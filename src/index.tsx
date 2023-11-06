@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import { DarkMode } from "./hooks/DarkModeContex";
+import { UserInfo } from "./hooks/UserContex";
 import reportWebVitals from "./reportWebVitals";
 
 import "@fontsource/roboto/300.css";
@@ -16,9 +17,11 @@ const root = ReactDOM.createRoot(
 
 root.render(
     <React.StrictMode>
-        <DarkMode>
-            <App />
-        </DarkMode>
+        <UserInfo>
+            <DarkMode>
+                <App />
+            </DarkMode>
+        </UserInfo>
     </React.StrictMode>
 );
 

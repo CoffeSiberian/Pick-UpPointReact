@@ -1,3 +1,5 @@
+import { LocalJWTDefined } from "./LocalJWT";
+
 export interface DarkModeTypes {
     primary: {
         main: string;
@@ -16,4 +18,8 @@ export interface DarkModeContextTypes {
     darkMode: boolean;
     themeTatailwind: DarkModeTypes;
     setDarkMode: (value: boolean) => void;
+}
+
+export interface UserContextTypes {
+    UserInfo: LocalJWTDefined | null;
 }
