@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, useEffect } from "react";
+import { createContext, useState, useContext, useEffect, useRef } from "react";
 import { dataGet } from "../helpers/dataFetch";
 import { API_URL } from "../helpers/configs";
 import { UserContextTypes } from "../types/ContexTypes";
@@ -12,6 +12,7 @@ export const useUser = (): UserContextTypes => {
 };
 
 export const UserInfo = ({ children }: any) => {
+    const loaded = useRef<boolean>(false);
     const [UserInfo, setUserInfo] = useState<LocalJWTDefined | null>(null);
 
     const verifyJWT = async (token: string) => {
@@ -27,10 +28,13 @@ export const UserInfo = ({ children }: any) => {
     };
 
     useEffect(() => {
+        if (loaded.current) return;
+
         const LocalInfo = getTokenData();
         if (LocalInfo) {
             verifyJWT(LocalInfo.token);
         }
+        loaded.current = true;
     }, []);
 
     return (

@@ -1,17 +1,17 @@
+import { useDarkMode } from "../hooks/DarkModeContex";
 import Paper from "@mui/material/Paper";
 import { Typography } from "@mui/material";
-import { useDarkMode } from "../hooks/DarkModeContex";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
 import Link from "@mui/material/Link";
+import { TITLE } from "../helpers/configs";
 
+// icons
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import GitHubIcon from "@mui/icons-material/GitHub";
 
 const Footer = () => {
-    const { darkMode, setDarkMode } = useDarkMode();
+    const { darkMode } = useDarkMode();
     const social = [
         {
             name: "Instagram",
@@ -36,7 +36,7 @@ const Footer = () => {
                 <div className="flex flex-col items-center md:flex-row md:justify-center p-2 drop-shadow-md">
                     <img className="h-auto w-10 mr-2" src="x" alt="logo" />
                     <Typography variant="h4">
-                        <b>Support System Ticket View</b>
+                        <b>{TITLE}</b>
                     </Typography>
                 </div>
                 <div className="flex justify-center p-2 gap-2">
@@ -62,18 +62,6 @@ const Footer = () => {
                             </li>
                         ))}
                     </ul>
-                </div>
-                <div className="flex justify-center">
-                    <FormControlLabel
-                        control={
-                            <Switch
-                                color="secondary"
-                                checked={darkMode}
-                                onChange={() => setDarkMode(!darkMode)}
-                            />
-                        }
-                        label={<b>Dark Mode</b>}
-                    />
                 </div>
 
                 <div className="flex justify-center mb-2">
