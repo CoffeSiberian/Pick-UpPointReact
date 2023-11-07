@@ -27,6 +27,11 @@ export const UserInfo = ({ children }: any) => {
         }
     };
 
+    const setLocalJwt = (token: string) => {
+        localStorage.setItem("jwt", token);
+        setUserInfo(getTokenData());
+    };
+
     useEffect(() => {
         if (loaded.current) return;
 
@@ -38,7 +43,7 @@ export const UserInfo = ({ children }: any) => {
     }, []);
 
     return (
-        <UserContex.Provider value={{ UserInfo }}>
+        <UserContex.Provider value={{ UserInfo, setLocalJwt }}>
             {children}
         </UserContex.Provider>
     );

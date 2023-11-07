@@ -8,17 +8,22 @@ import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 
+// components
+import ModalLogin from "./ModalLogin";
+
 // icons
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import MenuIcon from "@mui/icons-material/Menu";
 import IconButton from "@mui/material/IconButton";
+import PersonIcon from "@mui/icons-material/Person";
 
 import Switch from "@mui/material/Switch";
 import MovileHeaderOptions from "./MovileHeaderOptions";
 
 const Header = () => {
-    const [menuOpen, setMenuOpen] = useState(false);
     const { darkMode, setDarkMode } = useDarkMode();
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [openLogin, setopenLogin] = useState<boolean>(false);
     const navigate = useNavigate();
 
     const MaterialUISwitch = styled(Switch)(({ theme }) => ({
@@ -77,6 +82,11 @@ const Header = () => {
                 darkMode ? "bg-neutral-900" : "bg-white"
             }`}
         >
+            <ModalLogin
+                open={openLogin}
+                handleClose={() => setopenLogin(false)}
+                openRegister={() => navigate("/register")}
+            />
             <AppBar position="fixed">
                 <div className="flex absolute justify-center top-3 w-full">
                     <img
@@ -122,12 +132,6 @@ const Header = () => {
                                 flexItem
                             />
                         </div>
-                        <Divider
-                            sx={{ mr: 1 }}
-                            orientation="vertical"
-                            variant="middle"
-                            flexItem
-                        />
                     </div>
 
                     <div className="md:flex hidden justify-end w-full">
@@ -137,7 +141,16 @@ const Header = () => {
                             variant="middle"
                             flexItem
                         />
-                        <div className="flex"></div>
+                        <div className="flex">
+                            {" "}
+                            <Button
+                                startIcon={<PersonIcon />}
+                                color="inherit"
+                                onClick={() => setopenLogin(true)}
+                            >
+                                Iniciar sesión
+                            </Button>
+                        </div>
                     </div>
                     <div className="flex w-full mr-5 justify-end md:w-auto">
                         <MaterialUISwitch

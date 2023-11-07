@@ -7,22 +7,22 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
 
 interface ModalErrorProps {
-    error: boolean;
-    msj: string;
-    setError: (error: boolean) => void;
+    open: boolean;
+    message: string;
+    setError: () => void;
 }
 
-const ModalError: FC<ModalErrorProps> = ({ error, setError, msj }) => {
+const ModalError: FC<ModalErrorProps> = ({ open, message, setError }) => {
     return (
-        <Dialog open={error} keepMounted aria-describedby="loading-info">
-            <DialogTitle>An error occurred</DialogTitle>
+        <Dialog open={open} onClose={setError} aria-describedby="loading-info">
+            <DialogTitle>Error</DialogTitle>
             <DialogContent>
                 <div className="flex space-x-2 items-center">
-                    <Typography className="break-words">{msj}</Typography>
+                    <Typography className="break-words">{message}</Typography>
                 </div>
             </DialogContent>
             <DialogActions>
-                <Button color="error" onClick={() => setError(!error)}>
+                <Button color="error" onClick={() => setError()}>
                     Close
                 </Button>
             </DialogActions>

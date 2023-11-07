@@ -14,7 +14,7 @@ const ModalLoading: FC<ModalLoadingProps> = ({ open }) => {
     const { darkMode } = useDarkMode();
 
     return (
-        <Dialog open={open} keepMounted aria-describedby="loading-info">
+        <Dialog open={open} aria-describedby="loading-info">
             <DialogTitle>Loading...</DialogTitle>
             <DialogContent>
                 <div className="flex space-x-2 items-center">

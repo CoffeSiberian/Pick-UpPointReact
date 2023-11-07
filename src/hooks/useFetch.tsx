@@ -3,9 +3,9 @@ import { useState } from "react";
 import { dataGet, dataPost } from "../helpers/dataFetch";
 
 const useFetch = (url: string, method: "GET" | "POST") => {
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
-    const [succes, setSucces] = useState(false);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<boolean>(false);
+    const [succes, setSucces] = useState<boolean>(false);
 
     const response = async (
         options: AxiosRequestConfig,

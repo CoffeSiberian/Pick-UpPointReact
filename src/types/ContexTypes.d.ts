@@ -22,4 +22,5 @@ export interface DarkModeContextTypes {
 
 export interface UserContextTypes {
     UserInfo: LocalJWTDefined | null;
+    setLocalJwt: (token: string) => void;
 }
