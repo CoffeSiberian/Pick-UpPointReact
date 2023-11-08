@@ -2,7 +2,7 @@ import { createContext, useState, useContext, useEffect, useRef } from "react";
 import { dataGet } from "../helpers/dataFetch";
 import { API_URL } from "../helpers/configs";
 import { UserContextTypes } from "../types/ContexTypes";
-import getTokenData from "../helpers/getLocalJwt";
+import { getTokenData, getTokenDataGiven } from "../helpers/getLocalJwt";
 import { LocalJWTDefined } from "../types/LocalJWT";
 
 const UserContex = createContext<UserContextTypes>({} as UserContextTypes);
@@ -29,15 +29,15 @@ export const UserInfo = ({ children }: any) => {
 
     const setLocalJwt = (token: string) => {
         localStorage.setItem("jwt", token);
-        setUserInfo(getTokenData());
+        setUserInfo(getTokenDataGiven(token));
     };
 
     useEffect(() => {
         if (loaded.current) return;
 
-        const LocalInfo = getTokenData();
-        if (LocalInfo) {
-            verifyJWT(LocalInfo.token);
+        const jwt = localStorage.getItem("jwt");
+        if (jwt !== null) {
+            verifyJWT(jwt);
         }
         loaded.current = true;
     }, []);

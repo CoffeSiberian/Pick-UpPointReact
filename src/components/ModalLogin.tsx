@@ -109,7 +109,14 @@ const ModalLogin: FC<ModalLoginProps> = ({
             JSON.stringify(loginForm.payload)
         );
 
-        if (data === null) return;
+        if (data === null) {
+            setError({
+                status: 500,
+                message: "Error, Intenta mas tarde",
+                error: true,
+            });
+            return;
+        }
 
         if (data.status === 200) {
             setLocalJwt(data.data.jwt);
