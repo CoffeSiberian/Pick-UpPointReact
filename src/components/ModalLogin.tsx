@@ -1,7 +1,7 @@
-import { FC } from "react";
-import useFetch from "../hooks/useFetch";
+import { useState, FC, ChangeEvent } from "react";
 import { useUser } from "../hooks/UserContex";
-import { API_URL } from "../helpers/configs";
+import { API_URL, FK_STORE } from "../helpers/configs";
+import useFetch from "../hooks/useFetch";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Dialog from "@mui/material/Dialog";
@@ -13,17 +13,26 @@ import InputAdornment from "@mui/material/InputAdornment";
 import ModalLoading from "./ModalLoading";
 import ModalError from "./ModalError";
 
-//icons
+// icons
 import CloseIcon from "@mui/icons-material/Close";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import KeyIcon from "@mui/icons-material/Key";
 import LoginIcon from "@mui/icons-material/Login";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 
+// types
+import { LoginResponse } from "../types/responses/Login";
+
 interface ModalLoginProps {
     open: boolean;
     handleClose: () => void;
     openRegister: () => void;
+}
+
+interface LoginData {
+    email: string;
+    password: string;
+    fk_store: string;
 }
 
 const ModalLogin: FC<ModalLoginProps> = ({
@@ -36,13 +45,21 @@ const ModalLogin: FC<ModalLoginProps> = ({
         `${API_URL}/login`,
         "POST"
     );
+    const [loginForm, setloginForm] = useState<LoginData>({
+        email: "",
+        password: "",
+        fk_store: FK_STORE,
+    });
 
     const sendLogin = async () => {
-        const data = await response({
-            headers: {
-                "Content-Type": "application/json",
+        const data: LoginResponse | null = await response(
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                },
             },
-        });
+            JSON.stringify(loginForm)
+        );
 
         if (data === null) return;
         if (data.status === 200) {
@@ -51,12 +68,24 @@ const ModalLogin: FC<ModalLoginProps> = ({
         }
     };
 
+    const handleChangeText = (
+        event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+        id: string
+    ) => {
+        const eValue = event.target.value;
+
+        setloginForm({
+            ...loginForm,
+            [id]: eValue,
+        });
+    };
+
     return (
         <>
             <ModalLoading open={loading} />
             <ModalError
                 open={error}
-                message="Error al iniciar sesion. Intente de nuevo mas tarde."
+                message="Error al iniciar sesión. Intente de nuevo mas tarde."
                 setError={() => setError(false)}
             />
             <Dialog
@@ -67,7 +96,7 @@ const ModalLogin: FC<ModalLoginProps> = ({
                 scroll="paper"
             >
                 <DialogTitle className="flex justify-between">
-                    Iniciar Sesion
+                    Iniciar Sesión
                     <IconButton
                         aria-label="Cerrar ventana"
                         onClick={handleClose}
@@ -76,12 +105,14 @@ const ModalLogin: FC<ModalLoginProps> = ({
                     </IconButton>
                 </DialogTitle>
                 <DialogContent>
-                    <div className="flex flex-col gap-3 mt-2">
+                    <div className="flex flex-col gap-4 mt-2">
                         <TextField
                             fullWidth
-                            color="primary"
+                            color="info"
                             label="Email"
-                            id="fullWidth"
+                            type="email"
+                            value={loginForm.email}
+                            onChange={(e) => handleChangeText(e, "email")}
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
@@ -92,9 +123,11 @@ const ModalLogin: FC<ModalLoginProps> = ({
                         />
                         <TextField
                             fullWidth
-                            color="primary"
+                            color="info"
                             label="Contraseña"
-                            id="fullWidth"
+                            type="password"
+                            value={loginForm.password}
+                            onChange={(e) => handleChangeText(e, "password")}
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
