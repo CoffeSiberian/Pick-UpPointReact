@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDarkMode } from "../hooks/DarkModeContex";
+import { useUser } from "../hooks/UserContex";
 import { styled } from "@mui/material/styles";
 import logo from "../static/img/logo.png";
 import AppBar from "@mui/material/AppBar";
@@ -22,6 +23,7 @@ import MovileHeaderOptions from "./MovileHeaderOptions";
 
 const Header = () => {
     const { darkMode, setDarkMode } = useDarkMode();
+    const { UserInfo } = useUser();
     const [menuOpen, setMenuOpen] = useState(false);
     const [openLogin, setopenLogin] = useState<boolean>(false);
     const navigate = useNavigate();
@@ -142,14 +144,41 @@ const Header = () => {
                             flexItem
                         />
                         <div className="flex">
-                            {" "}
-                            <Button
-                                startIcon={<PersonIcon />}
-                                color="inherit"
-                                onClick={() => setopenLogin(true)}
-                            >
-                                Iniciar sesión
-                            </Button>
+                            {UserInfo !== null && !UserInfo.isAdmin && (
+                                <>
+                                    <Button
+                                        startIcon={<PersonIcon />}
+                                        color="inherit"
+                                        onClick={() => navigate("/account")}
+                                    >
+                                        Cuenta
+                                    </Button>
+                                </>
+                            )}
+
+                            {UserInfo === null && (
+                                <>
+                                    <Button
+                                        startIcon={<PersonIcon />}
+                                        color="inherit"
+                                        onClick={() => setopenLogin(true)}
+                                    >
+                                        Iniciar sesión
+                                    </Button>
+                                </>
+                            )}
+
+                            {UserInfo !== null && UserInfo.isAdmin && (
+                                <>
+                                    <Button
+                                        startIcon={<PersonIcon />}
+                                        color="inherit"
+                                        onClick={() => navigate("/dashboard")}
+                                    >
+                                        Dashboard
+                                    </Button>
+                                </>
+                            )}
                         </div>
                     </div>
                     <div className="flex w-full mr-5 justify-end md:w-auto">
