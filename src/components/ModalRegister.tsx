@@ -201,6 +201,7 @@ const ModalRegister: FC<ModalRegisterProps> = ({
                 aria-labelledby="child-modal-title"
                 aria-describedby="child-modal-description"
                 scroll="paper"
+                fullWidth
             >
                 <DialogTitle className="flex justify-between">
                     Registro
@@ -293,18 +294,15 @@ const ModalRegister: FC<ModalRegisterProps> = ({
                     </div>
                 </DialogContent>
                 <DialogActions>
-                    <div className="flex flex-col w-full gap-2">
-                        <Button
-                            color="success"
-                            size="small"
-                            variant="contained"
-                            endIcon={<LoginIcon />}
-                            onClick={sendRegister}
-                            className="w-full"
-                        >
-                            Registrarse
-                        </Button>
-                    </div>
+                    <Button
+                        color="success"
+                        size="small"
+                        variant="contained"
+                        endIcon={<LoginIcon />}
+                        onClick={sendRegister}
+                    >
+                        Registrarse
+                    </Button>
                 </DialogActions>
             </Dialog>
         </>

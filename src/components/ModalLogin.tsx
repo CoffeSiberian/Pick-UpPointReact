@@ -177,6 +177,7 @@ const ModalLogin: FC<ModalLoginProps> = ({ open, openLogin, openRegister }) => {
                 aria-labelledby="child-modal-title"
                 aria-describedby="child-modal-description"
                 scroll="paper"
+                fullWidth
             >
                 <DialogTitle className="flex justify-between">
                     Iniciar Sesión
@@ -231,31 +232,27 @@ const ModalLogin: FC<ModalLoginProps> = ({ open, openLogin, openRegister }) => {
                     </div>
                 </DialogContent>
                 <DialogActions>
-                    <div className="flex flex-col w-full gap-2">
-                        <Button
-                            color="success"
-                            size="small"
-                            variant="contained"
-                            endIcon={<LoginIcon />}
-                            onClick={sendLogin}
-                            className="w-full"
-                        >
-                            Iniciar Sesion
-                        </Button>
-                        <Button
-                            color="info"
-                            size="small"
-                            variant="contained"
-                            endIcon={<EditNoteIcon />}
-                            onClick={() => {
-                                openLogin(false);
-                                openRegister(true);
-                            }}
-                            className="w-full"
-                        >
-                            Registrarse
-                        </Button>
-                    </div>
+                    <Button
+                        color="success"
+                        size="small"
+                        variant="contained"
+                        endIcon={<LoginIcon />}
+                        onClick={sendLogin}
+                    >
+                        Iniciar Sesion
+                    </Button>
+                    <Button
+                        color="info"
+                        size="small"
+                        variant="contained"
+                        endIcon={<EditNoteIcon />}
+                        onClick={() => {
+                            openLogin(false);
+                            openRegister(true);
+                        }}
+                    >
+                        Registrarse
+                    </Button>
                 </DialogActions>
             </Dialog>
         </>
