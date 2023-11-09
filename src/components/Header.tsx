@@ -11,6 +11,7 @@ import Divider from "@mui/material/Divider";
 
 // components
 import ModalLogin from "./ModalLogin";
+import ModalRegister from "./ModalRegister";
 
 // icons
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
@@ -26,6 +27,7 @@ const Header = () => {
     const { UserInfo } = useUser();
     const [menuOpen, setMenuOpen] = useState(false);
     const [openLogin, setopenLogin] = useState<boolean>(false);
+    const [OpenRegister, setOpenRegister] = useState<boolean>(false);
     const navigate = useNavigate();
 
     const MaterialUISwitch = styled(Switch)(({ theme }) => ({
@@ -86,8 +88,13 @@ const Header = () => {
         >
             <ModalLogin
                 open={openLogin}
-                handleClose={() => setopenLogin(false)}
-                openRegister={() => navigate("/register")}
+                openLogin={() => setopenLogin(false)}
+                openRegister={setOpenRegister}
+            />
+            <ModalRegister
+                open={OpenRegister}
+                handleClose={() => setOpenRegister(false)}
+                openLogin={setopenLogin}
             />
             <AppBar position="fixed">
                 <div className="flex absolute justify-center top-3 w-full">

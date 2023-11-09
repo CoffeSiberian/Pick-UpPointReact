@@ -1,5 +1,4 @@
 import { useState, FC, ChangeEvent } from "react";
-import { useUser } from "../hooks/UserContex";
 import { API_URL, FK_STORE } from "../helpers/configs";
 import useFetch from "../hooks/useFetch";
 import Button from "@mui/material/Button";
@@ -15,48 +14,58 @@ import ModalError from "./ModalError";
 import SnakeBarInfo from "./SnakeBarInfo";
 
 // icons
+import NumbersIcon from "@mui/icons-material/Numbers";
+import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import CloseIcon from "@mui/icons-material/Close";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import KeyIcon from "@mui/icons-material/Key";
 import LoginIcon from "@mui/icons-material/Login";
-import EditNoteIcon from "@mui/icons-material/EditNote";
 
 // types
-import { LoginResponse } from "../types/responses/Login";
+import { RegisterResponse } from "../types/responses/Register";
 
 // schemas
 import {
-    loginEmailSchema,
-    loginPasswordSchema,
-    loginFormSchema,
-} from "../schemas/loginSch";
+    registerRutSchema,
+    registerNameSchema,
+    registerEmailSchema,
+    registerPasswordSchema,
+    registerFormSchema,
+} from "../schemas/registerSch";
 
-interface ModalLoginProps {
+interface ModalRegisterProps {
     open: boolean;
+    handleClose: () => void;
     openLogin: (open: boolean) => void;
-    openRegister: (open: boolean) => void;
 }
 
-interface LoginPayLoad {
+interface RegisterPayLoad {
+    rut: string;
+    name: string;
     email: string;
     password: string;
     fk_store: string;
 }
 
-interface LoginError {
+interface RegisterError {
+    rut: boolean;
+    name: boolean;
     email: boolean;
     password: boolean;
 }
 
-interface LoginData {
-    payload: LoginPayLoad;
-    error: LoginError;
+interface RegisterData {
+    payload: RegisterPayLoad;
+    error: RegisterError;
 }
 
-const ModalLogin: FC<ModalLoginProps> = ({ open, openLogin, openRegister }) => {
-    const { setLocalJwt } = useUser();
+const ModalRegister: FC<ModalRegisterProps> = ({
+    open,
+    handleClose,
+    openLogin,
+}) => {
     const { loading, response, succes, setSucces } = useFetch(
-        `${API_URL}/login`,
+        `${API_URL}/register`,
         "POST"
     );
 
@@ -65,48 +74,63 @@ const ModalLogin: FC<ModalLoginProps> = ({ open, openLogin, openRegister }) => {
         message: "",
         error: false,
     });
-    const [loginForm, setloginForm] = useState<LoginData>({
+    const [RegisterForm, setRegisterForm] = useState<RegisterData>({
         payload: {
+            rut: "",
+            name: "",
             email: "",
             password: "",
             fk_store: FK_STORE,
         },
         error: {
+            rut: false,
+            name: false,
             email: false,
             password: false,
         },
     });
 
     const validateForm = async (): Promise<boolean> => {
-        const loginEmailValid = await loginEmailSchema.isValid({
-            email: loginForm.payload.email,
-        });
-        const loginPasswordValid = await loginPasswordSchema.isValid({
-            password: loginForm.payload.password,
+        const registerRutValid = await registerRutSchema.isValid({
+            rut: RegisterForm.payload.rut,
         });
 
-        setloginForm({
-            ...loginForm,
+        const registerNameValid = await registerNameSchema.isValid({
+            name: RegisterForm.payload.name,
+        });
+
+        const registerEmailValid = await registerEmailSchema.isValid({
+            email: RegisterForm.payload.email,
+        });
+
+        const registerPasswordValid = await registerPasswordSchema.isValid({
+            password: RegisterForm.payload.password,
+        });
+
+        setRegisterForm({
+            ...RegisterForm,
             error: {
-                email: !loginEmailValid,
-                password: !loginPasswordValid,
+                rut: !registerRutValid,
+                name: !registerNameValid,
+                email: !registerEmailValid,
+                password: !registerPasswordValid,
             },
         });
 
-        return await loginFormSchema.isValid(loginForm.payload);
+        return await registerFormSchema.isValid(RegisterForm.payload);
     };
 
-    const sendLogin = async () => {
+    const sendRegister = async () => {
         const valid = await validateForm();
         if (!valid) return;
 
-        const data: LoginResponse | null = await response(
+        const data: RegisterResponse | null = await response(
             {
                 headers: {
                     "Content-Type": "application/json",
                 },
             },
-            JSON.stringify(loginForm.payload)
+            JSON.stringify(RegisterForm.payload)
         );
 
         if (data === null) {
@@ -119,9 +143,9 @@ const ModalLogin: FC<ModalLoginProps> = ({ open, openLogin, openRegister }) => {
         }
 
         if (data.status === 200) {
-            setLocalJwt(data.data.jwt);
-            openLogin(false);
-        } else if (data.status === 400 || data.status === 401) {
+            handleClose();
+            openLogin(true);
+        } else if (data.status === 400) {
             setError({
                 status: data.status,
                 message: "Email o contraseña incorrectos",
@@ -142,10 +166,10 @@ const ModalLogin: FC<ModalLoginProps> = ({ open, openLogin, openRegister }) => {
     ) => {
         const eValue = event.target.value;
 
-        setloginForm({
-            ...loginForm,
+        setRegisterForm({
+            ...RegisterForm,
             payload: {
-                ...loginForm.payload,
+                ...RegisterForm.payload,
                 [id]: eValue,
             },
         });
@@ -162,7 +186,7 @@ const ModalLogin: FC<ModalLoginProps> = ({ open, openLogin, openRegister }) => {
             />
             <SnakeBarInfo
                 open={succes}
-                message="Se ha iniciado sesion correctamente"
+                message="Registro exitoso"
                 severity="success"
                 handleClose={() => setSucces(false)}
             />
@@ -173,16 +197,16 @@ const ModalLogin: FC<ModalLoginProps> = ({ open, openLogin, openRegister }) => {
             />
             <Dialog
                 open={open}
-                onClose={() => openLogin(false)}
+                onClose={handleClose}
                 aria-labelledby="child-modal-title"
                 aria-describedby="child-modal-description"
                 scroll="paper"
             >
                 <DialogTitle className="flex justify-between">
-                    Iniciar Sesión
+                    Registro
                     <IconButton
                         aria-label="Cerrar ventana"
-                        onClick={() => openLogin(false)}
+                        onClick={handleClose}
                     >
                         <CloseIcon />
                     </IconButton>
@@ -192,13 +216,51 @@ const ModalLogin: FC<ModalLoginProps> = ({ open, openLogin, openRegister }) => {
                         <TextField
                             fullWidth
                             color="info"
+                            label="RUT"
+                            type="text"
+                            helperText={
+                                RegisterForm.error.rut && "RUT Invalido"
+                            }
+                            error={RegisterForm.error.rut}
+                            value={RegisterForm.payload.rut}
+                            onChange={(e) => handleChangeText(e, "rut")}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <NumbersIcon />
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                        <TextField
+                            fullWidth
+                            color="info"
+                            label="Nombre Completo"
+                            type="text"
+                            helperText={
+                                RegisterForm.error.name && "Ingresa un valor"
+                            }
+                            error={RegisterForm.error.name}
+                            value={RegisterForm.payload.name}
+                            onChange={(e) => handleChangeText(e, "name")}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <DriveFileRenameOutlineIcon />
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                        <TextField
+                            fullWidth
+                            color="info"
                             label="Email"
                             type="email"
                             helperText={
-                                loginForm.error.email && "Email invalido"
+                                RegisterForm.error.email && "Email invalido"
                             }
-                            error={loginForm.error.email}
-                            value={loginForm.payload.email}
+                            error={RegisterForm.error.email}
+                            value={RegisterForm.payload.email}
                             onChange={(e) => handleChangeText(e, "email")}
                             InputProps={{
                                 startAdornment: (
@@ -214,11 +276,11 @@ const ModalLogin: FC<ModalLoginProps> = ({ open, openLogin, openRegister }) => {
                             label="Contraseña"
                             type="password"
                             helperText={
-                                loginForm.error.password &&
+                                RegisterForm.error.password &&
                                 "Minimo de 5 caracteres"
                             }
-                            error={loginForm.error.password}
-                            value={loginForm.payload.password}
+                            error={RegisterForm.error.password}
+                            value={RegisterForm.payload.password}
                             onChange={(e) => handleChangeText(e, "password")}
                             InputProps={{
                                 startAdornment: (
@@ -237,20 +299,7 @@ const ModalLogin: FC<ModalLoginProps> = ({ open, openLogin, openRegister }) => {
                             size="small"
                             variant="contained"
                             endIcon={<LoginIcon />}
-                            onClick={sendLogin}
-                            className="w-full"
-                        >
-                            Iniciar Sesion
-                        </Button>
-                        <Button
-                            color="info"
-                            size="small"
-                            variant="contained"
-                            endIcon={<EditNoteIcon />}
-                            onClick={() => {
-                                openLogin(false);
-                                openRegister(true);
-                            }}
+                            onClick={sendRegister}
                             className="w-full"
                         >
                             Registrarse
@@ -262,4 +311,4 @@ const ModalLogin: FC<ModalLoginProps> = ({ open, openLogin, openRegister }) => {
     );
 };
 
-export default ModalLogin;
+export default ModalRegister;
