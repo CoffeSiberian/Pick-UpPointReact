@@ -1,4 +1,4 @@
-const AdminLogin = () => {
+const AdminDash = () => {
     return (
         <div>
             <p>adm</p>
@@ -6,4 +6,4 @@ const AdminLogin = () => {
     );
 };
 
-export default AdminLogin;
+export default AdminDash;

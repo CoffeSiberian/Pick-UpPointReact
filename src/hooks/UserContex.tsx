@@ -36,7 +36,6 @@ export const UserInfo = ({ children }: any) => {
         localStorage.removeItem("jwt");
         setUserInfo(null);
         window.location.href = "/";
-        window.location.reload();
     };
 
     useEffect(() => {

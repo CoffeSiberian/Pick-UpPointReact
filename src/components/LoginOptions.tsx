@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useUser } from "../hooks/UserContex";
+import { useNavigate } from "react-router-dom";
 import Tooltip from "@mui/material/Tooltip";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -13,10 +14,17 @@ import LogoutIcon from "@mui/icons-material/Logout";
 
 const LoginOptions = () => {
     const [ProfileOpen, setProfileOpen] = useState<null | HTMLElement>(null);
+
     const { UserInfo, logout } = useUser();
+    const navigate = useNavigate();
 
     const handleLogout = () => {
         logout();
+        setProfileOpen(null);
+    };
+
+    const handleAdminPanel = () => {
+        navigate("/admin");
         setProfileOpen(null);
     };
 
@@ -47,10 +55,7 @@ const LoginOptions = () => {
                 onClose={() => setProfileOpen(null)}
             >
                 {UserInfo !== null && UserInfo.isAdmin && (
-                    <MenuItem
-                        onClick={() => setProfileOpen(null)}
-                        className="gap-1"
-                    >
+                    <MenuItem onClick={handleAdminPanel} className="gap-1">
                         <AdminPanelSettingsIcon />
                         <Typography textAlign="center">
                             Panel de control
