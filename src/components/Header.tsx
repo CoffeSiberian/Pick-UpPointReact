@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDarkMode } from "../hooks/DarkModeContex";
 import { useUser } from "../hooks/UserContex";
@@ -12,12 +12,14 @@ import Divider from "@mui/material/Divider";
 // components
 import ModalLogin from "./ModalLogin";
 import ModalRegister from "./ModalRegister";
+import LoginOptions from "./LoginOptions";
 
 // icons
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import MenuIcon from "@mui/icons-material/Menu";
 import IconButton from "@mui/material/IconButton";
 import PersonIcon from "@mui/icons-material/Person";
+import StoreIcon from "@mui/icons-material/Store";
 
 import Switch from "@mui/material/Switch";
 import MovileHeaderOptions from "./MovileHeaderOptions";
@@ -25,10 +27,27 @@ import MovileHeaderOptions from "./MovileHeaderOptions";
 const Header = () => {
     const { darkMode, setDarkMode } = useDarkMode();
     const { UserInfo } = useUser();
+
     const [menuOpen, setMenuOpen] = useState(false);
     const [openLogin, setopenLogin] = useState<boolean>(false);
     const [OpenRegister, setOpenRegister] = useState<boolean>(false);
+
     const navigate = useNavigate();
+
+    const menuOptions: HeaderOptions = {
+        store: [
+            {
+                name: "Inicio",
+                path: "/",
+                icon: <HomeRoundedIcon />,
+            },
+            {
+                name: "Tienda",
+                path: "/store",
+                icon: <StoreIcon />,
+            },
+        ],
+    };
 
     const MaterialUISwitch = styled(Switch)(({ theme }) => ({
         width: 62,
@@ -106,6 +125,7 @@ const Header = () => {
                 </div>
                 <MovileHeaderOptions
                     openDrawer={menuOpen}
+                    store={menuOptions}
                     setOpenDrawer={setMenuOpen}
                 />
                 <Toolbar disableGutters>
@@ -127,19 +147,25 @@ const Header = () => {
                     </div>
                     <div className="md:flex ml-5 hidden justify-start w-full">
                         <div className="flex">
-                            <Button
-                                startIcon={<HomeRoundedIcon />}
-                                color="inherit"
-                                onClick={() => navigate("/")}
-                            >
-                                Inicio
-                            </Button>
-                            <Divider
-                                sx={{ mr: 1 }}
-                                orientation="vertical"
-                                variant="middle"
-                                flexItem
-                            />
+                            {menuOptions.store.map((item, index) => (
+                                <Fragment key={`${index}fragment`}>
+                                    <Button
+                                        key={`${index}item`}
+                                        startIcon={item.icon}
+                                        color="inherit"
+                                        onClick={() => navigate(item.path)}
+                                    >
+                                        {item.name}
+                                    </Button>
+                                    <Divider
+                                        key={`${index}divider`}
+                                        sx={{ mr: 1 }}
+                                        orientation="vertical"
+                                        variant="middle"
+                                        flexItem
+                                    />
+                                </Fragment>
+                            ))}
                         </div>
                     </div>
 
@@ -151,17 +177,7 @@ const Header = () => {
                             flexItem
                         />
                         <div className="flex">
-                            {UserInfo !== null && !UserInfo.isAdmin && (
-                                <>
-                                    <Button
-                                        startIcon={<PersonIcon />}
-                                        color="inherit"
-                                        onClick={() => navigate("/account")}
-                                    >
-                                        Cuenta
-                                    </Button>
-                                </>
-                            )}
+                            {UserInfo !== null && <LoginOptions />}
 
                             {UserInfo === null && (
                                 <>
@@ -171,18 +187,6 @@ const Header = () => {
                                         onClick={() => setopenLogin(true)}
                                     >
                                         Iniciar sesión
-                                    </Button>
-                                </>
-                            )}
-
-                            {UserInfo !== null && UserInfo.isAdmin && (
-                                <>
-                                    <Button
-                                        startIcon={<PersonIcon />}
-                                        color="inherit"
-                                        onClick={() => navigate("/dashboard")}
-                                    >
-                                        Dashboard
                                     </Button>
                                 </>
                             )}

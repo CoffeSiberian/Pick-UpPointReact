@@ -32,6 +32,13 @@ export const UserInfo = ({ children }: any) => {
         setUserInfo(getTokenDataGiven(token));
     };
 
+    const logout = () => {
+        localStorage.removeItem("jwt");
+        setUserInfo(null);
+        window.location.href = "/";
+        window.location.reload();
+    };
+
     useEffect(() => {
         if (loaded.current) return;
 
@@ -43,7 +50,7 @@ export const UserInfo = ({ children }: any) => {
     }, []);
 
     return (
-        <UserContex.Provider value={{ UserInfo, setLocalJwt }}>
+        <UserContex.Provider value={{ UserInfo, setLocalJwt, logout }}>
             {children}
         </UserContex.Provider>
     );
