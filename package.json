@@ -10,6 +10,7 @@
         "@mui/lab": "5.0.0-alpha.152",
         "@mui/material": "^5.14.17",
         "@mui/styled-engine-sc": "6.0.0-alpha.5",
+        "@mui/x-data-grid": "^6.18.1",
         "@testing-library/jest-dom": "^6.1.4",
         "@testing-library/react": "^14.0.0",
         "@testing-library/user-event": "^14.5.1",
@@ -48,6 +49,7 @@
         ]
     },
     "devDependencies": {
+        "@mui/x-data-grid-generator": "^6.18.1",
         "@types/jest": "^29.5.8",
         "@types/node": "^20.9.0",
         "@types/react": "^18.2.37",
