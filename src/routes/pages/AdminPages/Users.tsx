@@ -139,6 +139,9 @@ const Users = () => {
             });
         }
     };
+    const reloadUsers = () => {
+        getUsers();
+    };
 
     useEffect(() => {
         if (!loaded.current) {
@@ -152,6 +155,7 @@ const Users = () => {
             <UsersModalForm
                 open={userModalForm}
                 openUserModalForm={setuserModalForm}
+                reloadPage={reloadUsers}
             />
             <div className="flex flex-col gap-3">
                 <div className="flex justify-end">

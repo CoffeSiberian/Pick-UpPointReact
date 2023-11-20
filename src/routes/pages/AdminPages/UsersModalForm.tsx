@@ -15,11 +15,13 @@ import ModalError from "../../../components/ModalError";
 import SnakeBarInfo from "../../../components/SnakeBarInfo";
 
 // icons
+import SaveAsIcon from "@mui/icons-material/SaveAs";
+import CancelIcon from "@mui/icons-material/Cancel";
+import NumbersIcon from "@mui/icons-material/Numbers";
+import AbcIcon from "@mui/icons-material/Abc";
 import CloseIcon from "@mui/icons-material/Close";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import KeyIcon from "@mui/icons-material/Key";
-import LoginIcon from "@mui/icons-material/Login";
-import EditNoteIcon from "@mui/icons-material/EditNote";
 
 // schemas
 import {
@@ -30,9 +32,13 @@ import {
     userPasswordSchema,
 } from "../../../schemas/userSch";
 
+// types
+import { UserPost } from "../../../types/responses/userPost";
+
 interface UserModalFormProps {
     open: boolean;
     openUserModalForm: (open: boolean) => void;
+    reloadPage: () => void;
 }
 
 interface UserPayLoad {
@@ -42,25 +48,26 @@ interface UserPayLoad {
     password: string;
 }
 
-interface LoginError {
+interface UserError {
     rut: boolean;
     name: boolean;
     email: boolean;
     password: boolean;
 }
 
-interface LoginData {
+interface UserData {
     payload: UserPayLoad;
-    error: LoginError;
+    error: UserError;
 }
 
 const UsersModalForm: FC<UserModalFormProps> = ({
     open,
     openUserModalForm,
+    reloadPage,
 }) => {
-    const { setLocalJwt } = useUser();
+    const { UserInfo } = useUser();
     const { loading, response, succes, setSucces } = useFetch(
-        `${API_URL}/login`,
+        `${API_URL}/user`,
         "POST"
     );
 
@@ -69,7 +76,7 @@ const UsersModalForm: FC<UserModalFormProps> = ({
         message: "",
         error: false,
     });
-    const [loginForm, setloginForm] = useState<LoginData>({
+    const [userForm, setuserForm] = useState<UserData>({
         payload: {
             rut: "",
             name: "",
@@ -86,20 +93,20 @@ const UsersModalForm: FC<UserModalFormProps> = ({
 
     const validateForm = async (): Promise<boolean> => {
         const RutValid = await userRutSchema.isValid({
-            rut: loginForm.payload.rut,
+            rut: userForm.payload.rut,
         });
         const NameValid = await userNameSchema.isValid({
-            name: loginForm.payload.name,
+            name: userForm.payload.name,
         });
         const EmailValid = await userEmailSchema.isValid({
-            email: loginForm.payload.email,
+            email: userForm.payload.email,
         });
         const PasswordValid = await userPasswordSchema.isValid({
-            password: loginForm.payload.password,
+            password: userForm.payload.password,
         });
 
-        setloginForm({
-            ...loginForm,
+        setuserForm({
+            ...userForm,
             error: {
                 rut: !RutValid,
                 name: !NameValid,
@@ -108,20 +115,22 @@ const UsersModalForm: FC<UserModalFormProps> = ({
             },
         });
 
-        return await userSchema.isValid(loginForm.payload);
+        return await userSchema.isValid(userForm.payload);
     };
 
-    const sendLogin = async () => {
+    const sendData = async () => {
         const valid = await validateForm();
         if (!valid) return;
+        if (UserInfo === null) return;
 
-        const data: any | null = await response(
+        const data: UserPost | null = await response(
             {
                 headers: {
                     "Content-Type": "application/json",
+                    Authorization: `Bearer ${UserInfo.token}`,
                 },
             },
-            JSON.stringify(loginForm.payload)
+            JSON.stringify(userForm.payload)
         );
 
         if (data === null) {
@@ -134,8 +143,8 @@ const UsersModalForm: FC<UserModalFormProps> = ({
         }
 
         if (data.status === 200) {
-            setLocalJwt(data.data.jwt);
             openUserModalForm(false);
+            reloadPage();
         } else if (data.status === 400 || data.status === 401) {
             setError({
                 status: data.status,
@@ -157,10 +166,10 @@ const UsersModalForm: FC<UserModalFormProps> = ({
     ) => {
         const eValue = event.target.value;
 
-        setloginForm({
-            ...loginForm,
+        setuserForm({
+            ...userForm,
             payload: {
-                ...loginForm.payload,
+                ...userForm.payload,
                 [id]: eValue,
             },
         });
@@ -188,6 +197,7 @@ const UsersModalForm: FC<UserModalFormProps> = ({
             />
             <Dialog
                 open={open}
+                keepMounted={false}
                 onClose={() => openUserModalForm(false)}
                 aria-labelledby="child-modal-title"
                 aria-describedby="child-modal-description"
@@ -207,13 +217,57 @@ const UsersModalForm: FC<UserModalFormProps> = ({
                     <div className="flex flex-col gap-4 mt-2">
                         <TextField
                             fullWidth
+                            id="rut-user-add"
+                            autoComplete="off"
                             color="info"
                             label="RUT"
                             type="text"
-                            helperText={loginForm.error.rut && "Rut invalido"}
-                            error={loginForm.error.rut}
-                            value={loginForm.payload.rut}
+                            helperText={userForm.error.rut && "Rut invalido"}
+                            error={userForm.error.rut}
+                            value={userForm.payload.rut}
                             onChange={(e) => handleChangeText(e, "rut")}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <NumbersIcon />
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                        <TextField
+                            fullWidth
+                            autoComplete="off"
+                            id="name-user-add"
+                            color="info"
+                            label="Nombre"
+                            type="text"
+                            helperText={
+                                userForm.error.name && "Nombre invalido"
+                            }
+                            error={userForm.error.name}
+                            value={userForm.payload.name}
+                            onChange={(e) => handleChangeText(e, "name")}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <AbcIcon />
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                        <TextField
+                            fullWidth
+                            autoComplete="off"
+                            id="email-user-add"
+                            color="info"
+                            label="Email"
+                            type="text"
+                            helperText={
+                                userForm.error.email && "Email invalido"
+                            }
+                            error={userForm.error.email}
+                            value={userForm.payload.email}
+                            onChange={(e) => handleChangeText(e, "email")}
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
@@ -224,53 +278,17 @@ const UsersModalForm: FC<UserModalFormProps> = ({
                         />
                         <TextField
                             fullWidth
-                            color="info"
-                            label="Nombre"
-                            type="text"
-                            helperText={
-                                loginForm.error.name && "Nombre invalido"
-                            }
-                            error={loginForm.error.name}
-                            value={loginForm.payload.name}
-                            onChange={(e) => handleChangeText(e, "name")}
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <KeyIcon />
-                                    </InputAdornment>
-                                ),
-                            }}
-                        />
-                        <TextField
-                            fullWidth
-                            color="info"
-                            label="Email"
-                            type="text"
-                            helperText={
-                                loginForm.error.email && "Email invalido"
-                            }
-                            error={loginForm.error.email}
-                            value={loginForm.payload.email}
-                            onChange={(e) => handleChangeText(e, "email")}
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <KeyIcon />
-                                    </InputAdornment>
-                                ),
-                            }}
-                        />
-                        <TextField
-                            fullWidth
+                            id="password-user-add"
+                            autoComplete="off"
                             color="info"
                             label="Contraseña"
                             type="password"
                             helperText={
-                                loginForm.error.password &&
+                                userForm.error.password &&
                                 "Minimo de 5 caracteres"
                             }
-                            error={loginForm.error.password}
-                            value={loginForm.payload.password}
+                            error={userForm.error.password}
+                            value={userForm.payload.password}
                             onChange={(e) => handleChangeText(e, "password")}
                             InputProps={{
                                 startAdornment: (
@@ -287,8 +305,8 @@ const UsersModalForm: FC<UserModalFormProps> = ({
                         color="success"
                         size="small"
                         variant="contained"
-                        endIcon={<LoginIcon />}
-                        onClick={sendLogin}
+                        endIcon={<SaveAsIcon />}
+                        onClick={sendData}
                     >
                         Crear
                     </Button>
@@ -296,7 +314,7 @@ const UsersModalForm: FC<UserModalFormProps> = ({
                         color="info"
                         size="small"
                         variant="contained"
-                        endIcon={<EditNoteIcon />}
+                        endIcon={<CancelIcon />}
                         onClick={() => {
                             openUserModalForm(false);
                         }}
