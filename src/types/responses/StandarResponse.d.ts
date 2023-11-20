@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 
-interface UserPost extends AxiosResponse {
+interface StandarResponse extends AxiosResponse {
     data: {
         status: number;
         message: string;

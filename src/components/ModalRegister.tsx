@@ -22,7 +22,7 @@ import KeyIcon from "@mui/icons-material/Key";
 import LoginIcon from "@mui/icons-material/Login";
 
 // types
-import { RegisterResponse } from "../types/responses/Register";
+import { StandarResponse } from "../types/responses/StandarResponse";
 
 // schemas
 import {
@@ -124,7 +124,7 @@ const ModalRegister: FC<ModalRegisterProps> = ({
         const valid = await validateForm();
         if (!valid) return;
 
-        const data: RegisterResponse | null = await response(
+        const data: StandarResponse | null = await response(
             {
                 headers: {
                     "Content-Type": "application/json",

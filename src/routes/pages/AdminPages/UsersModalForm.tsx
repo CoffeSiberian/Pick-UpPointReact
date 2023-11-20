@@ -33,7 +33,7 @@ import {
 } from "../../../schemas/userSch";
 
 // types
-import { UserPost } from "../../../types/responses/userPost";
+import { StandarResponse } from "../../../types/responses/StandarResponse";
 
 interface UserModalFormProps {
     open: boolean;
@@ -123,7 +123,7 @@ const UsersModalForm: FC<UserModalFormProps> = ({
         if (!valid) return;
         if (UserInfo === null) return;
 
-        const data: UserPost | null = await response(
+        const data: StandarResponse | null = await response(
             {
                 headers: {
                     "Content-Type": "application/json",

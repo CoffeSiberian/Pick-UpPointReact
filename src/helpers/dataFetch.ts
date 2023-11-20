@@ -33,4 +33,20 @@ const dataPost = async (
     }
 };
 
-export { dataGet, dataPost };
+const dataDelete = async (
+    options: AxiosRequestConfig,
+    url: string
+): Promise<AxiosResponse | null> => {
+    try {
+        return await axios.delete(url, options);
+    } catch (err) {
+        if (isAxiosError(err)) {
+            if (err.response) {
+                return err.response;
+            }
+        }
+        return null;
+    }
+};
+
+export { dataGet, dataPost, dataDelete };

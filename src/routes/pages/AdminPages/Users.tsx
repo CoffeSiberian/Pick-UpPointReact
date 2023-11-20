@@ -10,6 +10,7 @@ import {
 } from "@mui/x-data-grid";
 import Button from "@mui/material/Button";
 import UsersModalForm from "./UsersModalForm";
+import ConfirmDel from "../../../components/ConfirmDel";
 
 // types
 import { GridColDef } from "@mui/x-data-grid";
@@ -27,10 +28,22 @@ interface Table {
     rows: UsersTypes[];
 }
 
+interface modalConfirm {
+    open: boolean;
+    url: string;
+    message: string;
+}
+
 const Users = () => {
     const loaded = useRef(false);
+    const { UserInfo } = useUser();
 
     const [userModalForm, setuserModalForm] = useState<boolean>(false);
+    const [modalConfirmDel, setmodalConfirmDel] = useState<modalConfirm>({
+        open: false,
+        url: "",
+        message: "",
+    });
     const [dataToTable, setdataToTable] = useState<Table>({
         columns: [
             { field: "id", headerName: "ID", width: 70, editable: false },
@@ -87,7 +100,12 @@ const Users = () => {
                             <EditIcon />
                         </IconButton>
                         <IconButton
-                            onClick={() => console.log(params.row.id)}
+                            onClick={() =>
+                                setDataToConfirmDel(
+                                    params.row.id,
+                                    params.row.name
+                                )
+                            }
                             size="small"
                             aria-label="Eliminar"
                             color="error"
@@ -108,7 +126,6 @@ const Users = () => {
         ],
         rows: [],
     });
-    const { UserInfo } = useUser();
     const { response, loading } = useFetch(
         `${API_URL}/user/list?limit_start=0&limit_end=5`,
         "GET"
@@ -139,8 +156,21 @@ const Users = () => {
             });
         }
     };
+
     const reloadUsers = () => {
         getUsers();
+    };
+
+    const setOpenConfirmDel = (close: boolean) => {
+        setmodalConfirmDel({ ...modalConfirmDel, open: close });
+    };
+
+    const setDataToConfirmDel = (idUser: string, username: string) => {
+        setmodalConfirmDel({
+            url: `${API_URL}/user?id=${idUser}`,
+            message: `¿Estas seguro de eliminar el usuario ${username}?`,
+            open: true,
+        });
     };
 
     useEffect(() => {
@@ -156,6 +186,13 @@ const Users = () => {
                 open={userModalForm}
                 openUserModalForm={setuserModalForm}
                 reloadPage={reloadUsers}
+            />
+            <ConfirmDel
+                open={modalConfirmDel.open}
+                setOpen={setOpenConfirmDel}
+                reloadUsers={reloadUsers}
+                url={modalConfirmDel.url}
+                message={modalConfirmDel.message}
             />
             <div className="flex flex-col gap-3">
                 <div className="flex justify-end">
