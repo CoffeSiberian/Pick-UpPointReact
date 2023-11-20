@@ -1,13 +1,26 @@
 import { useState, useEffect, useRef } from "react";
+import IconButton from "@mui/material/IconButton";
 import { API_URL } from "../../../helpers/configs";
 import useFetch from "../../../hooks/useFetch";
 import { useUser } from "../../../hooks/UserContex";
-import { DataGrid, GridColumnVisibilityModel } from "@mui/x-data-grid";
+import {
+    DataGrid,
+    GridColumnVisibilityModel,
+    GridRenderCellParams,
+} from "@mui/x-data-grid";
+import Button from "@mui/material/Button";
+import UsersModalForm from "./UsersModalForm";
 
 // types
 import { GridColDef } from "@mui/x-data-grid";
 import { UserListResponse } from "../../../types/responses/UserList";
 import { Users as UsersTypes } from "../../../types/model";
+
+// icons
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 
 interface Table {
     columns: GridColDef[];
@@ -17,6 +30,7 @@ interface Table {
 const Users = () => {
     const loaded = useRef(false);
 
+    const [userModalForm, setuserModalForm] = useState<boolean>(false);
     const [dataToTable, setdataToTable] = useState<Table>({
         columns: [
             { field: "id", headerName: "ID", width: 70, editable: false },
@@ -55,6 +69,41 @@ const Users = () => {
                 width: 180,
                 editable: false,
                 valueGetter: ({ value }) => value && new Date(value),
+            },
+            {
+                field: "Acciones",
+                type: "actions",
+                headerName: "Acciones",
+                width: 150,
+                editable: false,
+                renderCell: (params: GridRenderCellParams) => (
+                    <div className="flex gap-1">
+                        <IconButton
+                            onClick={() => console.log(params.row.id)}
+                            size="small"
+                            aria-label="Editar"
+                            color="info"
+                        >
+                            <EditIcon />
+                        </IconButton>
+                        <IconButton
+                            onClick={() => console.log(params.row.id)}
+                            size="small"
+                            aria-label="Eliminar"
+                            color="error"
+                        >
+                            <DeleteForeverIcon />
+                        </IconButton>
+                        <IconButton
+                            onClick={() => console.log(params.row.id)}
+                            size="small"
+                            aria-label="Historial"
+                            color="warning"
+                        >
+                            <MonetizationOnIcon />
+                        </IconButton>
+                    </div>
+                ),
             },
         ],
         rows: [],
@@ -99,16 +148,35 @@ const Users = () => {
     }, []);
 
     return (
-        <div className="flex" style={{ height: 300 }}>
-            <DataGrid
-                {...dataToTable}
-                loading={loading}
-                columnVisibilityModel={columnVisibilityModel}
-                onColumnVisibilityModelChange={(newModel) =>
-                    setColumnVisibilityModel(newModel)
-                }
+        <>
+            <UsersModalForm
+                open={userModalForm}
+                openUserModalForm={setuserModalForm}
             />
-        </div>
+            <div className="flex flex-col gap-3">
+                <div className="flex justify-end">
+                    <Button
+                        color="success"
+                        size="small"
+                        variant="contained"
+                        endIcon={<AddCircleIcon />}
+                        onClick={() => setuserModalForm(true)}
+                    >
+                        Crear Usuario
+                    </Button>
+                </div>
+                <div className="flex" style={{ height: 300 }}>
+                    <DataGrid
+                        {...dataToTable}
+                        loading={loading}
+                        columnVisibilityModel={columnVisibilityModel}
+                        onColumnVisibilityModelChange={(newModel) =>
+                            setColumnVisibilityModel(newModel)
+                        }
+                    />
+                </div>
+            </div>
+        </>
     );
 };
 
