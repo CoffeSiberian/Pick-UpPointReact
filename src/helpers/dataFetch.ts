@@ -49,4 +49,21 @@ const dataDelete = async (
     }
 };
 
-export { dataGet, dataPost, dataDelete };
+const dataPut = async (
+    options: AxiosRequestConfig,
+    payload: string,
+    url: string
+): Promise<AxiosResponse | null> => {
+    try {
+        return await axios.put(url, payload, options);
+    } catch (err) {
+        if (isAxiosError(err)) {
+            if (err.response) {
+                return err.response;
+            }
+        }
+        return null;
+    }
+};
+
+export { dataGet, dataPost, dataPut, dataDelete };

@@ -168,7 +168,7 @@ const Users = () => {
     const setDataToConfirmDel = (idUser: string, username: string) => {
         setmodalConfirmDel({
             url: `${API_URL}/user?id=${idUser}`,
-            message: `¿Estas seguro de eliminar el usuario ${username}?`,
+            message: `¿Estas seguro de eliminar el usuario "${username}"?`,
             open: true,
         });
     };

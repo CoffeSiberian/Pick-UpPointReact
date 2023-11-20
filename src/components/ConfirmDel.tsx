@@ -13,6 +13,10 @@ import SnakeBarInfo from "./SnakeBarInfo";
 // types
 import { StandarResponse } from "../types/responses/StandarResponse";
 
+// icons
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import CancelIcon from "@mui/icons-material/Cancel";
+
 interface ConfirmDelProps {
     open: boolean;
     setOpen: (open: boolean) => void;
@@ -90,13 +94,15 @@ const ConfirmDel: FC<ConfirmDelProps> = ({
                         color="error"
                         autoFocus
                         onClick={() => handleDelete()}
+                        endIcon={<DeleteForeverIcon />}
                     >
                         Eliminar
                     </Button>
                     <Button
                         color="info"
-                        onClick={() => setOpen(false)}
                         autoFocus
+                        onClick={() => setOpen(false)}
+                        endIcon={<CancelIcon />}
                     >
                         Cancelar
                     </Button>

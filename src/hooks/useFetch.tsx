@@ -2,7 +2,7 @@ import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { useState } from "react";
 import { dataGet, dataPost, dataDelete } from "../helpers/dataFetch";
 
-const useFetch = (url: string, method: "GET" | "POST" | "DELETE") => {
+const useFetch = (url: string, method: "GET" | "POST" | "PUT" | "DELETE") => {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<boolean>(false);
     const [succes, setSucces] = useState<boolean>(false);
@@ -15,9 +15,10 @@ const useFetch = (url: string, method: "GET" | "POST" | "DELETE") => {
             return responseGET(options);
         } else if (method === "POST") {
             return responsePOST(options, payload ? payload : "");
-        } else {
-            return responseDELETE(options);
+        } else if (method === "PUT") {
+            return reponsePUT(options, payload ? payload : "");
         }
+        return responseDELETE(options);
     };
 
     const responsePOST = async (
@@ -41,6 +42,22 @@ const useFetch = (url: string, method: "GET" | "POST" | "DELETE") => {
     ): Promise<AxiosResponse | null> => {
         setLoading(true);
         const data = await dataGet(options, url);
+        if (data) {
+            if (data.status === 200) setSucces(true);
+            else setError(true);
+        } else {
+            setError(true);
+        }
+        setLoading(false);
+        return data;
+    };
+
+    const reponsePUT = async (
+        options: AxiosRequestConfig,
+        payload: string
+    ): Promise<AxiosResponse | null> => {
+        setLoading(true);
+        const data = await dataPost(options, payload, url);
         if (data) {
             if (data.status === 200) setSucces(true);
             else setError(true);
