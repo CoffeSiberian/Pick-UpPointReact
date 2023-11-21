@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import IconButton from "@mui/material/IconButton";
-import { API_URL } from "../../../helpers/configs";
-import useFetch from "../../../hooks/useFetch";
-import { useUser } from "../../../hooks/UserContex";
+import { API_URL } from "../../../../helpers/configs";
+import useFetch from "../../../../hooks/useFetch";
+import { useUser } from "../../../../hooks/UserContex";
 import {
     DataGrid,
     GridColumnVisibilityModel,
@@ -10,12 +10,11 @@ import {
 } from "@mui/x-data-grid";
 import Button from "@mui/material/Button";
 import UsersModalForm from "./UsersModalForm";
-import ConfirmDel from "../../../components/ConfirmDel";
+import ConfirmDel from "../../../../components/ConfirmDel";
 
 // types
-import { GridColDef } from "@mui/x-data-grid";
-import { UserListResponse } from "../../../types/responses/UserList";
-import { Users as UsersTypes } from "../../../types/model";
+import { UserListResponse } from "../../../../types/responses/UserList";
+import { Table, modalConfirm } from "./UsersType";
 
 // icons
 import AddCircleIcon from "@mui/icons-material/AddCircle";
@@ -23,19 +22,9 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 
-interface Table {
-    columns: GridColDef[];
-    rows: UsersTypes[];
-}
-
-interface modalConfirm {
-    open: boolean;
-    url: string;
-    message: string;
-}
-
 const Users = () => {
     const loaded = useRef(false);
+    const [userToEdit, setuserToEdit] = useState<UserToEdit | null>(null);
     const { UserInfo } = useUser();
 
     const [userModalForm, setuserModalForm] = useState<boolean>(false);
@@ -92,7 +81,15 @@ const Users = () => {
                 renderCell: (params: GridRenderCellParams) => (
                     <div className="flex gap-1">
                         <IconButton
-                            onClick={() => console.log(params.row.id)}
+                            onClick={() => {
+                                setuserToEdit({
+                                    id: params.row.id,
+                                    name: params.row.name,
+                                    email: params.row.email,
+                                    rut: params.row.rut,
+                                });
+                                setuserModalForm(true);
+                            }}
                             size="small"
                             aria-label="Editar"
                             color="info"
