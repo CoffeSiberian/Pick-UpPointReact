@@ -1,7 +1,19 @@
-interface UserModalFormProps {
+interface UserModalFormCreateProps {
     open: boolean;
     openUserModalForm: (open: boolean) => void;
     reloadPage: () => void;
+}
+
+interface UserModalFormUpdateProps {
+    open: boolean;
+    openUserModalForm: (open: boolean) => void;
+    reloadPage: () => void;
+    userToEdit: UserToEdit;
+}
+
+interface UserModalFormUpdateState {
+    open: boolean;
+    userToEdit: UserToEdit;
 }
 
 interface UserToEdit {

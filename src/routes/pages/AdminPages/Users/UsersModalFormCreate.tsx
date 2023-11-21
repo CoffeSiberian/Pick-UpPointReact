@@ -8,8 +8,6 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import TextField from "@mui/material/TextField";
-import InputAdornment from "@mui/material/InputAdornment";
 import ModalLoading from "../../../../components/ModalLoading";
 import ModalError from "../../../../components/ModalError";
 import SnakeBarInfo from "../../../../components/SnakeBarInfo";
@@ -18,11 +16,7 @@ import UsersForms from "./UsersForms";
 // icons
 import SaveAsIcon from "@mui/icons-material/SaveAs";
 import CancelIcon from "@mui/icons-material/Cancel";
-import NumbersIcon from "@mui/icons-material/Numbers";
-import AbcIcon from "@mui/icons-material/Abc";
 import CloseIcon from "@mui/icons-material/Close";
-import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
-import KeyIcon from "@mui/icons-material/Key";
 
 // schemas
 import {
@@ -36,7 +30,7 @@ import {
 // types
 import { StandarResponse } from "../../../../types/responses/StandarResponse";
 
-const UsersModalForm: FC<UserModalFormProps> = ({
+const UsersModalFormCreate: FC<UserModalFormCreateProps> = ({
     open,
     openUserModalForm,
     reloadPage,
@@ -222,4 +216,4 @@ const UsersModalForm: FC<UserModalFormProps> = ({
     );
 };
 
-export default UsersModalForm;
+export default UsersModalFormCreate;

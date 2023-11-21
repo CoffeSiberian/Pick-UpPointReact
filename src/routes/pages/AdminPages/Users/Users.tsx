@@ -9,7 +9,8 @@ import {
     GridRenderCellParams,
 } from "@mui/x-data-grid";
 import Button from "@mui/material/Button";
-import UsersModalForm from "./UsersModalForm";
+import UsersModalFormCrate from "./UsersModalFormCreate";
+import UsersModalFormUpdate from "./UsersModalFormUpdate";
 import ConfirmDel from "../../../../components/ConfirmDel";
 
 // types
@@ -24,8 +25,18 @@ import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 
 const Users = () => {
     const loaded = useRef(false);
-    const [userToEdit, setuserToEdit] = useState<UserToEdit | null>(null);
     const { UserInfo } = useUser();
+
+    const [userModalUpdate, setuserModalUpdate] =
+        useState<UserModalFormUpdateState>({
+            open: false,
+            userToEdit: {
+                id: "",
+                name: "",
+                email: "",
+                rut: "",
+            },
+        });
 
     const [userModalForm, setuserModalForm] = useState<boolean>(false);
     const [modalConfirmDel, setmodalConfirmDel] = useState<modalConfirm>({
@@ -82,13 +93,15 @@ const Users = () => {
                     <div className="flex gap-1">
                         <IconButton
                             onClick={() => {
-                                setuserToEdit({
-                                    id: params.row.id,
-                                    name: params.row.name,
-                                    email: params.row.email,
-                                    rut: params.row.rut,
+                                setuserModalUpdate({
+                                    open: true,
+                                    userToEdit: {
+                                        id: params.row.id,
+                                        name: params.row.name,
+                                        email: params.row.email,
+                                        rut: params.row.rut,
+                                    },
                                 });
-                                setuserModalForm(true);
                             }}
                             size="small"
                             aria-label="Editar"
@@ -158,6 +171,10 @@ const Users = () => {
         getUsers();
     };
 
+    const openUserModalFormUpdate = (open: boolean) => {
+        setuserModalUpdate({ ...userModalUpdate, open });
+    };
+
     const setOpenConfirmDel = (close: boolean) => {
         setmodalConfirmDel({ ...modalConfirmDel, open: close });
     };
@@ -179,10 +196,16 @@ const Users = () => {
 
     return (
         <>
-            <UsersModalForm
+            <UsersModalFormCrate
                 open={userModalForm}
                 openUserModalForm={setuserModalForm}
                 reloadPage={reloadUsers}
+            />
+            <UsersModalFormUpdate
+                open={userModalUpdate.open}
+                openUserModalForm={openUserModalFormUpdate}
+                reloadPage={reloadUsers}
+                userToEdit={userModalUpdate.userToEdit}
             />
             <ConfirmDel
                 open={modalConfirmDel.open}

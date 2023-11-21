@@ -1,6 +1,6 @@
 import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { useState } from "react";
-import { dataGet, dataPost, dataDelete } from "../helpers/dataFetch";
+import { dataGet, dataPost, dataPut, dataDelete } from "../helpers/dataFetch";
 
 const useFetch = (url: string, method: "GET" | "POST" | "PUT" | "DELETE") => {
     const [loading, setLoading] = useState<boolean>(false);
@@ -57,7 +57,7 @@ const useFetch = (url: string, method: "GET" | "POST" | "PUT" | "DELETE") => {
         payload: string
     ): Promise<AxiosResponse | null> => {
         setLoading(true);
-        const data = await dataPost(options, payload, url);
+        const data = await dataPut(options, payload, url);
         if (data) {
             if (data.status === 200) setSucces(true);
             else setError(true);
