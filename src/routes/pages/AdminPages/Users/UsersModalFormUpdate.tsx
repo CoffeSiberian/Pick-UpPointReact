@@ -1,4 +1,4 @@
-import { useState, FC, ChangeEvent, useEffect } from "react";
+import { useState, FC, useEffect } from "react";
 import { useUser } from "../../../../hooks/UserContex";
 import { API_URL } from "../../../../helpers/configs";
 import useFetch from "../../../../hooks/useFetch";
@@ -47,7 +47,7 @@ const UsersModalFormUpdate: FC<UserModalFormUpdateProps> = ({
         message: "",
         error: false,
     });
-    const [userForm, setuserForm] = useState<UserDataUpdate>({
+    const [userForm, setuserForm] = useState<UserData>({
         payload: {
             id: "",
             rut: "",
@@ -133,17 +133,12 @@ const UsersModalFormUpdate: FC<UserModalFormUpdateProps> = ({
         }
     };
 
-    const handleChangeText = (
-        event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-        id: string
-    ) => {
-        const eValue = event.target.value;
-
+    const handleChangeText = (value: any, id: string) => {
         setuserForm({
             ...userForm,
             payload: {
                 ...userForm.payload,
-                [id]: eValue,
+                [id]: value,
             },
         });
     };

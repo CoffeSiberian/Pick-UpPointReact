@@ -25,21 +25,13 @@ interface UserToEdit {
 }
 
 interface UserPayLoad {
+    id?: string;
     rut: string;
     name: string;
     email: string;
     password: string;
+    isAdmin?: boolean;
 }
-
-interface UserPayLoadUpdate {
-    id: string;
-    rut: string;
-    name: string;
-    email: string;
-    password: string;
-    isAdmin: boolean;
-}
-
 interface UserError {
     rut: boolean;
     name: boolean;
@@ -48,19 +40,11 @@ interface UserError {
 }
 
 interface UserData {
-    payload: UserPayLoad;
-    error: UserError;
-}
-
-interface UserDataUpdate {
-    payload: UserPayLoadUpdate;
+    payload: UserPayLoad | UserPayLoadUpdate;
     error: UserError;
 }
 
 interface UsersFormsProps {
     userForm: UserData;
-    handleChangeText: (
-        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-        id: string
-    ) => void;
+    handleChangeText: (value: any, id: string) => void;
 }

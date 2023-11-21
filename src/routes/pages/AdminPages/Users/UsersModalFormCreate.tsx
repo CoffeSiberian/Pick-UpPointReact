@@ -1,4 +1,4 @@
-import { useState, FC, ChangeEvent } from "react";
+import { useState, FC } from "react";
 import { useUser } from "../../../../hooks/UserContex";
 import { API_URL } from "../../../../helpers/configs";
 import useFetch from "../../../../hooks/useFetch";
@@ -130,17 +130,12 @@ const UsersModalFormCreate: FC<UserModalFormCreateProps> = ({
         }
     };
 
-    const handleChangeText = (
-        event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-        id: string
-    ) => {
-        const eValue = event.target.value;
-
+    const handleChangeText = (value: any, id: string) => {
         setuserForm({
             ...userForm,
             payload: {
                 ...userForm.payload,
-                [id]: eValue,
+                [id]: value,
             },
         });
     };
