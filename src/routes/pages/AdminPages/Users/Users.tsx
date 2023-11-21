@@ -32,9 +32,10 @@ const Users = () => {
             open: false,
             userToEdit: {
                 id: "",
+                rut: "",
                 name: "",
                 email: "",
-                rut: "",
+                isAdmin: false,
             },
         });
 
@@ -97,9 +98,10 @@ const Users = () => {
                                     open: true,
                                     userToEdit: {
                                         id: params.row.id,
+                                        rut: params.row.rut,
                                         name: params.row.name,
                                         email: params.row.email,
-                                        rut: params.row.rut,
+                                        isAdmin: params.row.isAdmin,
                                     },
                                 });
                             }}

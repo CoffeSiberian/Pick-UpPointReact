@@ -21,6 +21,7 @@ interface UserToEdit {
     rut: string;
     name: string;
     email: string;
+    isAdmin: boolean;
 }
 
 interface UserPayLoad {
@@ -28,6 +29,15 @@ interface UserPayLoad {
     name: string;
     email: string;
     password: string;
+}
+
+interface UserPayLoadUpdate {
+    id: string;
+    rut: string;
+    name: string;
+    email: string;
+    password: string;
+    isAdmin: boolean;
 }
 
 interface UserError {
@@ -39,6 +49,11 @@ interface UserError {
 
 interface UserData {
     payload: UserPayLoad;
+    error: UserError;
+}
+
+interface UserDataUpdate {
+    payload: UserPayLoadUpdate;
     error: UserError;
 }
 

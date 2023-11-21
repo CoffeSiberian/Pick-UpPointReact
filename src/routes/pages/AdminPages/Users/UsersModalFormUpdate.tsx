@@ -47,12 +47,14 @@ const UsersModalFormUpdate: FC<UserModalFormUpdateProps> = ({
         message: "",
         error: false,
     });
-    const [userForm, setuserForm] = useState<UserData>({
+    const [userForm, setuserForm] = useState<UserDataUpdate>({
         payload: {
+            id: "",
             rut: "",
             name: "",
             email: "",
             password: "",
+            isAdmin: false,
         },
         error: {
             rut: false,
@@ -151,8 +153,10 @@ const UsersModalFormUpdate: FC<UserModalFormUpdateProps> = ({
         setuserForm({
             ...userForm,
             payload: {
+                id: userToEdit.id,
                 rut: userToEdit.rut,
                 name: userToEdit.name,
+                isAdmin: userToEdit.isAdmin,
                 email: userToEdit.email,
                 password: "",
             },
