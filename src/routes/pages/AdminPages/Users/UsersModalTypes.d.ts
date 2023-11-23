@@ -40,7 +40,7 @@ interface UserError {
 }
 
 interface UserData {
-    payload: UserPayLoad | UserPayLoadUpdate;
+    payload: UserPayLoad;
     error: UserError;
 }
 
