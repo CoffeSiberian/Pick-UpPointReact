@@ -6,8 +6,8 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import Summary from "./AdminPages/Summary";
 import Users from "./AdminPages/Users/Users";
-import Shop from "./AdminPages/Shop";
 import Sales from "./AdminPages/Sales";
+import Shop from "./AdminPages/Shop/Shop";
 
 // icons
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
