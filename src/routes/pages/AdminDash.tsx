@@ -8,9 +8,11 @@ import Summary from "./AdminPages/Summary";
 import Users from "./AdminPages/Users/Users";
 import Sales from "./AdminPages/Sales";
 import Shop from "./AdminPages/Shop/Shop";
+import Categories from "./AdminPages/Categories/Categories";
 
 // icons
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
+import CardMembershipIcon from "@mui/icons-material/CardMembership";
 import PersonIcon from "@mui/icons-material/Person";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import StorefrontIcon from "@mui/icons-material/Storefront";
@@ -50,10 +52,16 @@ const AdminDash = () => {
                             value="3"
                         />
                         <Tab
+                            icon={<CardMembershipIcon />}
+                            iconPosition="start"
+                            label="Categorias"
+                            value="4"
+                        />
+                        <Tab
                             icon={<StorefrontIcon />}
                             iconPosition="start"
                             label="Ventas"
-                            value="4"
+                            value="5"
                         />
                     </TabList>
                 </div>
@@ -74,6 +82,9 @@ const AdminDash = () => {
                         <Shop />
                     </TabPanel>
                     <TabPanel value="4">
+                        <Categories />
+                    </TabPanel>
+                    <TabPanel value="5">
                         <Sales />
                     </TabPanel>
                 </div>
