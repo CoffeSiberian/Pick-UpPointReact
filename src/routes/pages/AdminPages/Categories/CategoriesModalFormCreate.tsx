@@ -19,13 +19,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import CloseIcon from "@mui/icons-material/Close";
 
 // schemas
-import {
-    userSchema,
-    userRutSchema,
-    userNameSchema,
-    userEmailSchema,
-    userPasswordSchema,
-} from "../../../../schemas/userSch";
+import { categoriesNameSchema } from "../../../../schemas/categoriesSch";
 
 // types
 import { StandarResponse } from "../../../../types/responses/StandarResponse";
@@ -37,7 +31,7 @@ const CategoriesModalFormCreate: FC<UserModalFormCreateProps> = ({
 }) => {
     const { UserInfo } = useUser();
     const { loading, response, succes, setSucces } = useFetch(
-        `${API_URL}/user`,
+        `${API_URL}/categorie`,
         "POST"
     );
 
@@ -46,46 +40,28 @@ const CategoriesModalFormCreate: FC<UserModalFormCreateProps> = ({
         message: "",
         error: false,
     });
-    const [userForm, setuserForm] = useState<UserData>({
+    const [Form, setForm] = useState<CategoriesData>({
         payload: {
-            rut: "",
             name: "",
-            email: "",
-            password: "",
         },
         error: {
-            rut: false,
             name: false,
-            email: false,
-            password: false,
         },
     });
 
     const validateForm = async (): Promise<boolean> => {
-        const RutValid = await userRutSchema.isValid({
-            rut: userForm.payload.rut,
-        });
-        const NameValid = await userNameSchema.isValid({
-            name: userForm.payload.name,
-        });
-        const EmailValid = await userEmailSchema.isValid({
-            email: userForm.payload.email,
-        });
-        const PasswordValid = await userPasswordSchema.isValid({
-            password: userForm.payload.password,
+        const NameValid = await categoriesNameSchema.isValid({
+            name: Form.payload.name,
         });
 
-        setuserForm({
-            ...userForm,
+        setForm({
+            ...Form,
             error: {
-                rut: !RutValid,
                 name: !NameValid,
-                email: !EmailValid,
-                password: !PasswordValid,
             },
         });
 
-        return await userSchema.isValid(userForm.payload);
+        return NameValid;
     };
 
     const sendData = async () => {
@@ -100,7 +76,7 @@ const CategoriesModalFormCreate: FC<UserModalFormCreateProps> = ({
                     Authorization: `Bearer ${UserInfo.token}`,
                 },
             },
-            JSON.stringify(userForm.payload)
+            JSON.stringify(Form.payload)
         );
 
         if (data === null) {
@@ -131,10 +107,10 @@ const CategoriesModalFormCreate: FC<UserModalFormCreateProps> = ({
     };
 
     const handleChangeText = (value: any, id: string) => {
-        setuserForm({
-            ...userForm,
+        setForm({
+            ...Form,
             payload: {
-                ...userForm.payload,
+                ...Form.payload,
                 [id]: value,
             },
         });
@@ -170,7 +146,7 @@ const CategoriesModalFormCreate: FC<UserModalFormCreateProps> = ({
                 fullWidth
             >
                 <DialogTitle className="flex justify-between">
-                    Agregar Usuario
+                    Agregar Categoria
                     <IconButton
                         aria-label="Cerrar ventana"
                         onClick={() => openUserModalForm(false)}
@@ -180,7 +156,7 @@ const CategoriesModalFormCreate: FC<UserModalFormCreateProps> = ({
                 </DialogTitle>
                 <DialogContent>
                     <CategoriesForms
-                        shopForm={userForm}
+                        categoriesForm={Form}
                         handleChangeText={handleChangeText}
                     />
                 </DialogContent>

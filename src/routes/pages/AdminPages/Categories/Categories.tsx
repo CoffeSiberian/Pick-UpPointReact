@@ -14,28 +14,24 @@ import SalesModalFormUpdate from "./CategoriesModalFormUpdate";
 import ConfirmDel from "../../../../components/ConfirmDel";
 
 // types
-import { UserListResponse } from "../../../../types/responses/UserList";
+import { CategoriesListResponse } from "../../../../types/responses/CategorieList";
 import { Table, modalConfirm } from "./CategoriesType";
 
 // icons
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 
 const Categories = () => {
     const loaded = useRef(false);
     const { UserInfo } = useUser();
 
     const [userModalUpdate, setuserModalUpdate] =
-        useState<UserModalFormUpdateState>({
+        useState<CategoriesModalFormUpdateState>({
             open: false,
-            userToEdit: {
+            categoriesToEdit: {
                 id: "",
-                rut: "",
                 name: "",
-                email: "",
-                isAdmin: false,
             },
         });
 
@@ -47,25 +43,10 @@ const Categories = () => {
     });
     const [dataToTable, setdataToTable] = useState<Table>({
         columns: [
-            { field: "id", headerName: "ID", width: 70, editable: false },
-            { field: "rut", headerName: "RUT", width: 130, editable: false },
             {
                 field: "name",
-                headerName: "Nombre",
+                headerName: "Nombre Categoria",
                 width: 200,
-                editable: false,
-            },
-            {
-                field: "email",
-                headerName: "Email",
-                width: 200,
-                editable: false,
-            },
-            {
-                field: "isAdmin",
-                type: "boolean",
-                headerName: "Admin",
-                width: 130,
                 editable: false,
             },
             {
@@ -96,12 +77,9 @@ const Categories = () => {
                             onClick={() => {
                                 setuserModalUpdate({
                                     open: true,
-                                    userToEdit: {
+                                    categoriesToEdit: {
                                         id: params.row.id,
-                                        rut: params.row.rut,
                                         name: params.row.name,
-                                        email: params.row.email,
-                                        isAdmin: params.row.isAdmin,
                                     },
                                 });
                             }}
@@ -124,14 +102,6 @@ const Categories = () => {
                         >
                             <DeleteForeverIcon />
                         </IconButton>
-                        <IconButton
-                            onClick={() => console.log(params.row.id)}
-                            size="small"
-                            aria-label="Historial"
-                            color="warning"
-                        >
-                            <MonetizationOnIcon />
-                        </IconButton>
                     </div>
                 ),
             },
@@ -139,7 +109,7 @@ const Categories = () => {
         rows: [],
     });
     const { response, loading } = useFetch(
-        `${API_URL}/user/list?limit_start=0&limit_end=5`,
+        `${API_URL}/categories?store=${UserInfo?.fk_store}`,
         "GET"
     );
 
@@ -150,10 +120,10 @@ const Categories = () => {
             status: false,
         });
 
-    const getUsers = async () => {
+    const getCategories = async () => {
         if (!UserInfo) return;
 
-        const data: UserListResponse | null = await response({
+        const data: CategoriesListResponse | null = await response({
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${UserInfo.token}`,
@@ -169,8 +139,8 @@ const Categories = () => {
         }
     };
 
-    const reloadUsers = () => {
-        getUsers();
+    const reloadCategories = () => {
+        getCategories();
     };
 
     const openUserModalFormUpdate = (open: boolean) => {
@@ -181,17 +151,17 @@ const Categories = () => {
         setmodalConfirmDel({ ...modalConfirmDel, open: close });
     };
 
-    const setDataToConfirmDel = (idUser: string, username: string) => {
+    const setDataToConfirmDel = (idCategori: string, name: string) => {
         setmodalConfirmDel({
-            url: `${API_URL}/user?id=${idUser}`,
-            message: `¿Estas seguro de eliminar el usuario "${username}"?`,
+            url: `${API_URL}/categorie?id=${idCategori}`,
+            message: `¿Estas seguro de eliminar la categoria "${name}"?`,
             open: true,
         });
     };
 
     useEffect(() => {
         if (!loaded.current) {
-            getUsers();
+            reloadCategories();
             loaded.current = true;
         } // eslint-disable-next-line
     }, []);
@@ -201,18 +171,18 @@ const Categories = () => {
             <CategoriesModalFormCreate
                 open={userModalForm}
                 openUserModalForm={setuserModalForm}
-                reloadPage={reloadUsers}
+                reloadPage={reloadCategories}
             />
             <SalesModalFormUpdate
                 open={userModalUpdate.open}
-                openUserModalForm={openUserModalFormUpdate}
-                reloadPage={reloadUsers}
-                userToEdit={userModalUpdate.userToEdit}
+                openCategoriesModalForm={openUserModalFormUpdate}
+                reloadPage={reloadCategories}
+                categoriesToEdit={userModalUpdate.categoriesToEdit}
             />
             <ConfirmDel
                 open={modalConfirmDel.open}
                 setOpen={setOpenConfirmDel}
-                reloadUsers={reloadUsers}
+                reloadPage={reloadCategories}
                 url={modalConfirmDel.url}
                 message={modalConfirmDel.message}
             />
@@ -225,7 +195,7 @@ const Categories = () => {
                         endIcon={<AddCircleIcon />}
                         onClick={() => setuserModalForm(true)}
                     >
-                        Crear Usuario
+                        Crear Categoria
                     </Button>
                 </div>
                 <div className="flex" style={{ height: 300 }}>

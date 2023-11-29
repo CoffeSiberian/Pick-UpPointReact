@@ -20,7 +20,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 interface ConfirmDelProps {
     open: boolean;
     setOpen: (open: boolean) => void;
-    reloadUsers: () => void;
+    reloadPage: () => void;
     url: string;
     message: string;
 }
@@ -28,7 +28,7 @@ interface ConfirmDelProps {
 const ConfirmDel: FC<ConfirmDelProps> = ({
     open,
     setOpen,
-    reloadUsers,
+    reloadPage,
     url,
     message,
 }) => {
@@ -53,7 +53,7 @@ const ConfirmDel: FC<ConfirmDelProps> = ({
         if (data) {
             if (data.status === 200) {
                 setOpen(false);
-                reloadUsers();
+                reloadPage();
             } else {
                 setError({
                     status: data.status,

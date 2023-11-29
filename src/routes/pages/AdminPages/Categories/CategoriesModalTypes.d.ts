@@ -6,37 +6,27 @@ interface CategoriesModalFormCreateProps {
 
 interface CategoriesModalFormUpdateProps {
     open: boolean;
-    openUserModalForm: (open: boolean) => void;
+    openCategoriesModalForm: (open: boolean) => void;
     reloadPage: () => void;
-    userToEdit: UserToEdit;
+    categoriesToEdit: CategoriesToEdit;
 }
 
 interface CategoriesModalFormUpdateState {
     open: boolean;
-    userToEdit: UserToEdit;
+    categoriesToEdit: CategoriesToEdit;
 }
 
 interface CategoriesToEdit {
     id: string;
-    rut: string;
     name: string;
-    email: string;
-    isAdmin: boolean;
 }
 
 interface CategoriesPayLoad {
     id?: string;
-    rut: string;
     name: string;
-    email: string;
-    password: string;
-    isAdmin?: boolean;
 }
 interface CategoriesError {
-    rut: boolean;
     name: boolean;
-    email: boolean;
-    password: boolean;
 }
 
 interface CategoriesData {
@@ -45,6 +35,6 @@ interface CategoriesData {
 }
 
 interface CategoriesFormsProps {
-    CategoriesForm: CategoriesData;
+    categoriesForm: CategoriesData;
     handleChangeText: (value: any, id: string) => void;
 }

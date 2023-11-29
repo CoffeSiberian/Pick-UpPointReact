@@ -212,7 +212,7 @@ const Users = () => {
             <ConfirmDel
                 open={modalConfirmDel.open}
                 setOpen={setOpenConfirmDel}
-                reloadUsers={reloadUsers}
+                reloadPage={reloadUsers}
                 url={modalConfirmDel.url}
                 message={modalConfirmDel.message}
             />

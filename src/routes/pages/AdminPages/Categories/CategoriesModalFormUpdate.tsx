@@ -19,26 +19,20 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import CloseIcon from "@mui/icons-material/Close";
 
 // schemas
-import {
-    userSchema,
-    userRutSchema,
-    userNameSchema,
-    userEmailSchema,
-    userPasswordSchema,
-} from "../../../../schemas/userSch";
+import { categoriesNameSchema } from "../../../../schemas/categoriesSch";
 
 // types
 import { StandarResponse } from "../../../../types/responses/StandarResponse";
 
-const CategoriesModalFormUpdate: FC<UserModalFormUpdateProps> = ({
+const CategoriesModalFormUpdate: FC<CategoriesModalFormUpdateProps> = ({
     open,
-    openUserModalForm,
+    openCategoriesModalForm,
     reloadPage,
-    userToEdit,
+    categoriesToEdit,
 }) => {
     const { UserInfo } = useUser();
     const { loading, response, succes, setSucces } = useFetch(
-        `${API_URL}/user`,
+        `${API_URL}/categorie/name`,
         "PUT"
     );
 
@@ -47,48 +41,29 @@ const CategoriesModalFormUpdate: FC<UserModalFormUpdateProps> = ({
         message: "",
         error: false,
     });
-    const [userForm, setuserForm] = useState<UserData>({
+    const [Form, setForm] = useState<CategoriesData>({
         payload: {
             id: "",
-            rut: "",
             name: "",
-            email: "",
-            password: "",
-            isAdmin: false,
         },
         error: {
-            rut: false,
             name: false,
-            email: false,
-            password: false,
         },
     });
 
     const validateForm = async (): Promise<boolean> => {
-        const RutValid = await userRutSchema.isValid({
-            rut: userForm.payload.rut,
-        });
-        const NameValid = await userNameSchema.isValid({
-            name: userForm.payload.name,
-        });
-        const EmailValid = await userEmailSchema.isValid({
-            email: userForm.payload.email,
-        });
-        const PasswordValid = await userPasswordSchema.isValid({
-            password: userForm.payload.password,
+        const NameValid = await categoriesNameSchema.isValid({
+            name: Form.payload.name,
         });
 
-        setuserForm({
-            ...userForm,
+        setForm({
+            ...Form,
             error: {
-                rut: !RutValid,
                 name: !NameValid,
-                email: !EmailValid,
-                password: !PasswordValid,
             },
         });
 
-        return await userSchema.isValid(userForm.payload);
+        return NameValid;
     };
 
     const sendData = async () => {
@@ -103,7 +78,7 @@ const CategoriesModalFormUpdate: FC<UserModalFormUpdateProps> = ({
                     Authorization: `Bearer ${UserInfo.token}`,
                 },
             },
-            JSON.stringify(userForm.payload)
+            JSON.stringify(Form.payload)
         );
 
         if (data === null) {
@@ -116,7 +91,7 @@ const CategoriesModalFormUpdate: FC<UserModalFormUpdateProps> = ({
         }
 
         if (data.status === 200) {
-            openUserModalForm(false);
+            openCategoriesModalForm(false);
             reloadPage();
         } else if (data.status === 400 || data.status === 401) {
             setError({
@@ -134,29 +109,25 @@ const CategoriesModalFormUpdate: FC<UserModalFormUpdateProps> = ({
     };
 
     const handleChangeText = (value: any, id: string) => {
-        setuserForm({
-            ...userForm,
+        setForm({
+            ...Form,
             payload: {
-                ...userForm.payload,
+                ...Form.payload,
                 [id]: value,
             },
         });
     };
 
     useEffect(() => {
-        if (userToEdit === null) return;
-        setuserForm({
-            ...userForm,
+        if (categoriesToEdit === null) return;
+        setForm({
+            ...Form,
             payload: {
-                id: userToEdit.id,
-                rut: userToEdit.rut,
-                name: userToEdit.name,
-                isAdmin: userToEdit.isAdmin,
-                email: userToEdit.email,
-                password: "",
+                id: categoriesToEdit.id,
+                name: categoriesToEdit.name,
             },
         }); // eslint-disable-next-line
-    }, [userToEdit]);
+    }, [categoriesToEdit]);
 
     return (
         <>
@@ -181,24 +152,24 @@ const CategoriesModalFormUpdate: FC<UserModalFormUpdateProps> = ({
             <Dialog
                 open={open}
                 keepMounted={false}
-                onClose={() => openUserModalForm(false)}
+                onClose={() => openCategoriesModalForm(false)}
                 aria-labelledby="child-modal-title"
                 aria-describedby="child-modal-description"
                 scroll="paper"
                 fullWidth
             >
                 <DialogTitle className="flex justify-between">
-                    Actualizar Producto
+                    Actualizar Categoria
                     <IconButton
                         aria-label="Cerrar ventana"
-                        onClick={() => openUserModalForm(false)}
+                        onClick={() => openCategoriesModalForm(false)}
                     >
                         <CloseIcon />
                     </IconButton>
                 </DialogTitle>
                 <DialogContent>
                     <CategoriesForms
-                        shopForm={userForm}
+                        categoriesForm={Form}
                         handleChangeText={handleChangeText}
                     />
                 </DialogContent>
@@ -218,7 +189,7 @@ const CategoriesModalFormUpdate: FC<UserModalFormUpdateProps> = ({
                         variant="contained"
                         endIcon={<CancelIcon />}
                         onClick={() => {
-                            openUserModalForm(false);
+                            openCategoriesModalForm(false);
                         }}
                     >
                         Cancelar
