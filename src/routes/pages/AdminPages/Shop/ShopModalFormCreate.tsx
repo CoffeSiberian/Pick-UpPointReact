@@ -30,9 +30,9 @@ import {
 // types
 import { StandarResponse } from "../../../../types/responses/StandarResponse";
 
-const ShopModalFormCreate: FC<UserModalFormCreateProps> = ({
+const ShopModalFormCreate: FC<ProductModalFormCreateProps> = ({
     open,
-    openUserModalForm,
+    openProductModalForm,
     reloadPage,
 }) => {
     const { UserInfo } = useUser();
@@ -113,7 +113,7 @@ const ShopModalFormCreate: FC<UserModalFormCreateProps> = ({
         }
 
         if (data.status === 200) {
-            openUserModalForm(false);
+            openProductModalForm(false);
             reloadPage();
         } else if (data.status === 400 || data.status === 401) {
             setError({
@@ -163,7 +163,7 @@ const ShopModalFormCreate: FC<UserModalFormCreateProps> = ({
             <Dialog
                 open={open}
                 keepMounted={false}
-                onClose={() => openUserModalForm(false)}
+                onClose={() => openProductModalForm(false)}
                 aria-labelledby="child-modal-title"
                 aria-describedby="child-modal-description"
                 scroll="paper"
@@ -173,14 +173,14 @@ const ShopModalFormCreate: FC<UserModalFormCreateProps> = ({
                     Agregar Usuario
                     <IconButton
                         aria-label="Cerrar ventana"
-                        onClick={() => openUserModalForm(false)}
+                        onClick={() => openProductModalForm(false)}
                     >
                         <CloseIcon />
                     </IconButton>
                 </DialogTitle>
                 <DialogContent>
                     <SalesForms
-                        shopForm={userForm}
+                        productForm={userForm}
                         handleChangeText={handleChangeText}
                     />
                 </DialogContent>
@@ -200,7 +200,7 @@ const ShopModalFormCreate: FC<UserModalFormCreateProps> = ({
                         variant="contained"
                         endIcon={<CancelIcon />}
                         onClick={() => {
-                            openUserModalForm(false);
+                            openProductModalForm(false);
                         }}
                     >
                         Cancelar

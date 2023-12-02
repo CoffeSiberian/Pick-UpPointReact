@@ -1,47 +1,66 @@
-import { FC } from "react";
+import { FC, useEffect, useState, useRef } from "react";
+import { API_URL, FK_STORE } from "../../../../helpers/configs";
+import useFetch from "../../../../hooks/useFetch";
+
 import TextField from "@mui/material/TextField";
-import Checkbox from "@mui/material/Checkbox";
 import InputAdornment from "@mui/material/InputAdornment";
-import FormControlLabel from "@mui/material/FormControlLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 // icons
-import NumbersIcon from "@mui/icons-material/Numbers";
 import AbcIcon from "@mui/icons-material/Abc";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import KeyIcon from "@mui/icons-material/Key";
 
-const ShopForms: FC<ShopFormsProps> = ({ shopForm, handleChangeText }) => {
+// types
+import { CategoriesListResponse } from "../../../../types/responses/CategorieList";
+import { Categories } from "../../../../types/model";
+
+const ShopForms: FC<ProductFormsProps> = ({
+    productForm,
+    handleChangeText,
+}) => {
+    const loaded = useRef(false);
+
+    const { loading, response, succes, setSucces } = useFetch(
+        `${API_URL}/categories?store=${FK_STORE}`,
+        "GET"
+    );
+    const [Categories, setCategories] = useState<[Categories] | undefined>();
+
+    const getData = async () => {
+        const data: CategoriesListResponse | null = await response({
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (!data) return;
+        if (data.status === 200) {
+            setCategories(data.data);
+        }
+    };
+
+    useEffect(() => {
+        if (!loaded.current) {
+            loaded.current = true;
+            getData();
+            setSucces(false);
+        }
+    }, []);
+
     return (
         <div className="flex flex-col gap-4 mt-2">
             <TextField
                 fullWidth
-                id="rut-user-add"
                 autoComplete="off"
-                color="info"
-                label="RUT"
-                type="text"
-                helperText={shopForm.error.rut && "Rut invalido"}
-                error={shopForm.error.rut}
-                value={shopForm.payload.rut}
-                onChange={(e) => handleChangeText(e.target.value, "rut")}
-                InputProps={{
-                    startAdornment: (
-                        <InputAdornment position="start">
-                            <NumbersIcon />
-                        </InputAdornment>
-                    ),
-                }}
-            />
-            <TextField
-                fullWidth
-                autoComplete="off"
-                id="name-user-add"
+                id="name-product-add"
                 color="info"
                 label="Nombre"
                 type="text"
-                helperText={shopForm.error.name && "Nombre invalido"}
-                error={shopForm.error.name}
-                value={shopForm.payload.name}
+                helperText={productForm.error.name && "Nombre invalido"}
+                error={productForm.error.name}
+                value={productForm.payload.name}
                 onChange={(e) => handleChangeText(e.target.value, "name")}
                 InputProps={{
                     startAdornment: (
@@ -54,14 +73,18 @@ const ShopForms: FC<ShopFormsProps> = ({ shopForm, handleChangeText }) => {
             <TextField
                 fullWidth
                 autoComplete="off"
-                id="email-user-add"
+                id="description-product-add"
                 color="info"
-                label="Email"
+                label="Descripcion"
                 type="text"
-                helperText={shopForm.error.email && "Email invalido"}
-                error={shopForm.error.email}
-                value={shopForm.payload.email}
-                onChange={(e) => handleChangeText(e.target.value, "email")}
+                helperText={
+                    productForm.error.description && "Ingresa una descripcion"
+                }
+                error={productForm.error.description}
+                value={productForm.payload.description}
+                onChange={(e) =>
+                    handleChangeText(e.target.value, "description")
+                }
                 InputProps={{
                     startAdornment: (
                         <InputAdornment position="start">
@@ -70,32 +93,19 @@ const ShopForms: FC<ShopFormsProps> = ({ shopForm, handleChangeText }) => {
                     ),
                 }}
             />
-            {shopForm.payload.isAdmin !== undefined && (
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            color="info"
-                            checked={shopForm.payload.isAdmin}
-                            onChange={(e) =>
-                                handleChangeText(e.target.checked, "isAdmin")
-                            }
-                            inputProps={{ "aria-label": "Es Administrador" }}
-                        />
-                    }
-                    label="Es administrador"
-                />
-            )}
             <TextField
                 fullWidth
                 id="password-user-add"
                 autoComplete="off"
                 color="info"
-                label="Contraseña"
-                type="password"
-                helperText={shopForm.error.password && "Minimo de 5 caracteres"}
-                error={shopForm.error.password}
-                value={shopForm.payload.password}
-                onChange={(e) => handleChangeText(e.target.value, "password")}
+                label="Precio"
+                type="number"
+                helperText={
+                    productForm.error.price && "Ingresa un precio valido"
+                }
+                error={productForm.error.price}
+                value={productForm.payload.price}
+                onChange={(e) => handleChangeText(e.target.value, "price")}
                 InputProps={{
                     startAdornment: (
                         <InputAdornment position="start">
@@ -104,6 +114,33 @@ const ShopForms: FC<ShopFormsProps> = ({ shopForm, handleChangeText }) => {
                     ),
                 }}
             />
+            <Select
+                id="category-product-add"
+                fullWidth
+                autoComplete="off"
+                color="info"
+                label="Categoria"
+                error={productForm.error.fk_category}
+                value={productForm.payload.fk_category}
+                disabled={loading || !Categories}
+                onChange={(e) =>
+                    handleChangeText(e.target.value, "fk_category")
+                }
+            >
+                {Categories ? (
+                    Categories.map((category) => (
+                        <MenuItem
+                            key={category.id}
+                            value={category.id}
+                            className="capitalize"
+                        >
+                            {category.name}
+                        </MenuItem>
+                    ))
+                ) : (
+                    <MenuItem value={0}>Sin Categorias</MenuItem>
+                )}
+            </Select>
         </div>
     );
 };

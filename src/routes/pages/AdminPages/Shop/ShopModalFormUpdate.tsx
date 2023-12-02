@@ -30,11 +30,11 @@ import {
 // types
 import { StandarResponse } from "../../../../types/responses/StandarResponse";
 
-const ShopModalFormUpdate: FC<UserModalFormUpdateProps> = ({
+const ShopModalFormUpdate: FC<ProductModalFormUpdateProps> = ({
     open,
-    openUserModalForm,
+    openProductModalForm,
     reloadPage,
-    userToEdit,
+    productToEdit,
 }) => {
     const { UserInfo } = useUser();
     const { loading, response, succes, setSucces } = useFetch(
@@ -116,7 +116,7 @@ const ShopModalFormUpdate: FC<UserModalFormUpdateProps> = ({
         }
 
         if (data.status === 200) {
-            openUserModalForm(false);
+            openProductModalForm(false);
             reloadPage();
         } else if (data.status === 400 || data.status === 401) {
             setError({
@@ -144,19 +144,19 @@ const ShopModalFormUpdate: FC<UserModalFormUpdateProps> = ({
     };
 
     useEffect(() => {
-        if (userToEdit === null) return;
+        if (productToEdit === null) return;
         setuserForm({
             ...userForm,
             payload: {
-                id: userToEdit.id,
-                rut: userToEdit.rut,
-                name: userToEdit.name,
-                isAdmin: userToEdit.isAdmin,
-                email: userToEdit.email,
+                id: productToEdit.id,
+                rut: productToEdit.rut,
+                name: productToEdit.name,
+                isAdmin: productToEdit.isAdmin,
+                email: productToEdit.email,
                 password: "",
             },
         }); // eslint-disable-next-line
-    }, [userToEdit]);
+    }, [productToEdit]);
 
     return (
         <>
@@ -181,7 +181,7 @@ const ShopModalFormUpdate: FC<UserModalFormUpdateProps> = ({
             <Dialog
                 open={open}
                 keepMounted={false}
-                onClose={() => openUserModalForm(false)}
+                onClose={() => openProductModalForm(false)}
                 aria-labelledby="child-modal-title"
                 aria-describedby="child-modal-description"
                 scroll="paper"
@@ -191,14 +191,14 @@ const ShopModalFormUpdate: FC<UserModalFormUpdateProps> = ({
                     Actualizar Producto
                     <IconButton
                         aria-label="Cerrar ventana"
-                        onClick={() => openUserModalForm(false)}
+                        onClick={() => openProductModalForm(false)}
                     >
                         <CloseIcon />
                     </IconButton>
                 </DialogTitle>
                 <DialogContent>
                     <SalesForms
-                        shopForm={userForm}
+                        productForm={userForm}
                         handleChangeText={handleChangeText}
                     />
                 </DialogContent>
@@ -218,7 +218,7 @@ const ShopModalFormUpdate: FC<UserModalFormUpdateProps> = ({
                         variant="contained"
                         endIcon={<CancelIcon />}
                         onClick={() => {
-                            openUserModalForm(false);
+                            openProductModalForm(false);
                         }}
                     >
                         Cancelar

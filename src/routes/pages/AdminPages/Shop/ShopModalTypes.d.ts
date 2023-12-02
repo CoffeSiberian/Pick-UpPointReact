@@ -1,50 +1,50 @@
-interface ShopModalFormCreateProps {
+interface ProductModalFormCreateProps {
     open: boolean;
-    openUserModalForm: (open: boolean) => void;
+    openProductModalForm: (open: boolean) => void;
     reloadPage: () => void;
 }
 
-interface ShopModalFormUpdateProps {
+interface ProductModalFormUpdateProps {
     open: boolean;
-    openUserModalForm: (open: boolean) => void;
+    openProductModalForm: (open: boolean) => void;
     reloadPage: () => void;
-    userToEdit: UserToEdit;
+    productToEdit: ProductToEdit;
 }
 
-interface ShopModalFormUpdateState {
+interface ProductModalFormUpdateState {
     open: boolean;
-    userToEdit: UserToEdit;
+    productToEdit: ProductToEdit;
 }
 
-interface ShopToEdit {
+interface ProductToEdit {
     id: string;
-    rut: string;
     name: string;
-    email: string;
-    isAdmin: boolean;
+    description: string;
+    price: number;
+    fk_category: string;
 }
 
-interface ShopPayLoad {
+interface ProductPayLoad {
     id?: string;
-    rut: string;
     name: string;
-    email: string;
-    password: string;
-    isAdmin?: boolean;
+    description: string;
+    price: number;
+    fk_category: string;
 }
-interface UserError {
-    rut: boolean;
+
+interface ProductError {
     name: boolean;
-    email: boolean;
-    password: boolean;
+    description: boolean;
+    price: boolean;
+    fk_category: boolean;
 }
 
-interface ShopData {
-    payload: ShopPayLoad;
-    error: UserError;
+interface ProductData {
+    payload: ProductPayLoad;
+    error: ProductError;
 }
 
-interface ShopFormsProps {
-    shopForm: ShopData;
+interface ProductFormsProps {
+    productForm: ProductData;
     handleChangeText: (value: any, id: string) => void;
 }

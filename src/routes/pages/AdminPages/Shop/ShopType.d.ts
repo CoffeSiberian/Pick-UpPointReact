@@ -1,9 +1,9 @@
 import { GridColDef } from "@mui/x-data-grid";
-import { Users as UsersTypes } from "../../../../types/model";
+import { Products as ProductsTypes } from "../../../../types/model";
 
 interface Table {
     columns: GridColDef[];
-    rows: UsersTypes[];
+    rows: ProductsTypes[];
 }
 
 interface modalConfirm {

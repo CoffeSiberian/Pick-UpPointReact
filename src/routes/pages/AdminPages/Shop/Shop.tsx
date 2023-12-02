@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import IconButton from "@mui/material/IconButton";
-import { API_URL } from "../../../../helpers/configs";
+import { API_URL, FK_STORE } from "../../../../helpers/configs";
 import useFetch from "../../../../hooks/useFetch";
-import { useUser } from "../../../../hooks/UserContex";
 import {
     DataGrid,
     GridColumnVisibilityModel,
@@ -14,7 +13,7 @@ import SalesModalFormUpdate from "./ShopModalFormUpdate";
 import ConfirmDel from "../../../../components/ConfirmDel";
 
 // types
-import { UserListResponse } from "../../../../types/responses/UserList";
+import { ProductsListResponse } from "../../../../types/responses/ProductsList";
 import { Table, modalConfirm } from "./ShopType";
 
 // icons
@@ -25,21 +24,20 @@ import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 
 const Shop = () => {
     const loaded = useRef(false);
-    const { UserInfo } = useUser();
 
-    const [userModalUpdate, setuserModalUpdate] =
-        useState<UserModalFormUpdateState>({
+    const [productModalUpdate, setproductModalUpdate] =
+        useState<ProductModalFormUpdateState>({
             open: false,
-            userToEdit: {
+            productToEdit: {
                 id: "",
-                rut: "",
                 name: "",
-                email: "",
-                isAdmin: false,
+                description: "",
+                price: 0,
+                fk_category: "",
             },
         });
 
-    const [userModalForm, setuserModalForm] = useState<boolean>(false);
+    const [ModalForm, setModalForm] = useState<boolean>(false);
     const [modalConfirmDel, setmodalConfirmDel] = useState<modalConfirm>({
         open: false,
         url: "",
@@ -48,7 +46,6 @@ const Shop = () => {
     const [dataToTable, setdataToTable] = useState<Table>({
         columns: [
             { field: "id", headerName: "ID", width: 70, editable: false },
-            { field: "rut", headerName: "RUT", width: 130, editable: false },
             {
                 field: "name",
                 headerName: "Nombre",
@@ -56,17 +53,33 @@ const Shop = () => {
                 editable: false,
             },
             {
-                field: "email",
-                headerName: "Email",
+                field: "description",
+                headerName: "Descripción",
                 width: 200,
                 editable: false,
             },
             {
-                field: "isAdmin",
-                type: "boolean",
-                headerName: "Admin",
+                field: "price",
+                type: "string",
+                headerName: "Precio",
                 width: 130,
                 editable: false,
+            },
+            {
+                field: "category",
+                type: "string",
+                headerName: "Categoría",
+                width: 130,
+                editable: false,
+                valueGetter: ({ value }) => value.name,
+            },
+            {
+                field: "stock",
+                type: "string",
+                headerName: "Stock",
+                width: 130,
+                editable: false,
+                valueGetter: ({ value }) => value.quantity,
             },
             {
                 field: "createdAt",
@@ -94,14 +107,15 @@ const Shop = () => {
                     <div className="flex gap-1">
                         <IconButton
                             onClick={() => {
-                                setuserModalUpdate({
+                                setproductModalUpdate({
                                     open: true,
-                                    userToEdit: {
+                                    productToEdit: {
                                         id: params.row.id,
-                                        rut: params.row.rut,
                                         name: params.row.name,
-                                        email: params.row.email,
-                                        isAdmin: params.row.isAdmin,
+                                        description: params.row.description,
+                                        price: params.row.price,
+                                        fk_category:
+                                            params.row.category.fk_category,
                                     },
                                 });
                             }}
@@ -124,14 +138,6 @@ const Shop = () => {
                         >
                             <DeleteForeverIcon />
                         </IconButton>
-                        <IconButton
-                            onClick={() => console.log(params.row.id)}
-                            size="small"
-                            aria-label="Historial"
-                            color="warning"
-                        >
-                            <MonetizationOnIcon />
-                        </IconButton>
                     </div>
                 ),
             },
@@ -139,7 +145,7 @@ const Shop = () => {
         rows: [],
     });
     const { response, loading } = useFetch(
-        `${API_URL}/user/list?limit_start=0&limit_end=5`,
+        `${API_URL}/products?store=${FK_STORE}&limit_start=0&limit_end=5`,
         "GET"
     );
 
@@ -150,13 +156,10 @@ const Shop = () => {
             status: false,
         });
 
-    const getUsers = async () => {
-        if (!UserInfo) return;
-
-        const data: UserListResponse | null = await response({
+    const getData = async () => {
+        const data: ProductsListResponse | null = await response({
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${UserInfo.token}`,
             },
         });
 
@@ -169,12 +172,12 @@ const Shop = () => {
         }
     };
 
-    const reloadUsers = () => {
-        getUsers();
+    const reloadData = () => {
+        getData();
     };
 
-    const openUserModalFormUpdate = (open: boolean) => {
-        setuserModalUpdate({ ...userModalUpdate, open });
+    const openModalFormUpdate = (open: boolean) => {
+        setproductModalUpdate({ ...productModalUpdate, open });
     };
 
     const setOpenConfirmDel = (close: boolean) => {
@@ -191,7 +194,7 @@ const Shop = () => {
 
     useEffect(() => {
         if (!loaded.current) {
-            getUsers();
+            getData();
             loaded.current = true;
         } // eslint-disable-next-line
     }, []);
@@ -199,20 +202,20 @@ const Shop = () => {
     return (
         <>
             <SalesModalFormCrate
-                open={userModalForm}
-                openUserModalForm={setuserModalForm}
-                reloadPage={reloadUsers}
+                open={ModalForm}
+                openProductModalForm={setModalForm}
+                reloadPage={reloadData}
             />
             <SalesModalFormUpdate
-                open={userModalUpdate.open}
-                openUserModalForm={openUserModalFormUpdate}
-                reloadPage={reloadUsers}
-                userToEdit={userModalUpdate.userToEdit}
+                open={productModalUpdate.open}
+                openProductModalForm={openModalFormUpdate}
+                reloadPage={reloadData}
+                productToEdit={productModalUpdate.productToEdit}
             />
             <ConfirmDel
                 open={modalConfirmDel.open}
                 setOpen={setOpenConfirmDel}
-                reloadPage={reloadUsers}
+                reloadPage={reloadData}
                 url={modalConfirmDel.url}
                 message={modalConfirmDel.message}
             />
@@ -223,9 +226,9 @@ const Shop = () => {
                         size="small"
                         variant="contained"
                         endIcon={<AddCircleIcon />}
-                        onClick={() => setuserModalForm(true)}
+                        onClick={() => setModalForm(true)}
                     >
-                        Crear Usuario
+                        Crear Producto
                     </Button>
                 </div>
                 <div className="flex" style={{ height: 300 }}>
