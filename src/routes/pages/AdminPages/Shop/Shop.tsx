@@ -20,7 +20,6 @@ import { Table, modalConfirm } from "./ShopType";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 
 const Shop = () => {
     const loaded = useRef(false);
@@ -114,8 +113,7 @@ const Shop = () => {
                                         name: params.row.name,
                                         description: params.row.description,
                                         price: params.row.price,
-                                        fk_category:
-                                            params.row.category.fk_category,
+                                        fk_category: params.row.fk_category,
                                     },
                                 });
                             }}
@@ -184,10 +182,10 @@ const Shop = () => {
         setmodalConfirmDel({ ...modalConfirmDel, open: close });
     };
 
-    const setDataToConfirmDel = (idUser: string, username: string) => {
+    const setDataToConfirmDel = (id: string, name: string) => {
         setmodalConfirmDel({
-            url: `${API_URL}/user?id=${idUser}`,
-            message: `¿Estas seguro de eliminar el usuario "${username}"?`,
+            url: `${API_URL}/product?id=${id}`,
+            message: `¿Está seguro que desea eliminar el producto "${name}`,
             open: true,
         });
     };

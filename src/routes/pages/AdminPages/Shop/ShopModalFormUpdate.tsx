@@ -20,12 +20,12 @@ import CloseIcon from "@mui/icons-material/Close";
 
 // schemas
 import {
-    userSchema,
-    userRutSchema,
-    userNameSchema,
-    userEmailSchema,
-    userPasswordSchema,
-} from "../../../../schemas/userSch";
+    productSchema,
+    productSchemaName,
+    productSchemaDescription,
+    productSchemaPrice,
+    productSchemaCategory,
+} from "../../../../schemas/shopSch";
 
 // types
 import { StandarResponse } from "../../../../types/responses/StandarResponse";
@@ -38,7 +38,7 @@ const ShopModalFormUpdate: FC<ProductModalFormUpdateProps> = ({
 }) => {
     const { UserInfo } = useUser();
     const { loading, response, succes, setSucces } = useFetch(
-        `${API_URL}/user`,
+        `${API_URL}/product`,
         "PUT"
     );
 
@@ -47,48 +47,47 @@ const ShopModalFormUpdate: FC<ProductModalFormUpdateProps> = ({
         message: "",
         error: false,
     });
-    const [userForm, setuserForm] = useState<UserData>({
+    const [Form, setForm] = useState<ProductData>({
         payload: {
             id: "",
-            rut: "",
             name: "",
-            email: "",
-            password: "",
-            isAdmin: false,
+            description: "",
+            price: 0,
+            fk_category: "",
         },
         error: {
-            rut: false,
             name: false,
-            email: false,
-            password: false,
+            description: false,
+            price: false,
+            fk_category: false,
         },
     });
 
     const validateForm = async (): Promise<boolean> => {
-        const RutValid = await userRutSchema.isValid({
-            rut: userForm.payload.rut,
+        const NameValid = await productSchemaName.isValid({
+            name: Form.payload.name,
         });
-        const NameValid = await userNameSchema.isValid({
-            name: userForm.payload.name,
+        const DescriptionValid = await productSchemaDescription.isValid({
+            description: Form.payload.description,
         });
-        const EmailValid = await userEmailSchema.isValid({
-            email: userForm.payload.email,
+        const PriceValid = await productSchemaPrice.isValid({
+            price: Form.payload.price,
         });
-        const PasswordValid = await userPasswordSchema.isValid({
-            password: userForm.payload.password,
+        const CategoryValid = await productSchemaCategory.isValid({
+            fk_category: Form.payload.fk_category,
         });
 
-        setuserForm({
-            ...userForm,
+        setForm({
+            ...Form,
             error: {
-                rut: !RutValid,
                 name: !NameValid,
-                email: !EmailValid,
-                password: !PasswordValid,
+                description: !DescriptionValid,
+                price: !PriceValid,
+                fk_category: !CategoryValid,
             },
         });
 
-        return await userSchema.isValid(userForm.payload);
+        return await productSchema.isValid(Form.payload);
     };
 
     const sendData = async () => {
@@ -103,7 +102,7 @@ const ShopModalFormUpdate: FC<ProductModalFormUpdateProps> = ({
                     Authorization: `Bearer ${UserInfo.token}`,
                 },
             },
-            JSON.stringify(userForm.payload)
+            JSON.stringify(Form.payload)
         );
 
         if (data === null) {
@@ -134,10 +133,10 @@ const ShopModalFormUpdate: FC<ProductModalFormUpdateProps> = ({
     };
 
     const handleChangeText = (value: any, id: string) => {
-        setuserForm({
-            ...userForm,
+        setForm({
+            ...Form,
             payload: {
-                ...userForm.payload,
+                ...Form.payload,
                 [id]: value,
             },
         });
@@ -145,15 +144,14 @@ const ShopModalFormUpdate: FC<ProductModalFormUpdateProps> = ({
 
     useEffect(() => {
         if (productToEdit === null) return;
-        setuserForm({
-            ...userForm,
+        setForm({
+            ...Form,
             payload: {
                 id: productToEdit.id,
-                rut: productToEdit.rut,
                 name: productToEdit.name,
-                isAdmin: productToEdit.isAdmin,
-                email: productToEdit.email,
-                password: "",
+                description: productToEdit.description,
+                price: productToEdit.price,
+                fk_category: productToEdit.fk_category,
             },
         }); // eslint-disable-next-line
     }, [productToEdit]);
@@ -198,7 +196,7 @@ const ShopModalFormUpdate: FC<ProductModalFormUpdateProps> = ({
                 </DialogTitle>
                 <DialogContent>
                     <SalesForms
-                        productForm={userForm}
+                        productForm={Form}
                         handleChangeText={handleChangeText}
                     />
                 </DialogContent>

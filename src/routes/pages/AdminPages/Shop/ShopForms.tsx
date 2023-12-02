@@ -72,6 +72,7 @@ const ShopForms: FC<ProductFormsProps> = ({
             />
             <TextField
                 fullWidth
+                multiline
                 autoComplete="off"
                 id="description-product-add"
                 color="info"
@@ -130,7 +131,7 @@ const ShopForms: FC<ProductFormsProps> = ({
                 {Categories ? (
                     Categories.map((category) => (
                         <MenuItem
-                            key={category.id}
+                            key={`Categorie-${category.id}`}
                             value={category.id}
                             className="capitalize"
                         >
