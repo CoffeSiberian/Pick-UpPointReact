@@ -20,12 +20,12 @@ import CloseIcon from "@mui/icons-material/Close";
 
 // schemas
 import {
-    userSchema,
-    userRutSchema,
-    userNameSchema,
-    userEmailSchema,
-    userPasswordSchema,
-} from "../../../../schemas/userSch";
+    productSchema,
+    productSchemaName,
+    productSchemaDescription,
+    productSchemaPrice,
+    productSchemaCategory,
+} from "../../../../schemas/shopSch";
 
 // types
 import { StandarResponse } from "../../../../types/responses/StandarResponse";
@@ -37,7 +37,7 @@ const ShopModalFormCreate: FC<ProductModalFormCreateProps> = ({
 }) => {
     const { UserInfo } = useUser();
     const { loading, response, succes, setSucces } = useFetch(
-        `${API_URL}/user`,
+        `${API_URL}/product`,
         "POST"
     );
 
@@ -46,46 +46,47 @@ const ShopModalFormCreate: FC<ProductModalFormCreateProps> = ({
         message: "",
         error: false,
     });
-    const [userForm, setuserForm] = useState<UserData>({
+    const [Form, setForm] = useState<ProductData>({
         payload: {
-            rut: "",
+            id: "",
             name: "",
-            email: "",
-            password: "",
+            description: "",
+            price: 0,
+            fk_category: "",
         },
         error: {
-            rut: false,
             name: false,
-            email: false,
-            password: false,
+            description: false,
+            price: false,
+            fk_category: false,
         },
     });
 
     const validateForm = async (): Promise<boolean> => {
-        const RutValid = await userRutSchema.isValid({
-            rut: userForm.payload.rut,
+        const NameValid = await productSchemaName.isValid({
+            name: Form.payload.name,
         });
-        const NameValid = await userNameSchema.isValid({
-            name: userForm.payload.name,
+        const DescriptionValid = await productSchemaDescription.isValid({
+            description: Form.payload.description,
         });
-        const EmailValid = await userEmailSchema.isValid({
-            email: userForm.payload.email,
+        const PriceValid = await productSchemaPrice.isValid({
+            price: Form.payload.price,
         });
-        const PasswordValid = await userPasswordSchema.isValid({
-            password: userForm.payload.password,
+        const CategoryValid = await productSchemaCategory.isValid({
+            fk_category: Form.payload.fk_category,
         });
 
-        setuserForm({
-            ...userForm,
+        setForm({
+            ...Form,
             error: {
-                rut: !RutValid,
                 name: !NameValid,
-                email: !EmailValid,
-                password: !PasswordValid,
+                description: !DescriptionValid,
+                price: !PriceValid,
+                fk_category: !CategoryValid,
             },
         });
 
-        return await userSchema.isValid(userForm.payload);
+        return await productSchema.isValid(Form.payload);
     };
 
     const sendData = async () => {
@@ -100,7 +101,7 @@ const ShopModalFormCreate: FC<ProductModalFormCreateProps> = ({
                     Authorization: `Bearer ${UserInfo.token}`,
                 },
             },
-            JSON.stringify(userForm.payload)
+            JSON.stringify(Form.payload)
         );
 
         if (data === null) {
@@ -131,10 +132,10 @@ const ShopModalFormCreate: FC<ProductModalFormCreateProps> = ({
     };
 
     const handleChangeText = (value: any, id: string) => {
-        setuserForm({
-            ...userForm,
+        setForm({
+            ...Form,
             payload: {
-                ...userForm.payload,
+                ...Form.payload,
                 [id]: value,
             },
         });
@@ -151,7 +152,7 @@ const ShopModalFormCreate: FC<ProductModalFormCreateProps> = ({
             />
             <SnakeBarInfo
                 open={succes}
-                message="Usuario creado con exito"
+                message="Usuario actualizado con exito"
                 severity="success"
                 handleClose={() => setSucces(false)}
             />
@@ -170,7 +171,7 @@ const ShopModalFormCreate: FC<ProductModalFormCreateProps> = ({
                 fullWidth
             >
                 <DialogTitle className="flex justify-between">
-                    Agregar Usuario
+                    Crear Producto
                     <IconButton
                         aria-label="Cerrar ventana"
                         onClick={() => openProductModalForm(false)}
@@ -180,7 +181,7 @@ const ShopModalFormCreate: FC<ProductModalFormCreateProps> = ({
                 </DialogTitle>
                 <DialogContent>
                     <SalesForms
-                        productForm={userForm}
+                        productForm={Form}
                         handleChangeText={handleChangeText}
                     />
                 </DialogContent>

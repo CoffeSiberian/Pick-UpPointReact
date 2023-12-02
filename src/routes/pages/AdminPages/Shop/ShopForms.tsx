@@ -9,8 +9,8 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 // icons
 import AbcIcon from "@mui/icons-material/Abc";
-import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
-import KeyIcon from "@mui/icons-material/Key";
+import DescriptionIcon from "@mui/icons-material/Description";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 
 // types
 import { CategoriesListResponse } from "../../../../types/responses/CategorieList";
@@ -89,14 +89,14 @@ const ShopForms: FC<ProductFormsProps> = ({
                 InputProps={{
                     startAdornment: (
                         <InputAdornment position="start">
-                            <AlternateEmailIcon />
+                            <DescriptionIcon />
                         </InputAdornment>
                     ),
                 }}
             />
             <TextField
                 fullWidth
-                id="password-user-add"
+                id="price-product-add"
                 autoComplete="off"
                 color="info"
                 label="Precio"
@@ -110,7 +110,7 @@ const ShopForms: FC<ProductFormsProps> = ({
                 InputProps={{
                     startAdornment: (
                         <InputAdornment position="start">
-                            <KeyIcon />
+                            <AttachMoneyIcon />
                         </InputAdornment>
                     ),
                 }}
