@@ -140,7 +140,7 @@ const CategoriesModalFormUpdate: FC<CategoriesModalFormUpdateProps> = ({
             />
             <SnakeBarInfo
                 open={succes}
-                message="Usuario actualizado con exito"
+                message="Categoria actualizada con exito"
                 severity="success"
                 handleClose={() => setSucces(false)}
             />

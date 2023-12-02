@@ -127,7 +127,7 @@ const CategoriesModalFormCreate: FC<UserModalFormCreateProps> = ({
             />
             <SnakeBarInfo
                 open={succes}
-                message="Usuario creado con exito"
+                message="Categoria creada con exito"
                 severity="success"
                 handleClose={() => setSucces(false)}
             />

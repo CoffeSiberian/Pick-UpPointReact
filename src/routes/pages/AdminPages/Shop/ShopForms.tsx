@@ -5,10 +5,11 @@ import useFetch from "../../../../hooks/useFetch";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import MenuItem from "@mui/material/MenuItem";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Select from "@mui/material/Select";
 
 // icons
 import AbcIcon from "@mui/icons-material/Abc";
+import InventoryIcon from "@mui/icons-material/Inventory";
 import DescriptionIcon from "@mui/icons-material/Description";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 
@@ -22,7 +23,7 @@ const ShopForms: FC<ProductFormsProps> = ({
 }) => {
     const loaded = useRef(false);
 
-    const { loading, response, succes, setSucces } = useFetch(
+    const { loading, response, setSucces } = useFetch(
         `${API_URL}/categories?store=${FK_STORE}`,
         "GET"
     );
@@ -46,7 +47,7 @@ const ShopForms: FC<ProductFormsProps> = ({
             loaded.current = true;
             getData();
             setSucces(false);
-        }
+        } // eslint-disable-next-line
     }, []);
 
     return (
@@ -90,6 +91,27 @@ const ShopForms: FC<ProductFormsProps> = ({
                     startAdornment: (
                         <InputAdornment position="start">
                             <DescriptionIcon />
+                        </InputAdornment>
+                    ),
+                }}
+            />
+            <TextField
+                fullWidth
+                id="stock-product-add"
+                autoComplete="off"
+                color="info"
+                label="Stock"
+                type="number"
+                helperText={
+                    productForm.error.stock && "Ingresa un stock valido"
+                }
+                error={productForm.error.stock}
+                value={productForm.payload.stock}
+                onChange={(e) => handleChangeText(e.target.value, "stock")}
+                InputProps={{
+                    startAdornment: (
+                        <InputAdornment position="start">
+                            <InventoryIcon />
                         </InputAdornment>
                     ),
                 }}

@@ -20,6 +20,7 @@ interface ProductToEdit {
     id: string;
     name: string;
     description: string;
+    stock: number;
     price: number;
     fk_category: string;
 }
@@ -28,6 +29,7 @@ interface ProductPayLoad {
     id?: string;
     name: string;
     description: string;
+    stock: number;
     price: number;
     fk_category: string;
 }
@@ -35,6 +37,7 @@ interface ProductPayLoad {
 interface ProductError {
     name: boolean;
     description: boolean;
+    stock: boolean;
     price: boolean;
     fk_category: boolean;
 }

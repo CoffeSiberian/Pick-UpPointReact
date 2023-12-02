@@ -23,6 +23,7 @@ import {
     productSchema,
     productSchemaName,
     productSchemaDescription,
+    productSchemaStock,
     productSchemaPrice,
     productSchemaCategory,
 } from "../../../../schemas/shopSch";
@@ -52,12 +53,14 @@ const ShopModalFormUpdate: FC<ProductModalFormUpdateProps> = ({
             id: "",
             name: "",
             description: "",
+            stock: 0,
             price: 0,
             fk_category: "",
         },
         error: {
             name: false,
             description: false,
+            stock: false,
             price: false,
             fk_category: false,
         },
@@ -69,6 +72,9 @@ const ShopModalFormUpdate: FC<ProductModalFormUpdateProps> = ({
         });
         const DescriptionValid = await productSchemaDescription.isValid({
             description: Form.payload.description,
+        });
+        const StockValid = await productSchemaStock.isValid({
+            stock: Form.payload.stock,
         });
         const PriceValid = await productSchemaPrice.isValid({
             price: Form.payload.price,
@@ -82,6 +88,7 @@ const ShopModalFormUpdate: FC<ProductModalFormUpdateProps> = ({
             error: {
                 name: !NameValid,
                 description: !DescriptionValid,
+                stock: !StockValid,
                 price: !PriceValid,
                 fk_category: !CategoryValid,
             },
@@ -150,6 +157,7 @@ const ShopModalFormUpdate: FC<ProductModalFormUpdateProps> = ({
                 id: productToEdit.id,
                 name: productToEdit.name,
                 description: productToEdit.description,
+                stock: productToEdit.stock,
                 price: productToEdit.price,
                 fk_category: productToEdit.fk_category,
             },
@@ -167,7 +175,7 @@ const ShopModalFormUpdate: FC<ProductModalFormUpdateProps> = ({
             />
             <SnakeBarInfo
                 open={succes}
-                message="Usuario actualizado con exito"
+                message="Producto actualizado con exito"
                 severity="success"
                 handleClose={() => setSucces(false)}
             />

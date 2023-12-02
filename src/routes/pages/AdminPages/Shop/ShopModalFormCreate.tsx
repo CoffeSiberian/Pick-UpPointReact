@@ -23,6 +23,7 @@ import {
     productSchema,
     productSchemaName,
     productSchemaDescription,
+    productSchemaStock,
     productSchemaPrice,
     productSchemaCategory,
 } from "../../../../schemas/shopSch";
@@ -48,15 +49,16 @@ const ShopModalFormCreate: FC<ProductModalFormCreateProps> = ({
     });
     const [Form, setForm] = useState<ProductData>({
         payload: {
-            id: "",
             name: "",
             description: "",
+            stock: 0,
             price: 0,
             fk_category: "",
         },
         error: {
             name: false,
             description: false,
+            stock: false,
             price: false,
             fk_category: false,
         },
@@ -68,6 +70,9 @@ const ShopModalFormCreate: FC<ProductModalFormCreateProps> = ({
         });
         const DescriptionValid = await productSchemaDescription.isValid({
             description: Form.payload.description,
+        });
+        const StockValid = await productSchemaStock.isValid({
+            stock: Form.payload.stock,
         });
         const PriceValid = await productSchemaPrice.isValid({
             price: Form.payload.price,
@@ -81,6 +86,7 @@ const ShopModalFormCreate: FC<ProductModalFormCreateProps> = ({
             error: {
                 name: !NameValid,
                 description: !DescriptionValid,
+                stock: !StockValid,
                 price: !PriceValid,
                 fk_category: !CategoryValid,
             },
@@ -152,7 +158,7 @@ const ShopModalFormCreate: FC<ProductModalFormCreateProps> = ({
             />
             <SnakeBarInfo
                 open={succes}
-                message="Usuario actualizado con exito"
+                message="Producto creado con exito"
                 severity="success"
                 handleClose={() => setSucces(false)}
             />
