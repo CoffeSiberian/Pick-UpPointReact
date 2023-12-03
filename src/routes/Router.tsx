@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useUser } from "../hooks/UserContex";
 
 import Home from "./pages/Home";
+import Store from "./pages/Store";
 import Header from "../components/Header";
 import AdminDash from "./pages/AdminDash";
 import ErrorPage from "../components/ErrorPage";
@@ -22,6 +23,15 @@ const Router = () => {
                         <>
                             <Header />
                             <Home />
+                        </>
+                    }
+                />
+                <Route
+                    path="/store"
+                    element={
+                        <>
+                            <Header />
+                            <Store />
                         </>
                     }
                 />
