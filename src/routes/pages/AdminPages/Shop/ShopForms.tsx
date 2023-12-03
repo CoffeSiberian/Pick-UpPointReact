@@ -6,6 +6,8 @@ import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
 
 // icons
 import AbcIcon from "@mui/icons-material/Abc";
@@ -137,33 +139,38 @@ const ShopForms: FC<ProductFormsProps> = ({
                     ),
                 }}
             />
-            <Select
-                id="category-product-add"
-                fullWidth
-                autoComplete="off"
-                color="info"
-                label="Categoria"
-                error={productForm.error.fk_category}
-                value={productForm.payload.fk_category}
-                disabled={loading || !Categories}
-                onChange={(e) =>
-                    handleChangeText(e.target.value, "fk_category")
-                }
-            >
-                {Categories ? (
-                    Categories.map((category) => (
-                        <MenuItem
-                            key={`Categorie-${category.id}`}
-                            value={category.id}
-                            className="capitalize"
-                        >
-                            {category.name}
-                        </MenuItem>
-                    ))
-                ) : (
-                    <MenuItem value={0}>Sin Categorias</MenuItem>
-                )}
-            </Select>
+            <FormControl fullWidth>
+                <InputLabel color="info" id="category-product-add-label">
+                    Categoria
+                </InputLabel>
+                <Select
+                    id="category-product-add"
+                    fullWidth
+                    autoComplete="off"
+                    color="info"
+                    label="Categoria"
+                    error={productForm.error.fk_category}
+                    value={productForm.payload.fk_category}
+                    disabled={loading || !Categories}
+                    onChange={(e) =>
+                        handleChangeText(e.target.value, "fk_category")
+                    }
+                >
+                    {Categories ? (
+                        Categories.map((category) => (
+                            <MenuItem
+                                key={`Categorie-${category.id}`}
+                                value={category.id}
+                                className="capitalize"
+                            >
+                                {category.name}
+                            </MenuItem>
+                        ))
+                    ) : (
+                        <MenuItem value={0}>Sin Categorias</MenuItem>
+                    )}
+                </Select>
+            </FormControl>
         </div>
     );
 };
