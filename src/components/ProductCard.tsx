@@ -21,7 +21,7 @@ const ProductCard: FC<ProductCardProps> = ({
 
     return (
         <div
-            className={`flex flex-col ${themeTatailwind.secondary.main} rounded-lg border-2 border-transparent ${themeTatailwind.primary.border_color} shadow-2xl m-4 mb-12 p-4`}
+            className={`flex flex-col max-w-xs w-full ${themeTatailwind.secondary.main} rounded-lg border-2 border-transparent ${themeTatailwind.primary.border_color} shadow-2xl m-4 mb-12 p-4`}
         >
             <img
                 className="object-cover rounded-xl drop-shadow-lg"
@@ -72,11 +72,12 @@ const ProductCard: FC<ProductCardProps> = ({
                 <Button
                     variant="contained"
                     color="success"
+                    size="small"
                     endIcon={<ShoppingCartIcon />}
                 >
                     Añadir al carrito
                 </Button>
-                <Button variant="contained" endIcon={<InfoIcon />}>
+                <Button variant="contained" size="small" endIcon={<InfoIcon />}>
                     Ver detalles
                 </Button>
             </div>

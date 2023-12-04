@@ -13,6 +13,8 @@ import {
     ProductResponseObject,
 } from "../types/responses/ProductsList";
 
+import testimg from "../static/img/test.png";
+
 const ProductsList = () => {
     const loaded = useRef(false);
     const { response, loading, error } = useFetch(
@@ -44,7 +46,7 @@ const ProductsList = () => {
 
     const renderProducts = (): JSX.Element => {
         return (
-            <div className="flex flex-wrap justify-center items-center">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 grid-flow-row justify-items-center">
                 {products.map((product) => {
                     const description = product.description.substring(0, 100);
                     const descriptionExtra =
@@ -60,7 +62,7 @@ const ProductsList = () => {
                             category={product.category.name}
                             description={descriptionExtra}
                             price={product.price}
-                            img={"https://i.imgur.com/pbABSmI.png"}
+                            img={testimg}
                         />
                     );
                 })}
