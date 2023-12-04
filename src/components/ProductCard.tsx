@@ -1,4 +1,5 @@
 import { FC } from "react";
+import IconButton from "@mui/material/IconButton";
 import { Typography } from "@mui/material";
 import Link from "@mui/material/Link";
 import { useDarkMode } from "../hooks/DarkModeContex";
@@ -26,7 +27,7 @@ const ProductCard: FC<ProductCardProps> = ({
             <img
                 className="object-cover rounded-xl drop-shadow-lg"
                 src={img}
-                alt="Los Andes VTC logo"
+                alt="store"
             />
             <div className="flex flex-col pb-2">
                 <Link
@@ -38,22 +39,18 @@ const ProductCard: FC<ProductCardProps> = ({
                 </Link>
                 <Divider />
                 <Typography
-                    component={"div"}
-                    className="pt-2"
+                    className="flex pt-1"
                     color={themeTatailwind.primary.color}
                     variant="body1"
                 >
-                    <div className="flex">
-                        <Typography variant="body1">{description}</Typography>
-                    </div>
+                    {description}
                 </Typography>
                 <Typography
                     color={themeTatailwind.primary.color}
-                    component={"div"}
                     className="flex pb-2 pt-5"
-                    variant="h6"
+                    variant="body2"
                 >
-                    <Typography variant="body2">{category}</Typography>
+                    {category}
                 </Typography>
                 <Divider />
                 <Typography
@@ -68,18 +65,23 @@ const ProductCard: FC<ProductCardProps> = ({
                     })}
                 </Typography>
             </div>
-            <div className="grid content-end h-full gap-3">
-                <Button
-                    variant="contained"
-                    color="success"
-                    size="small"
-                    endIcon={<ShoppingCartIcon />}
-                >
-                    Añadir al carrito
-                </Button>
-                <Button variant="contained" size="small" endIcon={<InfoIcon />}>
-                    Ver detalles
-                </Button>
+            <div className="flex flex-col items-center justify-end h-full w-full">
+                <div className="flex justify-around w-full gap-3">
+                    <Button
+                        variant="contained"
+                        size="small"
+                        startIcon={<InfoIcon />}
+                    >
+                        Ver detalles
+                    </Button>
+                    <IconButton
+                        aria-label="add-card"
+                        color="success"
+                        size="small"
+                    >
+                        <ShoppingCartIcon />
+                    </IconButton>
+                </div>
             </div>
         </div>
     );
