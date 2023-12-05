@@ -24,7 +24,20 @@ export const ShopCartInfo = ({ children }: any) => {
             setShopCart([product]);
             return;
         }
-        const newShopCart = [...shopCart, product];
+        let ProductAndStock: ShopCartDataDefined = product;
+
+        const newShopCart = shopCart.filter((productCart) => {
+            if (productCart.id === product.id) {
+                ProductAndStock = {
+                    ...productCart,
+                    quantity: productCart.quantity + product.quantity,
+                };
+                return false;
+            }
+            return true;
+        });
+
+        newShopCart.push(ProductAndStock);
 
         setShopCart(newShopCart);
         setLocalShopCart({
