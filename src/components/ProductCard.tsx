@@ -29,7 +29,7 @@ const ProductCard: FC<ProductCardProps> = ({
                 src={img}
                 alt="store"
             />
-            <div className="flex flex-col pb-2">
+            <div className="flex flex-col h-full pb-2">
                 <Link
                     className="flex justify-center p-2"
                     color={themeTatailwind.primary.color}
@@ -39,7 +39,7 @@ const ProductCard: FC<ProductCardProps> = ({
                 </Link>
                 <Divider />
                 <Typography
-                    className="flex pt-1"
+                    className="flex h-full pt-1"
                     color={themeTatailwind.primary.color}
                     variant="body1"
                 >
@@ -65,7 +65,7 @@ const ProductCard: FC<ProductCardProps> = ({
                     })}
                 </Typography>
             </div>
-            <div className="flex flex-col items-center justify-end h-full w-full">
+            <div className="flex flex-col items-center justify-end w-full">
                 <div className="flex justify-around w-full gap-3">
                     <Button
                         variant="contained"
