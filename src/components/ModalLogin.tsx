@@ -174,8 +174,8 @@ const ModalLogin: FC<ModalLoginProps> = ({ open, openLogin, openRegister }) => {
             <Dialog
                 open={open}
                 onClose={() => openLogin(false)}
-                aria-labelledby="child-modal-title"
-                aria-describedby="child-modal-description"
+                aria-labelledby="Modal Login"
+                aria-describedby="Modal Login"
                 scroll="paper"
                 fullWidth
             >

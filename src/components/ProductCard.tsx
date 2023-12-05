@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { useShopCart } from "../hooks/ShopCartContex";
 import IconButton from "@mui/material/IconButton";
 import { Typography } from "@mui/material";
 import Link from "@mui/material/Link";
@@ -19,6 +20,16 @@ const ProductCard: FC<ProductCardProps> = ({
     price,
 }) => {
     const { themeTatailwind } = useDarkMode();
+    const { addProduct } = useShopCart();
+
+    const handleAddProduct = () => {
+        addProduct({
+            id,
+            name,
+            price,
+            quantity: 1,
+        });
+    };
 
     return (
         <div
@@ -78,6 +89,7 @@ const ProductCard: FC<ProductCardProps> = ({
                         aria-label="add-card"
                         color="success"
                         size="small"
+                        onClick={handleAddProduct}
                     >
                         <ShoppingCartIcon />
                     </IconButton>

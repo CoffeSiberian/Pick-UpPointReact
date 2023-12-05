@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App";
 import { DarkMode } from "./hooks/DarkModeContex";
 import { UserInfo } from "./hooks/UserContex";
+import { ShopCartInfo } from "./hooks/ShopCartContex";
 import reportWebVitals from "./reportWebVitals";
 
 import "@fontsource/roboto/300.css";
@@ -19,7 +20,9 @@ root.render(
     <React.StrictMode>
         <UserInfo>
             <DarkMode>
-                <App />
+                <ShopCartInfo>
+                    <App />
+                </ShopCartInfo>
             </DarkMode>
         </UserInfo>
     </React.StrictMode>
