@@ -10,6 +10,8 @@ import DialogTitle from "@mui/material/DialogTitle";
 // icons
 import CloseIcon from "@mui/icons-material/Close";
 import PaidIcon from "@mui/icons-material/Paid";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 interface ModalShopCartProps {
     open: boolean;
@@ -17,7 +19,7 @@ interface ModalShopCartProps {
 }
 
 const ModalShopCart: FC<ModalShopCartProps> = ({ open, setOpen }) => {
-    const { shopCart } = useShopCart();
+    const { shopCart, setShopCart } = useShopCart();
     const total = useRef<number>(0);
 
     const renderShopCart = (): JSX.Element => {
@@ -26,6 +28,7 @@ const ModalShopCart: FC<ModalShopCartProps> = ({ open, setOpen }) => {
 
         const render = shopCart.map((item) => {
             total.current += item.price * item.quantity;
+
             return (
                 <div className="flex flex-row" key={item.id}>
                     <div className="grid grid-cols-4 w-full">
@@ -36,7 +39,28 @@ const ModalShopCart: FC<ModalShopCartProps> = ({ open, setOpen }) => {
                                 currency: "CLP",
                             })}
                         </Typography>
-                        <Typography variant="body1">{item.quantity}</Typography>
+                        <Typography variant="body1">
+                            <IconButton
+                                aria-label="disminuir cantidad"
+                                size="small"
+                                onClick={() =>
+                                    changeQuantity(item.id, item.quantity - 1)
+                                }
+                            >
+                                <KeyboardArrowDownIcon />
+                            </IconButton>
+                            {item.quantity}
+
+                            <IconButton
+                                aria-label="aumentar cantidad"
+                                size="small"
+                                onClick={() =>
+                                    changeQuantity(item.id, item.quantity + 1)
+                                }
+                            >
+                                <KeyboardArrowUpIcon />
+                            </IconButton>
+                        </Typography>
                         <Typography variant="body1">
                             {(item.price * item.quantity).toLocaleString(
                                 "es-CL",
@@ -50,6 +74,17 @@ const ModalShopCart: FC<ModalShopCartProps> = ({ open, setOpen }) => {
                 </div>
             );
         });
+
+        const changeQuantity = (id: string, quantity: number) => {
+            const newShopCart = shopCart.map((item) => {
+                if (item.id === id) {
+                    item.quantity = quantity;
+                }
+                return item;
+            });
+
+            setShopCart(newShopCart);
+        };
 
         const totalString = total.current.toLocaleString("es-CL", {
             style: "currency",
