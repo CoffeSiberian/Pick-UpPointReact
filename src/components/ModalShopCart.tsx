@@ -9,6 +9,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 
 // icons
 import CloseIcon from "@mui/icons-material/Close";
+import DeleteIcon from "@mui/icons-material/Delete";
 import PaidIcon from "@mui/icons-material/Paid";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -19,7 +20,7 @@ interface ModalShopCartProps {
 }
 
 const ModalShopCart: FC<ModalShopCartProps> = ({ open, setOpen }) => {
-    const { shopCart, setShopCart } = useShopCart();
+    const { shopCart, setShopCart, delProduct } = useShopCart();
     const total = useRef<number>(0);
 
     const renderShopCart = (): JSX.Element => {
@@ -30,38 +31,52 @@ const ModalShopCart: FC<ModalShopCartProps> = ({ open, setOpen }) => {
             total.current += item.price * item.quantity;
 
             return (
-                <div className="flex flex-row" key={item.id}>
-                    <div className="grid grid-cols-4 w-full">
-                        <Typography variant="body1">{item.name}</Typography>
-                        <Typography variant="body1">
-                            {item.price.toLocaleString("es-CL", {
-                                style: "currency",
-                                currency: "CLP",
-                            })}
-                        </Typography>
-                        <Typography variant="body1">
-                            <IconButton
-                                aria-label="disminuir cantidad"
-                                size="small"
-                                onClick={() =>
-                                    changeQuantity(item.id, item.quantity - 1)
-                                }
-                            >
-                                <KeyboardArrowDownIcon />
-                            </IconButton>
-                            {item.quantity}
-
+                <div className="flex justify-center" key={item.id}>
+                    <div className="flex flex-col border-red-600 w-full md:w-2/4">
+                        <Typography
+                            variant="h6"
+                            className="flex justify-between"
+                        >
+                            {item.name}
                             <IconButton
                                 aria-label="aumentar cantidad"
                                 size="small"
-                                onClick={() =>
-                                    changeQuantity(item.id, item.quantity + 1)
-                                }
+                                onClick={() => delProduct(item.id)}
                             >
-                                <KeyboardArrowUpIcon />
+                                <DeleteIcon />
                             </IconButton>
                         </Typography>
-                        <Typography variant="body1">
+                        <Typography
+                            className="flex items-center justify-between"
+                            variant="body1"
+                        >
+                            <div>
+                                <IconButton
+                                    aria-label="disminuir cantidad"
+                                    size="small"
+                                    onClick={() =>
+                                        changeQuantity(
+                                            item.id,
+                                            item.quantity - 1
+                                        )
+                                    }
+                                >
+                                    <KeyboardArrowDownIcon />
+                                </IconButton>
+                                {item.quantity}
+                                <IconButton
+                                    aria-label="aumentar cantidad"
+                                    size="small"
+                                    onClick={() =>
+                                        changeQuantity(
+                                            item.id,
+                                            item.quantity + 1
+                                        )
+                                    }
+                                >
+                                    <KeyboardArrowUpIcon />
+                                </IconButton>
+                            </div>
                             {(item.price * item.quantity).toLocaleString(
                                 "es-CL",
                                 {
@@ -76,6 +91,9 @@ const ModalShopCart: FC<ModalShopCartProps> = ({ open, setOpen }) => {
         });
 
         const changeQuantity = (id: string, quantity: number) => {
+            if (quantity < 1) return;
+            if (quantity > 100) return;
+
             const newShopCart = shopCart.map((item) => {
                 if (item.id === id) {
                     item.quantity = quantity;
@@ -93,12 +111,6 @@ const ModalShopCart: FC<ModalShopCartProps> = ({ open, setOpen }) => {
 
         return (
             <div className="flex flex-col w-full">
-                <div className="grid grid-cols-4">
-                    <Typography variant="h6">Nombre</Typography>
-                    <Typography variant="h6">Precio</Typography>
-                    <Typography variant="h6">Cantidad</Typography>
-                    <Typography variant="h6">Total Producto</Typography>
-                </div>
                 {render}
                 <div className="flex flex-col gap-1 items-center mt-4">
                     <Typography variant="h6">Total: {totalString}</Typography>
