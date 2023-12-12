@@ -23,10 +23,14 @@ const ShopCart = () => {
         );
     };
 
+    const verifyShowShopCart: boolean = !(
+        shopCart === null || shopCart.length === 0
+    );
+
     return (
         <>
             <ModalShopCart open={open} setOpen={setOpen} />
-            {shopCart && renderShopCart()}
+            {verifyShowShopCart && renderShopCart()}
         </>
     );
 };

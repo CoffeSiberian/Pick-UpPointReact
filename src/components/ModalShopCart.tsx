@@ -1,4 +1,4 @@
-import { FC, useRef } from "react";
+import { FC, useEffect, useRef } from "react";
 import { useShopCart } from "../hooks/ShopCartContex";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -127,6 +127,14 @@ const ModalShopCart: FC<ModalShopCartProps> = ({ open, setOpen }) => {
             </div>
         );
     };
+
+    useEffect(() => {
+        if (shopCart === null) {
+            setOpen(false);
+        } else if (shopCart.length === 0) {
+            setOpen(false);
+        } // eslint-disable-next-line
+    }, [shopCart]);
 
     return (
         <Dialog
