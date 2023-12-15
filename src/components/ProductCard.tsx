@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { useNavigate } from "react-router-dom";
 import { useShopCart } from "../hooks/ShopCartContex";
 import IconButton from "@mui/material/IconButton";
 import { Typography } from "@mui/material";
@@ -21,6 +22,7 @@ const ProductCard: FC<ProductCardProps> = ({
 }) => {
     const { themeTatailwind } = useDarkMode();
     const { addProduct } = useShopCart();
+    const navigate = useNavigate();
 
     const handleAddProduct = () => {
         addProduct({
@@ -82,6 +84,7 @@ const ProductCard: FC<ProductCardProps> = ({
                         variant="contained"
                         size="small"
                         startIcon={<InfoIcon />}
+                        onClick={() => navigate(`/product/${id}`)}
                     >
                         Ver detalles
                     </Button>

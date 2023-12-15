@@ -3,6 +3,7 @@ import { useUser } from "../hooks/UserContex";
 
 import Home from "./pages/Home";
 import Store from "./pages/Store";
+import ViewProduct from "./pages/ViewProduct";
 import Header from "../components/Header";
 import AdminDash from "./pages/AdminDash";
 import ErrorPage from "../components/ErrorPage";
@@ -49,6 +50,15 @@ const Router = () => {
                                     footer="Si crees que esto es un error, contacta con el administrador"
                                 />
                             )}
+                        </>
+                    }
+                />
+                <Route
+                    path="/product/:newid"
+                    element={
+                        <>
+                            <Header />
+                            <ViewProduct />
                         </>
                     }
                 />
