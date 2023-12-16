@@ -16,10 +16,11 @@ import ShopCart from "../../components/ShopCart";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 import testImg from "../../static/img/test.png";
+import testImg2 from "../../static/img/test2.webp";
 
 const ViewProduct = () => {
     const { newid } = useParams();
-    const { shopCart, addProduct } = useShopCart();
+    const { addProduct } = useShopCart();
     const { themeTatailwind } = useDarkMode();
 
     const oldid = useRef(newid);
@@ -39,7 +40,7 @@ const ViewProduct = () => {
             name: "test",
             src: testImg,
         },
-        { id: 2, name: "test", src: testImg },
+        { id: 2, name: "test", src: testImg2 },
         { id: 3, name: "test", src: testImg },
     ];
 
@@ -77,9 +78,14 @@ const ViewProduct = () => {
 
         return (
             <div className="flex flex-row gap-3 overflow-hidden">
-                {testImgs.map((img) => (
+                {testImgs.map((img, index) => (
                     <div key={img.id} className="flex flex-col">
-                        <img src={img.src} alt={img.name} />
+                        <img
+                            onClick={() => setImageIndex(index)}
+                            style={{ cursor: "pointer" }}
+                            src={img.src}
+                            alt={img.name}
+                        />
                     </div>
                 ))}
             </div>
@@ -91,7 +97,7 @@ const ViewProduct = () => {
 
         return (
             <div className="flex flex-col">
-                <img src={testImgs[0].src} alt="test" />
+                <img src={testImgs[ImageIndex].src} alt="test" />
             </div>
         );
     };
