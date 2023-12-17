@@ -9,6 +9,7 @@ export const getTokenData = (): LocalJWTDefined | null => {
         const jwt_obj: LocalJWTUndefined = jwtDecode(token);
         const id = jwt_obj.id;
         const username = jwt_obj.username;
+        const email = jwt_obj.email;
         const isAdmin = jwt_obj.isAdmin;
         const fk_store = jwt_obj.fk_store;
         const iat = jwt_obj.iat;
@@ -20,7 +21,8 @@ export const getTokenData = (): LocalJWTDefined | null => {
             !fk_store ||
             !iat ||
             !exp ||
-            !username
+            !username ||
+            !email
         ) {
             throw new Error("Invalid token");
         }
@@ -29,6 +31,7 @@ export const getTokenData = (): LocalJWTDefined | null => {
             token,
             id,
             username,
+            email,
             isAdmin,
             fk_store,
             iat,
@@ -47,6 +50,7 @@ export const getTokenDataGiven = (token: string): LocalJWTDefined | null => {
         const jwt_obj: LocalJWTUndefined = jwtDecode(token);
         const id = jwt_obj.id;
         const username = jwt_obj.username;
+        const email = jwt_obj.email;
         const isAdmin = jwt_obj.isAdmin;
         const fk_store = jwt_obj.fk_store;
         const iat = jwt_obj.iat;
@@ -58,7 +62,8 @@ export const getTokenDataGiven = (token: string): LocalJWTDefined | null => {
             !fk_store ||
             !iat ||
             !exp ||
-            !username
+            !username ||
+            !email
         ) {
             throw new Error("Invalid token");
         }
@@ -67,6 +72,7 @@ export const getTokenDataGiven = (token: string): LocalJWTDefined | null => {
             token,
             id,
             username,
+            email,
             isAdmin,
             fk_store,
             iat,
