@@ -29,7 +29,7 @@ const ShopForms: FC<ProductFormsProps> = ({
         `${API_URL}/categories?store=${FK_STORE}`,
         "GET"
     );
-    const [Categories, setCategories] = useState<[Categories] | undefined>();
+    const [Categories, setCategories] = useState<Categories[] | undefined>();
 
     const getData = async () => {
         const data: CategoriesListResponse | null = await response({

@@ -6,7 +6,7 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import Summary from "./AdminPages/Summary";
 import Users from "./AdminPages/Users/Users";
-import Sales from "./AdminPages/Sales";
+import Sales from "./AdminPages/Sales/Sales";
 import Shop from "./AdminPages/Shop/Shop";
 import Categories from "./AdminPages/Categories/Categories";
 
