@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { FC, useState, useEffect, useRef } from "react";
 import {
     Html5Qrcode,
     CameraDevice,
@@ -10,8 +10,11 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Button from "@mui/material/Button";
 
-const QrReader = () => {
-    const [ScanResults, setScanResults] = useState<string | null>(null);
+interface QrReaderProps {
+    setScanResults: React.Dispatch<React.SetStateAction<string | null>>;
+}
+
+const QrReader: FC<QrReaderProps> = ({ setScanResults }) => {
     const [Permissions, setPermissions] = useState<boolean>(false);
     const [CameraId, setCameraId] = useState<string | null>(null);
     const [ListCameras, setListCameras] = useState<CameraDevice[]>();
@@ -91,26 +94,23 @@ const QrReader = () => {
             refCamera.current = new Html5Qrcode("QrReaderDiv");
         }
 
-        startCamera();
+        startCamera(); // eslint-disable-next-line
     }, [CameraId]);
 
     return (
-        <div className="flex justify-center">
-            <div className="flex flex-col justify-center items-center w-full">
-                <div
-                    className="mb-4 max-w-xl"
-                    id="QrReaderDiv"
-                    style={{ width: "100%" }}
-                ></div>
-                {ScanResults && <h1>{ScanResults}</h1>}
-                <div className="flex justify-center mb-3 w-full max-w-md">
-                    {Permissions === false && (
-                        <Button onClick={getCameras} variant="contained">
-                            Permitir Usar Camara
-                        </Button>
-                    )}
-                    {Permissions && listCameras()}
-                </div>
+        <div className="flex flex-col justify-center items-center w-full">
+            <div
+                className="mb-4 max-w-xl"
+                id="QrReaderDiv"
+                style={{ width: "100%" }}
+            ></div>
+            <div className="flex justify-center mb-3 w-full max-w-md">
+                {Permissions === false && (
+                    <Button onClick={getCameras} variant="contained">
+                        Permitir Usar Camara
+                    </Button>
+                )}
+                {Permissions && listCameras()}
             </div>
         </div>
     );
