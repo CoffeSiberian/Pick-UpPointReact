@@ -1,11 +1,17 @@
-import { FC, useEffect, useRef } from "react";
+import { FC, useState, useEffect, useRef } from "react";
 import { useShopCart } from "../hooks/ShopCartContex";
+import { API_URL } from "../helpers/configs";
+import { useUser } from "../hooks/UserContex";
+import useFetch from "../hooks/useFetch";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import ModalLoading from "./ModalLoading";
+import ModalError from "./ModalError";
+import SnakeBarInfo from "./SnakeBarInfo";
 
 // icons
 import CloseIcon from "@mui/icons-material/Close";
@@ -14,14 +20,76 @@ import PaidIcon from "@mui/icons-material/Paid";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
+// types
+import { PurchaseResponse } from "../types/responses/Purchase";
+
 interface ModalShopCartProps {
     open: boolean;
     setOpen: (open: boolean) => void;
 }
 
 const ModalShopCart: FC<ModalShopCartProps> = ({ open, setOpen }) => {
-    const { shopCart, setShopCart, delProduct } = useShopCart();
+    const { shopCart, setShopCart, delProduct, clearShopCart } = useShopCart();
+    const { UserInfo } = useUser();
+    const { loading, response } = useFetch(`${API_URL}/purchase`, "POST");
+
     const total = useRef<number>(0);
+
+    const [Error, setError] = useState<ResponseError>({
+        status: 200,
+        message: "",
+        error: false,
+    });
+
+    const sendData = async () => {
+        if (UserInfo === null) {
+            setError({
+                status: 401,
+                message: "Error, Inicia sesion para continuar",
+                error: true,
+            });
+            return;
+        }
+
+        if (shopCart === null) return;
+        if (shopCart.length === 0) return;
+
+        const purchaseItemsToSend = shopCart.map((item) => {
+            return { id: item.id, quantity: item.quantity };
+        });
+
+        const data: PurchaseResponse | null = await response(
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${UserInfo.token}`,
+                },
+            },
+            JSON.stringify({
+                products: purchaseItemsToSend,
+            })
+        );
+
+        if (data === null) {
+            setError({
+                status: 500,
+                message: "Error, Intenta mas tarde",
+                error: true,
+            });
+            return;
+        }
+        if (data.status !== 200) {
+            setError({
+                status: data.status,
+                message: "Error, Intenta mas tarde",
+                error: true,
+            });
+            return;
+        }
+
+        clearShopCart();
+        window.open(data.data.url_pay, "_blank");
+    };
 
     const renderShopCart = (): JSX.Element => {
         if (shopCart === null) return <></>;
@@ -119,6 +187,7 @@ const ModalShopCart: FC<ModalShopCartProps> = ({ open, setOpen }) => {
                             color="success"
                             variant="outlined"
                             startIcon={<PaidIcon />}
+                            onClick={sendData}
                         >
                             Pagar
                         </Button>
@@ -137,23 +206,37 @@ const ModalShopCart: FC<ModalShopCartProps> = ({ open, setOpen }) => {
     }, [shopCart]);
 
     return (
-        <Dialog
-            onClose={() => setOpen(false)}
-            open={open}
-            aria-describedby="loading-info"
-            fullWidth
-        >
-            <DialogTitle className="flex justify-between">
-                Tu carrito de compra
-                <IconButton
-                    aria-label="Cerrar ventana"
-                    onClick={() => setOpen(false)}
-                >
-                    <CloseIcon />
-                </IconButton>
-            </DialogTitle>
-            <DialogContent>{renderShopCart()}</DialogContent>
-        </Dialog>
+        <>
+            <ModalError
+                open={Error.error}
+                message={Error.message}
+                setError={() => setError({ ...Error, error: false })}
+            />
+            <ModalLoading open={loading} />
+            <SnakeBarInfo
+                open={Error.error}
+                message={Error.message}
+                severity="error"
+                handleClose={() => setError({ ...Error, error: false })}
+            />
+            <Dialog
+                onClose={() => setOpen(false)}
+                open={open}
+                aria-describedby="loading-info"
+                fullWidth
+            >
+                <DialogTitle className="flex justify-between">
+                    Tu carrito de compra
+                    <IconButton
+                        aria-label="Cerrar ventana"
+                        onClick={() => setOpen(false)}
+                    >
+                        <CloseIcon />
+                    </IconButton>
+                </DialogTitle>
+                <DialogContent>{renderShopCart()}</DialogContent>
+            </Dialog>
+        </>
     );
 };
 

@@ -58,8 +58,8 @@ export interface Purchases {
     id: string;
     total: number;
     date: Date;
-    status: string;
-    payment_method?: string | null;
+    status: number;
+    payment_method?: number | null;
     payment_id?: string | null;
     payment_successful: boolean;
     retired: boolean;

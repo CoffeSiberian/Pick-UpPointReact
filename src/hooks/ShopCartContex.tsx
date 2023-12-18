@@ -2,6 +2,7 @@ import { createContext, useState, useContext, useEffect } from "react";
 import {
     getShopCart,
     setShopCart as setLocalShopCart,
+    setShopCartClear,
 } from "../helpers/LocalShopCart";
 import { ShopCartContextTypes } from "../types/ContexTypes";
 import { ShopCartDataDefined } from "../types/LocalShopCart";
@@ -55,6 +56,11 @@ export const ShopCartInfo = ({ children }: any) => {
         });
     };
 
+    const clearShopCart = () => {
+        setShopCart(null);
+        setShopCartClear();
+    };
+
     const getLocalShopCart = async () => {
         const localShopCart = await getShopCart();
         if (localShopCart === null) return;
@@ -67,7 +73,13 @@ export const ShopCartInfo = ({ children }: any) => {
 
     return (
         <ShopCartContex.Provider
-            value={{ shopCart, setShopCart, addProduct, delProduct }}
+            value={{
+                shopCart,
+                setShopCart,
+                addProduct,
+                delProduct,
+                clearShopCart,
+            }}
         >
             {children}
         </ShopCartContex.Provider>

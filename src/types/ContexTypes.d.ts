@@ -31,5 +31,6 @@ export interface ShopCartContextTypes {
     shopCart: ShopCartDataDefined[] | null;
     addProduct: (data: ShopCartDataDefined) => void;
     delProduct: (id: string) => void;
+    clearShopCart: () => void;
     setShopCart: (data: ShopCartDataDefined[]) => void;
 }

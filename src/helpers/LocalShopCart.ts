@@ -27,3 +27,7 @@ export const getShopCart = async (): Promise<ShopCartDataDefined[] | null> => {
 export const setShopCart = (data: ShopCartDefined): void => {
     localStorage.setItem("shopcart", JSON.stringify(data));
 };
+
+export const setShopCartClear = (): void => {
+    localStorage.removeItem("shopcart");
+};
