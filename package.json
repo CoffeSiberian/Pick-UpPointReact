@@ -10,6 +10,7 @@
         "@mui/lab": "5.0.0-alpha.152",
         "@mui/material": "^5.14.17",
         "@mui/styled-engine-sc": "6.0.0-alpha.5",
+        "@mui/x-charts": "^6.18.3",
         "@mui/x-data-grid": "^6.18.1",
         "@testing-library/jest-dom": "^6.1.4",
         "@testing-library/react": "^14.0.0",
