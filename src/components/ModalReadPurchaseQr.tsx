@@ -1,7 +1,9 @@
 import { FC, useState, forwardRef } from "react";
+import { useDarkMode } from "../hooks/DarkModeContex";
 import { Button, Typography } from "@mui/material";
 import { API_URL } from "../helpers/configs";
 import { useUser } from "../hooks/UserContex";
+import { formatDate } from "../helpers/formatDate";
 import useFetch from "../hooks/useFetch";
 import AppBar from "@mui/material/AppBar";
 import Dialog from "@mui/material/Dialog";
@@ -15,6 +17,14 @@ import ModalError from "./ModalError";
 
 // icons
 import CloseIcon from "@mui/icons-material/Close";
+import CancelIcon from "@mui/icons-material/Cancel";
+import OfflinePinIcon from "@mui/icons-material/OfflinePin";
+import NumbersIcon from "@mui/icons-material/Numbers";
+import AssuredWorkloadIcon from "@mui/icons-material/AssuredWorkload";
+import ScheduleIcon from "@mui/icons-material/Schedule";
+import InventoryIcon from "@mui/icons-material/Inventory";
+import PaymentsIcon from "@mui/icons-material/Payments";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 // types
 import { TransitionProps } from "@mui/material/transitions";
@@ -42,6 +52,8 @@ const ModalReadPurchaseQr: FC<ModalReadPurchaseQrProps> = ({
     setOpen,
 }) => {
     const { UserInfo } = useUser();
+    const { themeTatailwind } = useDarkMode();
+    const status = ["Pendiente", "Pagado", "Rechazado", "Anulado"];
 
     const { loading, response, succes, setSucces } = useFetch(
         `${API_URL}/purchase/check`,
@@ -120,38 +132,80 @@ const ModalReadPurchaseQr: FC<ModalReadPurchaseQrProps> = ({
         if (!Response) return <></>;
 
         return (
-            <>
-                <Typography variant="h6" component="div">
-                    {Response.user.name}
-                </Typography>
-                <Typography variant="h6" component="div">
-                    {Response.total}
-                </Typography>
-                <Typography variant="h6" component="div">
-                    {Response.payment_id}
-                </Typography>
-                <Typography variant="h6" component="div">
-                    {Response.date}
-                </Typography>
-                <Typography variant="h6" component="div">
-                    {Response.payment_successful}
-                </Typography>
-                <Typography variant="h6" component="div">
-                    {Response.retired}
-                </Typography>
-                <Typography variant="h6" component="div">
-                    {Response.status}
-                </Typography>
-                <Button
-                    variant="contained"
-                    color="info"
-                    onClick={() => {
-                        setResponse(null);
-                    }}
-                >
-                    Volver
-                </Button>
-            </>
+            <div
+                className={`flex flex-col max-w-md w-full ${themeTatailwind.secondary.main} rounded-lg border-2 border-transparent ${themeTatailwind.primary.border_color} shadow-2xl m-4 mb-12 p-4`}
+            >
+                <div className="flex h-full pb-2">
+                    <Typography variant="h6">
+                        <div className="flex items-center justify-center">
+                            <AccountCircleIcon className="mr-1" />
+                            <div>{Response.user.name}</div>
+                        </div>
+                    </Typography>
+                </div>
+                <div className="flex flex-col h-full pb-2">
+                    <Typography
+                        component={"div"}
+                        className="pt-2"
+                        color={themeTatailwind.primary.color}
+                        variant="body1"
+                    >
+                        <div className="flex">
+                            <NumbersIcon className="mr-1" />
+                            <div>
+                                <b className="mr-2">Total:</b>
+                                {Response.total.toLocaleString("es-CL", {
+                                    style: "currency",
+                                    currency: "CLP",
+                                })}
+                            </div>
+                        </div>
+                        <div className="flex">
+                            <AssuredWorkloadIcon className="mr-1" />
+                            <div>
+                                <b className="mr-2">ID FLOW:</b>
+                                {Response.payment_id}
+                            </div>
+                        </div>
+                        <div className="flex">
+                            <ScheduleIcon className="mr-1" />
+                            <div>
+                                <b className="mr-2">Fecha:</b>
+                                {formatDate(Response.date)}
+                            </div>
+                        </div>
+                        <div className="flex">
+                            <InventoryIcon className="mr-1" />
+                            <div>
+                                <b className="mr-2">Retirado:</b>
+                                {Response.retired ? (
+                                    <OfflinePinIcon />
+                                ) : (
+                                    <CancelIcon />
+                                )}
+                            </div>
+                        </div>
+                        <div className="flex">
+                            <PaymentsIcon className="mr-1" />
+                            <div>
+                                <b className="mr-2">Pago:</b>
+                                {status[Response.status - 1]}
+                            </div>
+                        </div>
+                    </Typography>
+                </div>
+                <div className="flex flex-col items-center justify-end w-full">
+                    <Button
+                        variant="contained"
+                        color="info"
+                        onClick={() => {
+                            setResponse(null);
+                        }}
+                    >
+                        Volver
+                    </Button>
+                </div>
+            </div>
         );
     };
 
