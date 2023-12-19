@@ -34,6 +34,23 @@ const RenderQrCode = () => {
         img.src = `data:image/svg+xml;base64,${btoa(svgData)}`;
     };
 
+    const renderQr = (): JSX.Element => {
+        if (!id) return <></>;
+
+        return (
+            <>
+                <QRCode id="QRCode" value={id} />
+                <Button
+                    variant="contained"
+                    onClick={onImageCownload}
+                    color="success"
+                >
+                    Descargar QR
+                </Button>
+            </>
+        );
+    };
+
     return (
         <div className="flex justify-center">
             <div className="flex flex-col items-center p-2 gap-3 max-w-md">
@@ -51,17 +68,7 @@ const RenderQrCode = () => {
                     </span>
                     para poder retirar tu producto de manera presencial.
                 </Typography>
-                <QRCode
-                    id="QRCode"
-                    value="06e88765-e473-401d-825b-39f8ca4e9078"
-                />
-                <Button
-                    variant="contained"
-                    onClick={onImageCownload}
-                    color="success"
-                >
-                    Descargar QR
-                </Button>
+                {id ? renderQr() : <Typography>Id no encontrado</Typography>}
             </div>
         </div>
     );
