@@ -32,6 +32,7 @@ import {
     PurchaseResponseQr,
     PurchaseListResponseObject,
 } from "../types/responses/PurchaseList";
+import { StandarResponse } from "../types/responses/StandarResponse";
 
 interface ModalReadPurchaseQrProps {
     open: boolean;
@@ -60,10 +61,18 @@ const ModalReadPurchaseQr: FC<ModalReadPurchaseQrProps> = ({
         "POST"
     );
 
+    const {
+        loading: loading2,
+        response: response2,
+        succes: succes2,
+        setSucces: setSucces2,
+    } = useFetch(`${API_URL}/purchase/retired`, "PUT");
+
     const [QrValue, setQrValue] = useState<string | null>(null);
     const [Response, setResponse] = useState<PurchaseListResponseObject | null>(
         null
     );
+
     const [Error, setError] = useState<ResponseError>({
         status: 200,
         message: "",
@@ -96,6 +105,44 @@ const ModalReadPurchaseQr: FC<ModalReadPurchaseQrProps> = ({
         }
         if (data.status === 200) {
             setResponse(data.data);
+            return;
+        }
+
+        setError({
+            status: data.status,
+            message: "No se pudo comprobar el codigo QR",
+            error: true,
+        });
+    };
+
+    const dataRetired = async () => {
+        if (!UserInfo) return;
+        if (!Response) return;
+
+        const data: StandarResponse | null = await response2(
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${UserInfo.token}`,
+                },
+            },
+            JSON.stringify({
+                id: Response.id,
+                retired: true,
+                fk_user: Response.user.id,
+            })
+        );
+
+        if (!data) {
+            setError({
+                status: 404,
+                message: "No se pudo comprobar el codigo QR",
+                error: true,
+            });
+            return;
+        }
+        if (data.status === 200) {
+            await getData();
             return;
         }
 
@@ -198,7 +245,10 @@ const ModalReadPurchaseQr: FC<ModalReadPurchaseQrProps> = ({
                     <LoadingButton
                         disabled={Response.retired || Response.status !== 2}
                         variant="contained"
-                        loading={loading}
+                        loading={loading2}
+                        onClick={() => {
+                            dataRetired();
+                        }}
                         color="error"
                     >
                         Marcar como retirado
@@ -234,6 +284,12 @@ const ModalReadPurchaseQr: FC<ModalReadPurchaseQrProps> = ({
                 message="Se ha leido el codigo QR correctamente"
                 severity="success"
                 handleClose={() => setSucces(false)}
+            />
+            <SnakeBarInfo
+                open={succes2}
+                message="Se ha marcado como retirado correctamente"
+                severity="success"
+                handleClose={() => setSucces2(false)}
             />
             <AppBar sx={{ position: "relative" }}>
                 <Toolbar>
