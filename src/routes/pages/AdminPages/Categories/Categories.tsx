@@ -198,7 +198,7 @@ const Categories = () => {
                         Crear Categoria
                     </Button>
                 </div>
-                <div className="flex" style={{ height: 300 }}>
+                <div className="flex" style={{ height: 800 }}>
                     <DataGrid
                         {...dataToTable}
                         loading={loading}

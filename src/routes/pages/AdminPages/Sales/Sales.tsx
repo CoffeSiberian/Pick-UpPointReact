@@ -212,7 +212,7 @@ const Sales = () => {
                         Verificar entrega
                     </Button>
                 </div>
-                <div className="flex" style={{ height: 300 }}>
+                <div className="flex" style={{ height: 800 }}>
                     <DataGrid
                         {...dataToTable}
                         loading={loading}
