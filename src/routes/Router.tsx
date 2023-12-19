@@ -4,6 +4,7 @@ import { useUser } from "../hooks/UserContex";
 import Home from "./pages/Home";
 import Store from "./pages/Store";
 import ViewProduct from "./pages/ViewProduct";
+import RenderQrCode from "./pages/RenderQrCode";
 import Header from "../components/Header";
 import AdminDash from "./pages/AdminDash";
 import ErrorPage from "../components/ErrorPage";
@@ -59,6 +60,15 @@ const Router = () => {
                         <>
                             <Header />
                             <ViewProduct />
+                        </>
+                    }
+                />
+                <Route
+                    path="/purchase/qr/:id"
+                    element={
+                        <>
+                            <Header />
+                            <RenderQrCode />
                         </>
                     }
                 />

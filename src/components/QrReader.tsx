@@ -43,6 +43,7 @@ const QrReader: FC<QrReaderProps> = ({ setScanResults }) => {
 
     const successCallback = (decodedText: string, scaner: Html5Qrcode) => {
         scaner.stop();
+        refCamSelected.current = false;
         setScanResults(decodedText);
     };
 
