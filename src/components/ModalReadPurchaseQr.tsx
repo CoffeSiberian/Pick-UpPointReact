@@ -194,7 +194,15 @@ const ModalReadPurchaseQr: FC<ModalReadPurchaseQrProps> = ({
                         </div>
                     </Typography>
                 </div>
-                <div className="flex flex-col items-center justify-end w-full">
+                <div className="flex justify-center w-full gap-3">
+                    <LoadingButton
+                        disabled={Response.retired || Response.status !== 2}
+                        variant="contained"
+                        loading={loading}
+                        color="error"
+                    >
+                        Marcar como retirado
+                    </LoadingButton>
                     <Button
                         variant="contained"
                         color="info"
