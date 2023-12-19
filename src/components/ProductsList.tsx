@@ -18,7 +18,7 @@ import testimg from "../static/img/test.png";
 const ProductsList = () => {
     const loaded = useRef(false);
     const { response, loading, error } = useFetch(
-        `${API_URL}/products?store=${FK_STORE}&limit_start=0&limit_end=5`,
+        `${API_URL}/products?store=${FK_STORE}&limit_start=0&limit_end=15`,
         "GET"
     );
 

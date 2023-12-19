@@ -139,7 +139,7 @@ const Users = () => {
         rows: [],
     });
     const { response, loading } = useFetch(
-        `${API_URL}/user/list?limit_start=0&limit_end=5`,
+        `${API_URL}/user/list?limit_start=0&limit_end=15`,
         "GET"
     );
 

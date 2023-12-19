@@ -145,7 +145,7 @@ const Shop = () => {
         rows: [],
     });
     const { response, loading } = useFetch(
-        `${API_URL}/products?store=${FK_STORE}&limit_start=0&limit_end=5`,
+        `${API_URL}/products?store=${FK_STORE}&limit_start=0&limit_end=15`,
         "GET"
     );
 

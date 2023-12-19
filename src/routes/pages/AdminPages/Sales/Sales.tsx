@@ -143,7 +143,7 @@ const Sales = () => {
         rows: [],
     });
     const { response, loading } = useFetch(
-        `${API_URL}/purchases?limit_start=0&limit_end=5`,
+        `${API_URL}/purchases?limit_start=0&limit_end=15`,
         "GET"
     );
 
