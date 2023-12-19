@@ -25,13 +25,16 @@ const AdminDash = () => {
     };
 
     return (
-        <div className="flex flex-col p-5 mr-5 ml-5 justify-center">
+        <div className="flex flex-col p-2 justify-center">
             <TabContext value={value}>
                 <div className="flex justify-center items-center">
                     <TabList
+                        variant="scrollable"
+                        scrollButtons
+                        allowScrollButtonsMobile
                         textColor="secondary"
                         onChange={handleChange}
-                        aria-label="lab API tabs example"
+                        aria-label="options-admin"
                     >
                         <Tab
                             icon={<QueryStatsIcon />}
@@ -71,11 +74,11 @@ const AdminDash = () => {
                     light={false}
                     sx={{ borderBottomWidth: 3 }}
                 />
-                <div className="flex justify-center">
+                <div className="flex flex-col justify-center">
                     <TabPanel value="1">
                         <Summary />
                     </TabPanel>
-                    <TabPanel className="flex" value="2">
+                    <TabPanel value="2">
                         <Users />
                     </TabPanel>
                     <TabPanel value="3">

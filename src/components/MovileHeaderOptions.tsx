@@ -1,5 +1,7 @@
 import { FC, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../hooks/UserContex";
+import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -7,19 +9,26 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
+import LoginOptions from "./LoginOptions";
+
+// icons
+import PersonIcon from "@mui/icons-material/Person";
 
 interface MovileHeaderOptionsProps {
     openDrawer: boolean;
     store: HeaderOptions;
     setOpenDrawer: (open: boolean) => void;
+    setOpenLogin: (open: boolean) => void;
 }
 
 const MovileHeaderOptions: FC<MovileHeaderOptionsProps> = ({
     openDrawer,
     store,
     setOpenDrawer,
+    setOpenLogin,
 }) => {
     const navigate = useNavigate();
+    const { UserInfo } = useUser();
 
     return (
         <Drawer
@@ -45,6 +54,22 @@ const MovileHeaderOptions: FC<MovileHeaderOptionsProps> = ({
                         <Divider />
                     </Fragment>
                 ))}
+                <Fragment key="loginfragment">
+                    <ListItem disablePadding>
+                        <div className="flex w-full mt-2 justify-center">
+                            {UserInfo && <LoginOptions />}
+                            {UserInfo === null && (
+                                <Button
+                                    startIcon={<PersonIcon />}
+                                    color="inherit"
+                                    onClick={() => setOpenLogin(true)}
+                                >
+                                    Iniciar sesión
+                                </Button>
+                            )}
+                        </div>
+                    </ListItem>
+                </Fragment>
             </List>
         </Drawer>
     );

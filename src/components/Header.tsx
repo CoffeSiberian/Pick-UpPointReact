@@ -127,6 +127,7 @@ const Header = () => {
                     openDrawer={menuOpen}
                     store={menuOptions}
                     setOpenDrawer={setMenuOpen}
+                    setOpenLogin={setopenLogin}
                 />
                 <Toolbar disableGutters>
                     <div className="flex md:hidden">
@@ -169,7 +170,7 @@ const Header = () => {
                         </div>
                     </div>
 
-                    <div className="md:flex hidden justify-end w-full">
+                    <div className="hidden md:flex justify-end w-full">
                         <Divider
                             sx={{ mr: 1 }}
                             orientation="vertical"
@@ -177,18 +178,16 @@ const Header = () => {
                             flexItem
                         />
                         <div className="flex">
-                            {UserInfo !== null && <LoginOptions />}
+                            {UserInfo && <LoginOptions />}
 
                             {UserInfo === null && (
-                                <>
-                                    <Button
-                                        startIcon={<PersonIcon />}
-                                        color="inherit"
-                                        onClick={() => setopenLogin(true)}
-                                    >
-                                        Iniciar sesión
-                                    </Button>
-                                </>
+                                <Button
+                                    startIcon={<PersonIcon />}
+                                    color="inherit"
+                                    onClick={() => setopenLogin(true)}
+                                >
+                                    Iniciar sesión
+                                </Button>
                             )}
                         </div>
                     </div>

@@ -102,6 +102,7 @@ const ModalReadPurchaseQr: FC<ModalReadPurchaseQrProps> = ({
                     {QrValue}
                 </Typography>
                 <LoadingButton
+                    disabled={QrValue === null}
                     variant="contained"
                     onClick={() => {
                         getData();
