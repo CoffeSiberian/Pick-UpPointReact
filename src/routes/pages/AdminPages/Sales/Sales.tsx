@@ -9,6 +9,7 @@ import {
     GridRenderCellParams,
 } from "@mui/x-data-grid";
 import Button from "@mui/material/Button";
+import ModalReadPurchaseQr from "../../../../components/ModalReadPurchaseQr";
 // import SalesModalFormUpdate from "./SalesModalFormUpdate";
 
 // types
@@ -23,6 +24,7 @@ const Sales = () => {
     const loaded = useRef(false);
     const { UserInfo } = useUser();
     const status = ["Pendiente", "Pagado", "Rechazado", "Anulado"];
+    const [OpenPurchaseQr, setOpenPurchaseQr] = useState<boolean>(false);
 
     /*     const [userModalUpdate, setuserModalUpdate] =
         useState<CategoriesModalFormUpdateState>({
@@ -185,12 +187,17 @@ const Sales = () => {
                 reloadPage={reloadCategories}
                 categoriesToEdit={userModalUpdate.categoriesToEdit}
             /> */}
+            <ModalReadPurchaseQr
+                open={OpenPurchaseQr}
+                setOpen={() => setOpenPurchaseQr(false)}
+            />
             <div className="flex flex-col gap-3">
                 <div className="flex justify-end">
                     <Button
                         color="success"
                         size="small"
                         variant="contained"
+                        onClick={() => setOpenPurchaseQr(true)}
                         endIcon={<AddCircleIcon />}
                     >
                         Verificar entrega

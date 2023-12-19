@@ -5,6 +5,10 @@ export interface PurchaseListResponse extends AxiosResponse {
     data: PurchaseListResponseObject[];
 }
 
+export interface PurchaseResponseQr extends AxiosResponse {
+    data: PurchaseListResponseObject;
+}
+
 export interface PurchaseListResponseObject {
     id: string;
     total: number;
@@ -37,7 +41,6 @@ export interface User {
     rut: string;
     name: string;
     email: string;
-    password: string;
     isAdmin: boolean;
     fk_store: string;
     createdAt: string;

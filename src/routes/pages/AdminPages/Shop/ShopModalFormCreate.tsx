@@ -11,7 +11,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import ModalLoading from "../../../../components/ModalLoading";
 import ModalError from "../../../../components/ModalError";
 import SnakeBarInfo from "../../../../components/SnakeBarInfo";
-import SalesForms from "./ShopForms";
+import ShopForms from "./ShopForms";
 
 // icons
 import SaveAsIcon from "@mui/icons-material/SaveAs";
@@ -186,7 +186,7 @@ const ShopModalFormCreate: FC<ProductModalFormCreateProps> = ({
                     </IconButton>
                 </DialogTitle>
                 <DialogContent>
-                    <SalesForms
+                    <ShopForms
                         productForm={Form}
                         handleChangeText={handleChangeText}
                     />

@@ -75,8 +75,10 @@ const QrReader: FC<QrReaderProps> = ({ setScanResults }) => {
                 </InputLabel>
                 <Select
                     id="camera-select"
+                    fullWidth
                     value={CameraId === null ? "" : CameraId}
                     label="Selecciona una cámara"
+                    color="info"
                     onChange={handleChange}
                 >
                     {ListCameras.map((camera) => (
@@ -106,7 +108,11 @@ const QrReader: FC<QrReaderProps> = ({ setScanResults }) => {
             ></div>
             <div className="flex justify-center mb-3 w-full max-w-md">
                 {Permissions === false && (
-                    <Button onClick={getCameras} variant="contained">
+                    <Button
+                        color="warning"
+                        onClick={getCameras}
+                        variant="contained"
+                    >
                         Permitir Usar Camara
                     </Button>
                 )}
