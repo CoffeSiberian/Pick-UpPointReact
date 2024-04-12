@@ -47,7 +47,7 @@ const QrReader: FC<QrReaderProps> = ({ setScanResults }) => {
         setScanResults(decodedText);
     };
 
-    const errorCallback = (error: any) => {};
+    const errorCallback = () => {};
 
     const startCamera = async () => {
         if (CameraId === null) return;

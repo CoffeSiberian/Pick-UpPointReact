@@ -3,11 +3,7 @@ import IconButton from "@mui/material/IconButton";
 import { API_URL } from "../../../../helpers/configs";
 import useFetch from "../../../../hooks/useFetch";
 import { useUser } from "../../../../hooks/UserContex";
-import {
-    DataGrid,
-    GridColumnVisibilityModel,
-    GridRenderCellParams,
-} from "@mui/x-data-grid";
+import { DataGrid, GridColumnVisibilityModel } from "@mui/x-data-grid";
 import Button from "@mui/material/Button";
 import ModalReadPurchaseQr from "../../../../components/ModalReadPurchaseQr";
 // import SalesModalFormUpdate from "./SalesModalFormUpdate";
@@ -118,7 +114,7 @@ const Sales = () => {
                 minWidth: 50,
                 flex: 1,
                 editable: false,
-                renderCell: (params: GridRenderCellParams) => (
+                renderCell: () => (
                     <div className="flex gap-1">
                         <IconButton
                             /*                             onClick={() => {

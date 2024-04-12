@@ -20,7 +20,7 @@ import StorefrontIcon from "@mui/icons-material/Storefront";
 const AdminDash = () => {
     const [value, setValue] = useState("1");
 
-    const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+    const handleChange = (newValue: string) => {
         setValue(newValue);
     };
 
@@ -33,7 +33,7 @@ const AdminDash = () => {
                         scrollButtons
                         allowScrollButtonsMobile
                         textColor="secondary"
-                        onChange={handleChange}
+                        onChange={(_, value) => handleChange(value)}
                         aria-label="options-admin"
                     >
                         <Tab
