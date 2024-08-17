@@ -74,7 +74,11 @@ const Users = () => {
                 headerName: "Creado",
                 width: 180,
                 editable: false,
-                valueGetter: ({ value }) => value && new Date(value),
+                valueGetter: (date) => {
+                    if (typeof date === "string") {
+                        return new Date(date);
+                    }
+                },
             },
             {
                 field: "updatedAt",
@@ -82,7 +86,11 @@ const Users = () => {
                 headerName: "Actualizado",
                 width: 180,
                 editable: false,
-                valueGetter: ({ value }) => value && new Date(value),
+                valueGetter: (date) => {
+                    if (typeof date === "string") {
+                        return new Date(date);
+                    }
+                },
             },
             {
                 field: "Acciones",
