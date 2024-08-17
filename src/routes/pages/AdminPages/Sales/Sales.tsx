@@ -36,40 +36,44 @@ const Sales = () => {
     const [dataToTable, setdataToTable] = useState<Table>({
         columns: [
             {
-                field: "userRut",
+                field: "user.rut",
                 headerName: "RUT",
+                type: "string",
                 minWidth: 100,
                 flex: 1,
                 editable: false,
-                valueGetter: (params) => params.row.user.rut,
+                valueGetter: (_, row) => row.user.rut,
             },
             {
-                field: "userName",
+                field: "user.name",
                 headerName: "Nombre",
+                type: "string",
                 minWidth: 200,
                 flex: 1,
                 editable: false,
-                valueGetter: (params) => params.row.user.name,
+                valueGetter: (_, row) => row.user.name,
             },
             {
                 field: "total",
                 headerName: "Total",
+                type: "number",
                 minWidth: 80,
                 flex: 1,
                 editable: false,
             },
             {
-                field: "statusCode",
+                field: "status",
                 headerName: "Estado",
+                type: "string",
                 minWidth: 90,
                 flex: 1,
                 editable: false,
-                type: "string",
-                valueGetter: (params) => status[params.row.status - 1],
+                valueGetter: (params) => status[params - 1],
             },
             {
                 field: "payment_id",
                 headerName: "ID de pago",
+                type: "string",
                 minWidth: 100,
                 flex: 1,
                 editable: false,
@@ -77,36 +81,44 @@ const Sales = () => {
             {
                 field: "payment_successful",
                 headerName: "Pagado",
+                type: "boolean",
                 minWidth: 70,
                 flex: 1,
                 editable: false,
-                type: "boolean",
             },
             {
                 field: "retired",
                 headerName: "Retirado",
+                type: "boolean",
                 minWidth: 70,
                 flex: 1,
                 editable: false,
-                type: "boolean",
             },
             {
                 field: "createdAt",
-                type: "dateTime",
                 headerName: "Creado",
+                type: "dateTime",
                 minWidth: 160,
                 flex: 1,
                 editable: false,
-                valueGetter: ({ value }) => value && new Date(value),
+                valueGetter: (date) => {
+                    if (typeof date === "string") {
+                        return new Date(date);
+                    }
+                },
             },
             {
                 field: "updatedAt",
-                type: "dateTime",
                 headerName: "Actualizado",
+                type: "dateTime",
                 minWidth: 160,
                 flex: 1,
                 editable: false,
-                valueGetter: ({ value }) => value && new Date(value),
+                valueGetter: (date) => {
+                    if (typeof date === "string") {
+                        return new Date(date);
+                    }
+                },
             },
             {
                 field: "Acciones",

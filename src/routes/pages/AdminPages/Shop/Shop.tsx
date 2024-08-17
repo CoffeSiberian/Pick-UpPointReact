@@ -71,7 +71,7 @@ const Shop = () => {
                 headerName: "Categoría",
                 width: 130,
                 editable: false,
-                valueGetter: ({ value }) => value.name,
+                valueGetter: ({ name }) => name,
             },
             {
                 field: "stock",
@@ -79,7 +79,7 @@ const Shop = () => {
                 headerName: "Stock",
                 width: 130,
                 editable: false,
-                valueGetter: ({ value }) => value.quantity,
+                valueFormatter: ({ quantity }) => quantity,
             },
             {
                 field: "createdAt",
@@ -87,7 +87,11 @@ const Shop = () => {
                 headerName: "Creado",
                 width: 180,
                 editable: false,
-                valueGetter: ({ value }) => value && new Date(value),
+                valueGetter: (date) => {
+                    if (typeof date === "string") {
+                        return new Date(date);
+                    }
+                },
             },
             {
                 field: "updatedAt",
@@ -95,7 +99,11 @@ const Shop = () => {
                 headerName: "Actualizado",
                 width: 180,
                 editable: false,
-                valueGetter: ({ value }) => value && new Date(value),
+                valueGetter: (date) => {
+                    if (typeof date === "string") {
+                        return new Date(date);
+                    }
+                },
             },
             {
                 field: "Acciones",
