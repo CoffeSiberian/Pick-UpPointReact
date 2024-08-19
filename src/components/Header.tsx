@@ -101,7 +101,7 @@ const Header = () => {
 
     return (
         <nav
-            className={`pb-40 sm:pb-48 md:pb-36 ${
+            className={`pb-16 md:pb-20 ${
                 darkMode ? "bg-neutral-900" : "bg-white"
             }`}
         >
@@ -116,20 +116,13 @@ const Header = () => {
                 openLogin={setopenLogin}
             />
             <AppBar position="fixed">
-                <div className="flex absolute justify-center top-3 w-full">
-                    <img
-                        className="drop-shadow-2xl w-32"
-                        src={logo}
-                        alt="Los Andes VTC logo"
-                    />
-                </div>
                 <MovileHeaderOptions
                     openDrawer={menuOpen}
                     store={menuOptions}
                     setOpenDrawer={setMenuOpen}
                     setOpenLogin={setopenLogin}
                 />
-                <Toolbar disableGutters>
+                <Toolbar className="flex justify-between w-full" disableGutters>
                     <div className="flex md:hidden">
                         <IconButton
                             aria-label="Menu"
@@ -146,38 +139,42 @@ const Header = () => {
                             flexItem
                         />
                     </div>
-                    <div className="md:flex ml-5 hidden justify-start w-full">
-                        <div className="flex">
-                            {menuOptions.store.map((item, index) => (
-                                <Fragment key={`${index}fragment`}>
-                                    <Button
-                                        key={`${index}item`}
-                                        startIcon={item.icon}
-                                        color="inherit"
-                                        onClick={() => navigate(item.path)}
-                                    >
-                                        {item.name}
-                                    </Button>
-                                    <Divider
-                                        key={`${index}divider`}
-                                        sx={{ mr: 1 }}
-                                        orientation="vertical"
-                                        variant="middle"
-                                        flexItem
-                                    />
-                                </Fragment>
-                            ))}
-                        </div>
+                    <div className="md:flex ml-5 hidden">
+                        {menuOptions.store.map((item, index) => (
+                            <Fragment key={`${index}fragment`}>
+                                <Button
+                                    key={`${index}item`}
+                                    startIcon={item.icon}
+                                    color="inherit"
+                                    onClick={() => navigate(item.path)}
+                                >
+                                    {item.name}
+                                </Button>
+                                <Divider
+                                    key={`${index}divider`}
+                                    sx={{ mr: 1 }}
+                                    orientation="vertical"
+                                    variant="middle"
+                                    flexItem
+                                />
+                            </Fragment>
+                        ))}
                     </div>
-
-                    <div className="hidden md:flex justify-end w-full">
+                    <div className="flex p-2">
+                        <img
+                            className="drop-shadow-2xl w-12 md:w-16"
+                            src={logo}
+                            alt="Los Andes VTC logo"
+                        />
+                    </div>
+                    <div className="flex">
                         <Divider
                             sx={{ mr: 1 }}
                             orientation="vertical"
                             variant="middle"
                             flexItem
                         />
-                        <div className="flex">
+                        <div className="hidden md:flex">
                             {UserInfo && <LoginOptions />}
 
                             {UserInfo === null && (
@@ -190,14 +187,14 @@ const Header = () => {
                                 </Button>
                             )}
                         </div>
-                    </div>
-                    <div className="flex w-full mr-5 justify-end md:w-auto">
-                        <MaterialUISwitch
-                            checked={darkMode}
-                            onChange={(event) =>
-                                setDarkMode(event.target.checked)
-                            }
-                        />
+                        <div className="flex">
+                            <MaterialUISwitch
+                                checked={darkMode}
+                                onChange={(event) =>
+                                    setDarkMode(event.target.checked)
+                                }
+                            />
+                        </div>
                     </div>
                 </Toolbar>
             </AppBar>
