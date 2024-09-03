@@ -12,6 +12,7 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Slide from "@mui/material/Slide";
 import QrReader from "./QrReader";
+import classNames from "classnames";
 import SnakeBarInfo from "./SnakeBarInfo";
 import ModalError from "./ModalError";
 
@@ -180,7 +181,13 @@ const ModalReadPurchaseQr: FC<ModalReadPurchaseQrProps> = ({
 
         return (
             <div
-                className={`flex flex-col max-w-md w-full ${themeTatailwind.secondary.main} rounded-lg border-2 border-transparent ${themeTatailwind.primary.border_color} shadow-2xl m-4 mb-12 p-4`}
+                className={classNames(
+                    "flex flex-col max-w-md w-full",
+                    themeTatailwind.secondary.main,
+                    "rounded-lg border-2 border-transparent",
+                    themeTatailwind.primary.border_color,
+                    "shadow-2xl m-4 mb-12 p-4"
+                )}
             >
                 <div className="flex h-full pb-2">
                     <Typography variant="h6">

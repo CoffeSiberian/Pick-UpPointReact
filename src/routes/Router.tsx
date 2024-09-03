@@ -12,10 +12,6 @@ import ErrorPage from "../components/ErrorPage";
 const Router = () => {
     const { UserInfo } = useUser();
 
-    const verifyUser = (): boolean => {
-        return UserInfo !== null && UserInfo.isAdmin;
-    };
-
     return (
         <BrowserRouter>
             <Routes>
@@ -42,7 +38,7 @@ const Router = () => {
                     element={
                         <>
                             <Header />
-                            {verifyUser() ? (
+                            {UserInfo !== null && UserInfo.isAdmin ? (
                                 <AdminDash />
                             ) : (
                                 <ErrorPage

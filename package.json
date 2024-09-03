@@ -13,13 +13,14 @@
         "@emotion/react": "^11.13.3",
         "@emotion/styled": "^11.13.0",
         "@fontsource/roboto": "^5.0.14",
-        "@mui/icons-material": "^6.0.1",
-        "@mui/lab": "6.0.0-beta.8",
-        "@mui/material": "^6.0.1",
-        "@mui/styled-engine-sc": "6.0.1",
+        "@mui/icons-material": "^6.0.2",
+        "@mui/lab": "6.0.0-beta.9",
+        "@mui/material": "^6.0.2",
+        "@mui/styled-engine-sc": "6.0.2",
         "@mui/x-charts": "^7.15.0",
         "@mui/x-data-grid": "^7.15.0",
         "axios": "^1.7.7",
+        "classnames": "^2.5.1",
         "dayjs": "^1.11.13",
         "html5-qrcode": "^2.3.8",
         "jwt-decode": "^4.0.0",
@@ -31,19 +32,19 @@
         "yup": "^1.4.0"
     },
     "devDependencies": {
+        "@eslint/js": "^9.9.1",
         "@types/react": "^18.3.5",
         "@types/react-dom": "^18.3.0",
         "@vitejs/plugin-react": "^4.3.1",
-        "@eslint/js": "^9.9.1",
+        "autoprefixer": "^10.4.20",
         "eslint": "^9.9.1",
-        "globals": "^15.9.0",
         "eslint-plugin-react-hooks": "^5.1.0-rc.0",
         "eslint-plugin-react-refresh": "^0.4.11",
-        "autoprefixer": "^10.4.20",
+        "globals": "^15.9.0",
         "postcss": "^8.4.44",
         "tailwindcss": "^3.4.10",
         "typescript": "^5.5.4",
         "typescript-eslint": "^8.4.0",
-        "vite": "^5.4.2"
+        "vite": "^5.4.3"
     }
 }

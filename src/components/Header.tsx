@@ -8,6 +8,7 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
+import classNames from "classnames";
 
 // components
 import ModalLogin from "./ModalLogin";
@@ -101,9 +102,10 @@ const Header = () => {
 
     return (
         <nav
-            className={`pb-16 md:pb-20 ${
+            className={classNames(
+                "pb-16 md:pb-20",
                 darkMode ? "bg-neutral-900" : "bg-white"
-            }`}
+            )}
         >
             <ModalLogin
                 open={openLogin}
@@ -162,7 +164,7 @@ const Header = () => {
                     </div>
                     <div className="flex p-2">
                         <img
-                            className="drop-shadow-2xl w-12 md:w-16"
+                            className="w-12 md:w-16"
                             src={logo}
                             alt="Los Andes VTC logo"
                         />

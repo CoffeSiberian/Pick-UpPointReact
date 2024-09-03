@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { Typography } from "@mui/material";
 import { useDarkMode } from "../hooks/DarkModeContex";
+import classNames from "classnames";
 import Divider from "@mui/material/Divider";
 
 interface ErrorDataProps {
@@ -15,9 +16,11 @@ const ErrorPage: FC<ErrorDataProps> = ({ title, message, footer }) => {
     return (
         <div className="flex justify-center w-full">
             <div
-                className={`flex flex-col items-center ${
-                    darkMode ? "bg-yellow-900" : "bg-yellow-600"
-                }  rounded-xl gap-2 m-10 p-3`}
+                className={classNames(
+                    "flex flex-col items-center",
+                    darkMode ? "bg-yellow-900" : "bg-yellow-600",
+                    "rounded-xl gap-2 m-10 p-3"
+                )}
             >
                 <Typography variant="h4" color={themeTatailwind.primary.color}>
                     <b>{title}</b>
