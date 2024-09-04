@@ -130,7 +130,7 @@ const UsersModalFormCreate: FC<UserModalFormCreateProps> = ({
         }
     };
 
-    const handleChangeText = (value: any, id: string) => {
+    const handleChangeText = (value: string, id: string) => {
         setuserForm({
             ...userForm,
             payload: {

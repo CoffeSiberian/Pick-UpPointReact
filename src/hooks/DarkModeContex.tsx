@@ -1,6 +1,12 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import { DarkModeTypes, DarkModeContextTypes } from "../types/ContexTypes";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+
+// types
+import {
+    DarkModeTypes,
+    DarkModeContextTypes,
+    ProviderProps,
+} from "../types/ContexTypes";
 
 const DarkModeContex = createContext<DarkModeContextTypes>(
     {} as DarkModeContextTypes
@@ -10,7 +16,7 @@ export const useDarkMode = (): DarkModeContextTypes => {
     return useContext(DarkModeContex);
 };
 
-export const DarkMode = ({ children }: any) => {
+export const DarkMode = ({ children }: ProviderProps) => {
     const [darkMode, setDarkModeState] = useState<boolean>(true);
 
     const darkMaterial = {

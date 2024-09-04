@@ -106,7 +106,7 @@ const CategoriesModalFormCreate: FC<UserModalFormCreateProps> = ({
         }
     };
 
-    const handleChangeText = (value: any, id: string) => {
+    const handleChangeText = (value: string, id: string) => {
         setForm({
             ...Form,
             payload: {

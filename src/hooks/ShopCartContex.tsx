@@ -4,7 +4,9 @@ import {
     setShopCart as setLocalShopCart,
     setShopCartClear,
 } from "../helpers/LocalShopCart";
-import { ShopCartContextTypes } from "../types/ContexTypes";
+
+// types
+import { ShopCartContextTypes, ProviderProps } from "../types/ContexTypes";
 import { ShopCartDataDefined } from "../types/LocalShopCart";
 
 const ShopCartContex = createContext<ShopCartContextTypes>(
@@ -15,7 +17,7 @@ export const useShopCart = (): ShopCartContextTypes => {
     return useContext(ShopCartContex);
 };
 
-export const ShopCartInfo = ({ children }: any) => {
+export const ShopCartInfo = ({ children }: ProviderProps) => {
     const [shopCart, setShopCart] = useState<ShopCartDataDefined[] | null>(
         null
     );

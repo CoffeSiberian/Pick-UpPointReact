@@ -1,5 +1,4 @@
 import { AxiosResponse } from "axios";
-import { Purchases } from "../model";
 
 export interface PurchaseListResponse extends AxiosResponse {
     data: PurchaseListResponseObject[];

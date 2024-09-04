@@ -36,5 +36,5 @@ interface CategoriesData {
 
 interface CategoriesFormsProps {
     categoriesForm: CategoriesData;
-    handleChangeText: (value: any, id: string) => void;
+    handleChangeText: (value: string, id: string) => void;
 }

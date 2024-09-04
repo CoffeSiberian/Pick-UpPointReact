@@ -1,5 +1,3 @@
-import { Products } from "./model";
-
 interface ShopCartDataUndefined {
     id: string | undefined;
     name: string | undefined;
@@ -7,7 +5,7 @@ interface ShopCartDataUndefined {
     quantity: number | undefined;
 }
 
-interface ShopCartDataDefined {
+export interface ShopCartDataDefined {
     id: string;
     name: string;
     price: number;

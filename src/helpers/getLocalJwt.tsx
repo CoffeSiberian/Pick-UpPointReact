@@ -78,7 +78,7 @@ export const getTokenDataGiven = (token: string): LocalJWTDefined | null => {
             iat,
             exp,
         };
-    } catch (e) {
+    } catch {
         return null;
     }
 };

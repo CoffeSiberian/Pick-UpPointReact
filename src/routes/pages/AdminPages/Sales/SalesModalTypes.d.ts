@@ -30,5 +30,5 @@ interface SalesData {
 
 interface SalesFormsProps {
     SalesForm: SalesData;
-    handleChangeText: (value: any, id: string) => void;
+    handleChangeText: (value: string, id: string) => void;
 }

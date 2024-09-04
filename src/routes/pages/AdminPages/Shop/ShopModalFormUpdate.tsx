@@ -139,7 +139,7 @@ const ShopModalFormUpdate: FC<ProductModalFormUpdateProps> = ({
         }
     };
 
-    const handleChangeText = (value: any, id: string) => {
+    const handleChangeText = (value: string, id: string) => {
         setForm({
             ...Form,
             payload: {

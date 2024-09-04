@@ -34,3 +34,7 @@ export interface ShopCartContextTypes {
     clearShopCart: () => void;
     setShopCart: (data: ShopCartDataDefined[]) => void;
 }
+
+export interface ProviderProps {
+    children: ReactNode;
+}
