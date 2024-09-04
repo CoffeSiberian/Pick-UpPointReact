@@ -25,6 +25,7 @@ interface CategoriesPayLoad {
     id?: string;
     name: string;
 }
+
 interface CategoriesError {
     name: boolean;
 }
@@ -36,5 +37,5 @@ interface CategoriesData {
 
 interface CategoriesFormsProps {
     categoriesForm: CategoriesData;
-    handleChangeText: (value: string, id: string) => void;
+    setCategoriesForm: (categoriesForm: CategoriesData) => void;
 }

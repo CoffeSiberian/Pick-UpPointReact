@@ -108,16 +108,6 @@ const SalesModalFormUpdate: FC<CategoriesModalFormUpdateProps> = ({
         }
     };
 
-    const handleChangeText = (value: string, id: string) => {
-        setForm({
-            ...Form,
-            payload: {
-                ...Form.payload,
-                [id]: value,
-            },
-        });
-    };
-
     useEffect(() => {
         if (categoriesToEdit === null) return;
         setForm({
@@ -170,7 +160,7 @@ const SalesModalFormUpdate: FC<CategoriesModalFormUpdateProps> = ({
                 <DialogContent>
                     <SalesForms
                         categoriesForm={Form}
-                        handleChangeText={handleChangeText}
+                        setCategoriesForm={setForm}
                     />
                 </DialogContent>
                 <DialogActions>

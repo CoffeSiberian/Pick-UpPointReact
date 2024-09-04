@@ -7,7 +7,7 @@ import AbcIcon from "@mui/icons-material/Abc";
 
 const CategoriesForms: FC<CategoriesFormsProps> = ({
     categoriesForm,
-    handleChangeText,
+    setCategoriesForm,
 }) => {
     return (
         <div className="flex flex-col gap-4 mt-2">
@@ -21,7 +21,15 @@ const CategoriesForms: FC<CategoriesFormsProps> = ({
                 helperText={categoriesForm.error.name && "Nombre invalido"}
                 error={categoriesForm.error.name}
                 value={categoriesForm.payload.name}
-                onChange={(e) => handleChangeText(e.target.value, "name")}
+                onChange={(e) =>
+                    setCategoriesForm({
+                        ...categoriesForm,
+                        payload: {
+                            ...categoriesForm.payload,
+                            name: e.target.value,
+                        },
+                    })
+                }
                 InputProps={{
                     startAdornment: (
                         <InputAdornment position="start">

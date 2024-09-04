@@ -106,16 +106,6 @@ const CategoriesModalFormCreate: FC<UserModalFormCreateProps> = ({
         }
     };
 
-    const handleChangeText = (value: string, id: string) => {
-        setForm({
-            ...Form,
-            payload: {
-                ...Form.payload,
-                [id]: value,
-            },
-        });
-    };
-
     return (
         <>
             <ModalLoading open={loading} />
@@ -157,7 +147,7 @@ const CategoriesModalFormCreate: FC<UserModalFormCreateProps> = ({
                 <DialogContent>
                     <CategoriesForms
                         categoriesForm={Form}
-                        handleChangeText={handleChangeText}
+                        setCategoriesForm={setForm}
                     />
                 </DialogContent>
                 <DialogActions>
