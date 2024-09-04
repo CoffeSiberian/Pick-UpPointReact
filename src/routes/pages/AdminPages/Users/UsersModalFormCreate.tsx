@@ -46,7 +46,7 @@ const UsersModalFormCreate: FC<UserModalFormCreateProps> = ({
         message: "",
         error: false,
     });
-    const [userForm, setuserForm] = useState<UserData>({
+    const [userForm, setUserForm] = useState<UserData>({
         payload: {
             rut: "",
             name: "",
@@ -75,7 +75,7 @@ const UsersModalFormCreate: FC<UserModalFormCreateProps> = ({
             password: userForm.payload.password,
         });
 
-        setuserForm({
+        setUserForm({
             ...userForm,
             error: {
                 rut: !RutValid,
@@ -130,16 +130,6 @@ const UsersModalFormCreate: FC<UserModalFormCreateProps> = ({
         }
     };
 
-    const handleChangeText = (value: string, id: string) => {
-        setuserForm({
-            ...userForm,
-            payload: {
-                ...userForm.payload,
-                [id]: value,
-            },
-        });
-    };
-
     return (
         <>
             <ModalLoading open={loading} />
@@ -179,10 +169,7 @@ const UsersModalFormCreate: FC<UserModalFormCreateProps> = ({
                     </IconButton>
                 </DialogTitle>
                 <DialogContent>
-                    <UsersForms
-                        userForm={userForm}
-                        handleChangeText={handleChangeText}
-                    />
+                    <UsersForms userForm={userForm} setUserForm={setUserForm} />
                 </DialogContent>
                 <DialogActions>
                     <Button

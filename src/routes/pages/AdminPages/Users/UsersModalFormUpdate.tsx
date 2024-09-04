@@ -47,7 +47,7 @@ const UsersModalFormUpdate: FC<UserModalFormUpdateProps> = ({
         message: "",
         error: false,
     });
-    const [userForm, setuserForm] = useState<UserData>({
+    const [userForm, setUserForm] = useState<UserData>({
         payload: {
             id: "",
             rut: "",
@@ -78,7 +78,7 @@ const UsersModalFormUpdate: FC<UserModalFormUpdateProps> = ({
             password: userForm.payload.password,
         });
 
-        setuserForm({
+        setUserForm({
             ...userForm,
             error: {
                 rut: !RutValid,
@@ -133,19 +133,9 @@ const UsersModalFormUpdate: FC<UserModalFormUpdateProps> = ({
         }
     };
 
-    const handleChangeText = (value: string, id: string) => {
-        setuserForm({
-            ...userForm,
-            payload: {
-                ...userForm.payload,
-                [id]: value,
-            },
-        });
-    };
-
     useEffect(() => {
         if (userToEdit === null) return;
-        setuserForm({
+        setUserForm({
             ...userForm,
             payload: {
                 id: userToEdit.id,
@@ -197,10 +187,7 @@ const UsersModalFormUpdate: FC<UserModalFormUpdateProps> = ({
                     </IconButton>
                 </DialogTitle>
                 <DialogContent>
-                    <UsersForms
-                        userForm={userForm}
-                        handleChangeText={handleChangeText}
-                    />
+                    <UsersForms userForm={userForm} setUserForm={setUserForm} />
                 </DialogContent>
                 <DialogActions>
                     <Button

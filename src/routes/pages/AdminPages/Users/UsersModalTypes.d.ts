@@ -46,5 +46,5 @@ interface UserData {
 
 interface UsersFormsProps {
     userForm: UserData;
-    handleChangeText: (value: string, id: string) => void;
+    setUserForm: (userForm: UserData) => void;
 }

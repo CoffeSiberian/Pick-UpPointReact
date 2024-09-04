@@ -10,7 +10,7 @@ import AbcIcon from "@mui/icons-material/Abc";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import KeyIcon from "@mui/icons-material/Key";
 
-const UsersForms: FC<UsersFormsProps> = ({ userForm, handleChangeText }) => {
+const UsersForms: FC<UsersFormsProps> = ({ userForm, setUserForm }) => {
     return (
         <div className="flex flex-col gap-4 mt-2">
             <TextField
@@ -23,7 +23,15 @@ const UsersForms: FC<UsersFormsProps> = ({ userForm, handleChangeText }) => {
                 helperText={userForm.error.rut && "Rut invalido"}
                 error={userForm.error.rut}
                 value={userForm.payload.rut}
-                onChange={(e) => handleChangeText(e.target.value, "rut")}
+                onChange={(e) =>
+                    setUserForm({
+                        ...userForm,
+                        payload: {
+                            ...userForm.payload,
+                            rut: e.target.value,
+                        },
+                    })
+                }
                 InputProps={{
                     startAdornment: (
                         <InputAdornment position="start">
@@ -42,7 +50,15 @@ const UsersForms: FC<UsersFormsProps> = ({ userForm, handleChangeText }) => {
                 helperText={userForm.error.name && "Nombre invalido"}
                 error={userForm.error.name}
                 value={userForm.payload.name}
-                onChange={(e) => handleChangeText(e.target.value, "name")}
+                onChange={(e) =>
+                    setUserForm({
+                        ...userForm,
+                        payload: {
+                            ...userForm.payload,
+                            name: e.target.value,
+                        },
+                    })
+                }
                 InputProps={{
                     startAdornment: (
                         <InputAdornment position="start">
@@ -61,7 +77,15 @@ const UsersForms: FC<UsersFormsProps> = ({ userForm, handleChangeText }) => {
                 helperText={userForm.error.email && "Email invalido"}
                 error={userForm.error.email}
                 value={userForm.payload.email}
-                onChange={(e) => handleChangeText(e.target.value, "email")}
+                onChange={(e) =>
+                    setUserForm({
+                        ...userForm,
+                        payload: {
+                            ...userForm.payload,
+                            email: e.target.value,
+                        },
+                    })
+                }
                 InputProps={{
                     startAdornment: (
                         <InputAdornment position="start">
@@ -77,7 +101,13 @@ const UsersForms: FC<UsersFormsProps> = ({ userForm, handleChangeText }) => {
                             color="info"
                             checked={userForm.payload.isAdmin}
                             onChange={(e) =>
-                                handleChangeText(e.target.checked, "isAdmin")
+                                setUserForm({
+                                    ...userForm,
+                                    payload: {
+                                        ...userForm.payload,
+                                        isAdmin: e.target.checked,
+                                    },
+                                })
                             }
                             inputProps={{ "aria-label": "Es Administrador" }}
                         />
@@ -95,7 +125,15 @@ const UsersForms: FC<UsersFormsProps> = ({ userForm, handleChangeText }) => {
                 helperText={userForm.error.password && "Minimo de 5 caracteres"}
                 error={userForm.error.password}
                 value={userForm.payload.password}
-                onChange={(e) => handleChangeText(e.target.value, "password")}
+                onChange={(e) =>
+                    setUserForm({
+                        ...userForm,
+                        payload: {
+                            ...userForm.payload,
+                            password: e.target.value,
+                        },
+                    })
+                }
                 InputProps={{
                     startAdornment: (
                         <InputAdornment position="start">
