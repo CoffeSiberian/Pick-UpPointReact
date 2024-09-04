@@ -19,10 +19,7 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import { CategoriesListResponse } from "../../../../types/responses/CategorieList";
 import { Categories } from "../../../../types/model";
 
-const ShopForms: FC<ProductFormsProps> = ({
-    productForm,
-    handleChangeText,
-}) => {
+const ShopForms: FC<ProductFormsProps> = ({ productForm, setProductForm }) => {
     const loaded = useRef(false);
 
     const { loading, response, setSucces } = useFetch(
@@ -64,7 +61,15 @@ const ShopForms: FC<ProductFormsProps> = ({
                 helperText={productForm.error.name && "Nombre invalido"}
                 error={productForm.error.name}
                 value={productForm.payload.name}
-                onChange={(e) => handleChangeText(e.target.value, "name")}
+                onChange={(e) =>
+                    setProductForm({
+                        ...productForm,
+                        payload: {
+                            ...productForm.payload,
+                            name: e.target.value,
+                        },
+                    })
+                }
                 InputProps={{
                     startAdornment: (
                         <InputAdornment position="start">
@@ -87,7 +92,13 @@ const ShopForms: FC<ProductFormsProps> = ({
                 error={productForm.error.description}
                 value={productForm.payload.description}
                 onChange={(e) =>
-                    handleChangeText(e.target.value, "description")
+                    setProductForm({
+                        ...productForm,
+                        payload: {
+                            ...productForm.payload,
+                            description: e.target.value,
+                        },
+                    })
                 }
                 InputProps={{
                     startAdornment: (
@@ -109,7 +120,18 @@ const ShopForms: FC<ProductFormsProps> = ({
                 }
                 error={productForm.error.stock}
                 value={productForm.payload.stock}
-                onChange={(e) => handleChangeText(e.target.value, "stock")}
+                onChange={(e) => {
+                    const value = parseInt(e.target.value);
+                    if (isNaN(value)) return;
+
+                    setProductForm({
+                        ...productForm,
+                        payload: {
+                            ...productForm.payload,
+                            stock: value,
+                        },
+                    });
+                }}
                 InputProps={{
                     startAdornment: (
                         <InputAdornment position="start">
@@ -130,7 +152,18 @@ const ShopForms: FC<ProductFormsProps> = ({
                 }
                 error={productForm.error.price}
                 value={productForm.payload.price}
-                onChange={(e) => handleChangeText(e.target.value, "price")}
+                onChange={(e) => {
+                    const value = parseInt(e.target.value);
+                    if (isNaN(value)) return;
+
+                    setProductForm({
+                        ...productForm,
+                        payload: {
+                            ...productForm.payload,
+                            price: value,
+                        },
+                    });
+                }}
                 InputProps={{
                     startAdornment: (
                         <InputAdornment position="start">
@@ -153,7 +186,13 @@ const ShopForms: FC<ProductFormsProps> = ({
                     value={productForm.payload.fk_category}
                     disabled={loading || !Categories}
                     onChange={(e) =>
-                        handleChangeText(e.target.value, "fk_category")
+                        setProductForm({
+                            ...productForm,
+                            payload: {
+                                ...productForm.payload,
+                                fk_category: e.target.value,
+                            },
+                        })
                     }
                 >
                     {Categories ? (

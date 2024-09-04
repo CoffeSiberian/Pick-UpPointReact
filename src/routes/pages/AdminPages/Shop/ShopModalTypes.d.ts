@@ -49,5 +49,5 @@ interface ProductData {
 
 interface ProductFormsProps {
     productForm: ProductData;
-    handleChangeText: (value: string, id: string) => void;
+    setProductForm: (productForm: ProductData) => void;
 }

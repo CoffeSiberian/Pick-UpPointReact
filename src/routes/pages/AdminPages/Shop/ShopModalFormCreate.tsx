@@ -137,16 +137,6 @@ const ShopModalFormCreate: FC<ProductModalFormCreateProps> = ({
         }
     };
 
-    const handleChangeText = (value: string, id: string) => {
-        setForm({
-            ...Form,
-            payload: {
-                ...Form.payload,
-                [id]: value,
-            },
-        });
-    };
-
     return (
         <>
             <ModalLoading open={loading} />
@@ -186,10 +176,7 @@ const ShopModalFormCreate: FC<ProductModalFormCreateProps> = ({
                     </IconButton>
                 </DialogTitle>
                 <DialogContent>
-                    <ShopForms
-                        productForm={Form}
-                        handleChangeText={handleChangeText}
-                    />
+                    <ShopForms productForm={Form} setProductForm={setForm} />
                 </DialogContent>
                 <DialogActions>
                     <Button
