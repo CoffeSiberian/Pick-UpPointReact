@@ -139,16 +139,6 @@ const ShopModalFormUpdate: FC<ProductModalFormUpdateProps> = ({
         }
     };
 
-    const handleChangeText = (value: string, id: string) => {
-        setForm({
-            ...Form,
-            payload: {
-                ...Form.payload,
-                [id]: value,
-            },
-        });
-    };
-
     useEffect(() => {
         if (productToEdit === null) return;
         setForm({
@@ -203,10 +193,7 @@ const ShopModalFormUpdate: FC<ProductModalFormUpdateProps> = ({
                     </IconButton>
                 </DialogTitle>
                 <DialogContent>
-                    <SalesForms
-                        productForm={Form}
-                        handleChangeText={handleChangeText}
-                    />
+                    <SalesForms productForm={Form} setProductForm={setForm} />
                 </DialogContent>
                 <DialogActions>
                     <Button
