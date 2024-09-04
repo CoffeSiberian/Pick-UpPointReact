@@ -24,6 +24,7 @@ import { categoriesNameSchema } from "../../../../schemas/categoriesSch";
 // types
 import { StandarResponse } from "../../../../types/responses/StandarResponse";
 
+// actualmente sin utilizar
 const SalesModalFormUpdate: FC<CategoriesModalFormUpdateProps> = ({
     open,
     openCategoriesModalForm,
@@ -41,7 +42,7 @@ const SalesModalFormUpdate: FC<CategoriesModalFormUpdateProps> = ({
         message: "",
         error: false,
     });
-    const [Form, setForm] = useState<CategoriesData>({
+    const [Form, setForm] = useState<SalesData>({
         payload: {
             id: "",
             name: "",
@@ -110,6 +111,7 @@ const SalesModalFormUpdate: FC<CategoriesModalFormUpdateProps> = ({
 
     useEffect(() => {
         if (categoriesToEdit === null) return;
+
         setForm({
             ...Form,
             payload: {
@@ -158,10 +160,7 @@ const SalesModalFormUpdate: FC<CategoriesModalFormUpdateProps> = ({
                     </IconButton>
                 </DialogTitle>
                 <DialogContent>
-                    <SalesForms
-                        categoriesForm={Form}
-                        setCategoriesForm={setForm}
-                    />
+                    <SalesForms salesForm={Form} setSalesForm={setForm} />
                 </DialogContent>
                 <DialogActions>
                     <Button

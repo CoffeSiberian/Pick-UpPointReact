@@ -19,6 +19,7 @@ interface SalesPayLoad {
     id?: string;
     name: string;
 }
+
 interface SalesError {
     name: boolean;
 }
@@ -29,6 +30,6 @@ interface SalesData {
 }
 
 interface SalesFormsProps {
-    SalesForm: SalesData;
-    handleChangeText: (value: string, id: string) => void;
+    salesForm: SalesData;
+    setSalesForm: (data: SalesData) => void;
 }

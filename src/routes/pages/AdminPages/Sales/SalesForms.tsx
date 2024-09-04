@@ -5,10 +5,8 @@ import InputAdornment from "@mui/material/InputAdornment";
 // icons
 import AbcIcon from "@mui/icons-material/Abc";
 
-const SalesForms: FC<CategoriesFormsProps> = ({
-    categoriesForm,
-    handleChangeText,
-}) => {
+// actualmente sin utilizar
+const SalesForms: FC<SalesFormsProps> = ({ salesForm, setSalesForm }) => {
     return (
         <div className="flex flex-col gap-4 mt-2">
             <TextField
@@ -18,10 +16,18 @@ const SalesForms: FC<CategoriesFormsProps> = ({
                 color="info"
                 label="Nombre Categoria"
                 type="text"
-                helperText={categoriesForm.error.name && "Nombre invalido"}
-                error={categoriesForm.error.name}
-                value={categoriesForm.payload.name}
-                onChange={(e) => handleChangeText(e.target.value, "name")}
+                helperText={salesForm.error.name && "Nombre invalido"}
+                error={salesForm.error.name}
+                value={salesForm.payload.name}
+                onChange={(e) =>
+                    setSalesForm({
+                        ...salesForm,
+                        payload: {
+                            ...salesForm.payload,
+                            name: e.target.value,
+                        },
+                    })
+                }
                 InputProps={{
                     startAdornment: (
                         <InputAdornment position="start">
