@@ -236,8 +236,10 @@ const Users = () => {
                         Crear Usuario
                     </Button>
                 </div>
-                <div className="flex" style={{ height: 800 }}>
+                <div className="flex justify-center">
                     <DataGrid
+                        className="max-w-[1175px]"
+                        autoHeight={true}
                         {...dataToTable}
                         loading={loading}
                         columnVisibilityModel={columnVisibilityModel}

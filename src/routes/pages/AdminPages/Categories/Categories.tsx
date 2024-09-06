@@ -206,8 +206,10 @@ const Categories = () => {
                         Crear Categoria
                     </Button>
                 </div>
-                <div className="flex" style={{ height: 800 }}>
+                <div className="flex justify-center">
                     <DataGrid
+                        className="max-w-[715px]"
+                        autoHeight={true}
                         {...dataToTable}
                         loading={loading}
                         columnVisibilityModel={columnVisibilityModel}

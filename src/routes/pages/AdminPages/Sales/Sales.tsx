@@ -220,8 +220,10 @@ const Sales = () => {
                         Verificar entrega
                     </Button>
                 </div>
-                <div className="flex" style={{ height: 800 }}>
+                <div className="flex justify-center">
                     <DataGrid
+                        className="max-w-[1310px]"
+                        autoHeight={true}
                         {...dataToTable}
                         loading={loading}
                         columnVisibilityModel={columnVisibilityModel}
