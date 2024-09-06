@@ -20,10 +20,6 @@ import StorefrontIcon from "@mui/icons-material/Storefront";
 const AdminDash = () => {
     const [value, setValue] = useState("1");
 
-    const handleChange = (newValue: string) => {
-        setValue(newValue);
-    };
-
     return (
         <div className="flex flex-col p-2 justify-center">
             <TabContext value={value}>
@@ -33,7 +29,7 @@ const AdminDash = () => {
                         scrollButtons
                         allowScrollButtonsMobile
                         textColor="secondary"
-                        onChange={(_, value) => handleChange(value)}
+                        onChange={(_, value) => setValue(value)}
                         aria-label="options-admin"
                     >
                         <Tab
