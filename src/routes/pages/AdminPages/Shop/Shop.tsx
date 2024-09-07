@@ -164,6 +164,11 @@ const Shop = () => {
             status: false,
         });
 
+    const [paginationModel, setPaginationModel] = useState({
+        page: 0,
+        pageSize: 30,
+    });
+
     const getData = async () => {
         const data: ProductsListResponse | null = await response({
             headers: {
@@ -245,6 +250,10 @@ const Shop = () => {
                         autoHeight={true}
                         {...dataToTable}
                         loading={loading}
+                        pageSizeOptions={[30]}
+                        rows={dataToTable.rows}
+                        paginationModel={paginationModel}
+                        onPaginationModelChange={setPaginationModel}
                         columnVisibilityModel={columnVisibilityModel}
                         onColumnVisibilityModelChange={(newModel) =>
                             setColumnVisibilityModel(newModel)

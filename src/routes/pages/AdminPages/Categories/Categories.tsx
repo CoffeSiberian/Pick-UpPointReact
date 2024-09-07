@@ -128,6 +128,11 @@ const Categories = () => {
             status: false,
         });
 
+    const [paginationModel, setPaginationModel] = useState({
+        page: 0,
+        pageSize: 30,
+    });
+
     const getCategories = async () => {
         if (!UserInfo) return;
 
@@ -212,6 +217,10 @@ const Categories = () => {
                         autoHeight={true}
                         {...dataToTable}
                         loading={loading}
+                        pageSizeOptions={[30]}
+                        rows={dataToTable.rows}
+                        paginationModel={paginationModel}
+                        onPaginationModelChange={setPaginationModel}
                         columnVisibilityModel={columnVisibilityModel}
                         onColumnVisibilityModelChange={(newModel) =>
                             setColumnVisibilityModel(newModel)

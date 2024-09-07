@@ -158,6 +158,11 @@ const Users = () => {
             status: false,
         });
 
+    const [paginationModel, setPaginationModel] = useState({
+        page: 0,
+        pageSize: 30,
+    });
+
     const getUsers = async () => {
         if (!UserInfo) return;
 
@@ -242,6 +247,10 @@ const Users = () => {
                         autoHeight={true}
                         {...dataToTable}
                         loading={loading}
+                        pageSizeOptions={[30]}
+                        rows={dataToTable.rows}
+                        paginationModel={paginationModel}
+                        onPaginationModelChange={setPaginationModel}
                         columnVisibilityModel={columnVisibilityModel}
                         onColumnVisibilityModelChange={(newModel) =>
                             setColumnVisibilityModel(newModel)
