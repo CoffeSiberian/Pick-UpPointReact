@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from "react";
-import { useShopCart } from "../../hooks/ShopCartContex";
+import { useState, useEffect, useContext, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { useDarkMode } from "../../hooks/DarkModeContex";
+import { ShopCartContex } from "../../hooks/ShopCartContex";
+import { DarkModeContex } from "../../hooks/DarkModeContex";
 import { API_URL } from "../../helpers/configs";
 import { ProductResponseObject } from "../../types/responses/ProductsList";
 import useFetch from "../../hooks/useFetch";
@@ -20,8 +20,8 @@ import testImg2 from "../../static/img/test2.webp";
 
 const ViewProduct = () => {
     const { newid } = useParams();
-    const { addProduct } = useShopCart();
-    const { themeTatailwind } = useDarkMode();
+    const { addProduct } = useContext(ShopCartContex);
+    const { themeTatailwind } = useContext(DarkModeContex);
 
     const oldid = useRef(newid);
     const loaded = useRef(false);

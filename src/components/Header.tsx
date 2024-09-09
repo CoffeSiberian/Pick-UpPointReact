@@ -1,7 +1,7 @@
-import { useState, Fragment } from "react";
+import { useState, useContext, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDarkMode } from "../hooks/DarkModeContex";
-import { useUser } from "../hooks/UserContex";
+import { DarkModeContex } from "../hooks/DarkModeContex";
+import { UserContex } from "../hooks/UserContex";
 import { styled } from "@mui/material/styles";
 import logo from "../static/img/logo.png";
 import AppBar from "@mui/material/AppBar";
@@ -26,8 +26,8 @@ import Switch from "@mui/material/Switch";
 import MovileHeaderOptions from "./MovileHeaderOptions";
 
 const Header = () => {
-    const { darkMode, setDarkMode } = useDarkMode();
-    const { UserInfo } = useUser();
+    const { darkMode, setDarkMode } = useContext(DarkModeContex);
+    const { UserInfo } = useContext(UserContex);
 
     const [menuOpen, setMenuOpen] = useState(false);
     const [openLogin, setopenLogin] = useState<boolean>(false);

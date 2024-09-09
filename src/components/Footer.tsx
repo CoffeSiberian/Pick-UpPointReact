@@ -1,4 +1,5 @@
-import { useDarkMode } from "../hooks/DarkModeContex";
+import { useContext } from "react";
+import { DarkModeContex } from "../hooks/DarkModeContex";
 import Paper from "@mui/material/Paper";
 import { Typography } from "@mui/material";
 import Link from "@mui/material/Link";
@@ -11,7 +12,7 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import GitHubIcon from "@mui/icons-material/GitHub";
 
 const Footer = () => {
-    const { darkMode } = useDarkMode();
+    const { darkMode } = useContext(DarkModeContex);
     const social = [
         {
             name: "Instagram",

@@ -1,7 +1,7 @@
-import { FC, useState, useEffect, useRef } from "react";
-import { useShopCart } from "../hooks/ShopCartContex";
+import { FC, useState, useEffect, useContext, useRef } from "react";
+import { ShopCartContex } from "../hooks/ShopCartContex";
+import { UserContex } from "../hooks/UserContex";
 import { API_URL } from "../helpers/configs";
-import { useUser } from "../hooks/UserContex";
 import useFetch from "../hooks/useFetch";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -29,8 +29,9 @@ interface ModalShopCartProps {
 }
 
 const ModalShopCart: FC<ModalShopCartProps> = ({ open, setOpen }) => {
-    const { shopCart, setShopCart, delProduct, clearShopCart } = useShopCart();
-    const { UserInfo } = useUser();
+    const { shopCart, setShopCart, delProduct, clearShopCart } =
+        useContext(ShopCartContex);
+    const { UserInfo } = useContext(UserContex);
     const { loading, response } = useFetch(`${API_URL}/purchase`, "POST");
 
     const total = useRef<number>(0);

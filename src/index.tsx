@@ -5,7 +5,7 @@ import { createRoot } from "react-dom/client";
 import App from "./App";
 
 // hooks
-import { DarkMode } from "./hooks/DarkModeContex";
+import { DarkModeInfo } from "./hooks/DarkModeContex";
 import { UserInfo } from "./hooks/UserContex";
 import { ShopCartInfo } from "./hooks/ShopCartContex";
 
@@ -19,11 +19,11 @@ import "@fontsource/roboto/700.css";
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
         <UserInfo>
-            <DarkMode>
+            <DarkModeInfo>
                 <ShopCartInfo>
                     <App />
                 </ShopCartInfo>
-            </DarkMode>
+            </DarkModeInfo>
         </UserInfo>
     </StrictMode>
 );

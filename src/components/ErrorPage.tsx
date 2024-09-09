@@ -1,6 +1,6 @@
-import { FC } from "react";
+import { useContext, FC } from "react";
 import { Typography } from "@mui/material";
-import { useDarkMode } from "../hooks/DarkModeContex";
+import { DarkModeContex } from "../hooks/DarkModeContex";
 import classNames from "classnames";
 import Divider from "@mui/material/Divider";
 
@@ -11,7 +11,7 @@ interface ErrorDataProps {
 }
 
 const ErrorPage: FC<ErrorDataProps> = ({ title, message, footer }) => {
-    const { themeTatailwind, darkMode } = useDarkMode();
+    const { themeTatailwind, darkMode } = useContext(DarkModeContex);
 
     return (
         <div className="flex justify-center w-full">

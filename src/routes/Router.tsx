@@ -1,5 +1,6 @@
+import { useContext } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useUser } from "../hooks/UserContex";
+import { UserContex } from "../hooks/UserContex";
 
 import Home from "./pages/Home";
 import Store from "./pages/Store";
@@ -10,7 +11,7 @@ import AdminDash from "./pages/AdminDash";
 import ErrorPage from "../components/ErrorPage";
 
 const Router = () => {
-    const { UserInfo } = useUser();
+    const { UserInfo } = useContext(UserContex);
 
     return (
         <BrowserRouter>

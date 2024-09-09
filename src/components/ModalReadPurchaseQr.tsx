@@ -1,8 +1,8 @@
-import { FC, useState, forwardRef } from "react";
-import { useDarkMode } from "../hooks/DarkModeContex";
+import { FC, useState, useContext, forwardRef } from "react";
+import { DarkModeContex } from "../hooks/DarkModeContex";
 import { Button, Typography } from "@mui/material";
 import { API_URL } from "../helpers/configs";
-import { useUser } from "../hooks/UserContex";
+import { UserContex } from "../hooks/UserContex";
 import { formatDate } from "../helpers/formatDate";
 import useFetch from "../hooks/useFetch";
 import AppBar from "@mui/material/AppBar";
@@ -53,8 +53,8 @@ const ModalReadPurchaseQr: FC<ModalReadPurchaseQrProps> = ({
     open,
     setOpen,
 }) => {
-    const { UserInfo } = useUser();
-    const { themeTatailwind } = useDarkMode();
+    const { UserInfo } = useContext(UserContex);
+    const { themeTatailwind } = useContext(DarkModeContex);
     const status = ["Pendiente", "Pagado", "Rechazado", "Anulado"];
 
     const { loading, response, succes, setSucces } = useFetch(

@@ -1,10 +1,11 @@
-import { useDarkMode } from "./hooks/DarkModeContex";
+import { useContext } from "react";
+import { DarkModeContex } from "./hooks/DarkModeContex";
 import classNames from "classnames";
 import Router from "./routes/Router";
 import Footer from "./components/Footer";
 
 const App = () => {
-    const { themeTatailwind } = useDarkMode();
+    const { themeTatailwind } = useContext(DarkModeContex);
 
     return (
         <div

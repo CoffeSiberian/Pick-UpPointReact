@@ -1,6 +1,6 @@
-import { FC, Fragment } from "react";
+import { FC, useContext, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "../hooks/UserContex";
+import { UserContex } from "../hooks/UserContex";
 import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -28,7 +28,7 @@ const MovileHeaderOptions: FC<MovileHeaderOptionsProps> = ({
     setOpenLogin,
 }) => {
     const navigate = useNavigate();
-    const { UserInfo } = useUser();
+    const { UserInfo } = useContext(UserContex);
 
     return (
         <Drawer

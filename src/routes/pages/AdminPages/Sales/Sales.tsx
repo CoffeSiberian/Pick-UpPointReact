@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import IconButton from "@mui/material/IconButton";
 import { API_URL } from "../../../../helpers/configs";
 import useFetch from "../../../../hooks/useFetch";
-import { useUser } from "../../../../hooks/UserContex";
+import { UserContex } from "../../../../hooks/UserContex";
 import { DataGrid, GridColumnVisibilityModel } from "@mui/x-data-grid";
 import Button from "@mui/material/Button";
 import ModalReadPurchaseQr from "../../../../components/ModalReadPurchaseQr";
@@ -18,7 +18,7 @@ import EditIcon from "@mui/icons-material/Edit";
 
 const Sales = () => {
     const loaded = useRef(false);
-    const { UserInfo } = useUser();
+    const { UserInfo } = useContext(UserContex);
     const status = ["Pendiente", "Pagado", "Rechazado", "Anulado"];
     const [OpenPurchaseQr, setOpenPurchaseQr] = useState<boolean>(false);
 

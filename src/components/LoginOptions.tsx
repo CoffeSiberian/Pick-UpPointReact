@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useUser } from "../hooks/UserContex";
+import { useState, useContext } from "react";
+import { UserContex } from "../hooks/UserContex";
 import { useNavigate } from "react-router-dom";
 import Tooltip from "@mui/material/Tooltip";
 import Button from "@mui/material/Button";
@@ -15,7 +15,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 const LoginOptions = () => {
     const [ProfileOpen, setProfileOpen] = useState<null | HTMLElement>(null);
 
-    const { UserInfo, logout } = useUser();
+    const { UserInfo, logout } = useContext(UserContex);
     const navigate = useNavigate();
 
     const handleLogout = () => {

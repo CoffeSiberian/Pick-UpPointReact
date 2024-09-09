@@ -1,12 +1,13 @@
+import { useContext } from "react";
 import { useParams } from "react-router-dom";
-import { useDarkMode } from "../../hooks/DarkModeContex";
+import { DarkModeContex } from "../../hooks/DarkModeContex";
 import Typography from "@mui/material/Typography";
 import QRCode from "react-qr-code";
 import Button from "@mui/material/Button";
 
 const RenderQrCode = () => {
     const { id } = useParams();
-    const { themeTatailwind } = useDarkMode();
+    const { themeTatailwind } = useContext(DarkModeContex);
 
     const onImageCownload = () => {
         const fileName = id ? id : "QRCode";

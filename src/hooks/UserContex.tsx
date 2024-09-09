@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, useEffect, useRef } from "react";
+import { createContext, useState, useEffect, useRef } from "react";
 import { dataGet } from "../helpers/dataFetch";
 import { API_URL } from "../helpers/configs";
 import { getTokenData, getTokenDataGiven } from "../helpers/getLocalJwt";
@@ -7,11 +7,9 @@ import { getTokenData, getTokenDataGiven } from "../helpers/getLocalJwt";
 import { UserContextTypes, ProviderProps } from "../types/ContexTypes";
 import { LocalJWTDefined } from "../types/LocalJWT";
 
-const UserContex = createContext<UserContextTypes>({} as UserContextTypes);
-
-export const useUser = (): UserContextTypes => {
-    return useContext(UserContex);
-};
+export const UserContex = createContext<UserContextTypes>(
+    {} as UserContextTypes
+);
 
 export const UserInfo = ({ children }: ProviderProps) => {
     const loaded = useRef<boolean>(false);

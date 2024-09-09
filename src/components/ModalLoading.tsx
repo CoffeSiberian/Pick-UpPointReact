@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { useDarkMode } from "../hooks/DarkModeContex";
+import { useContext, FC } from "react";
+import { DarkModeContex } from "../hooks/DarkModeContex";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
@@ -11,7 +11,7 @@ interface ModalLoadingProps {
 }
 
 const ModalLoading: FC<ModalLoadingProps> = ({ open }) => {
-    const { darkMode } = useDarkMode();
+    const { darkMode } = useContext(DarkModeContex);
 
     return (
         <Dialog open={open} aria-describedby="loading-info">

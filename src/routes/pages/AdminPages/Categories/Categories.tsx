@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import IconButton from "@mui/material/IconButton";
 import { API_URL } from "../../../../helpers/configs";
 import useFetch from "../../../../hooks/useFetch";
-import { useUser } from "../../../../hooks/UserContex";
+import { UserContex } from "../../../../hooks/UserContex";
 import {
     DataGrid,
     GridColumnVisibilityModel,
@@ -24,7 +24,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 const Categories = () => {
     const loaded = useRef(false);
-    const { UserInfo } = useUser();
+    const { UserInfo } = useContext(UserContex);
 
     const [userModalUpdate, setuserModalUpdate] =
         useState<CategoriesModalFormUpdateState>({

@@ -1,5 +1,5 @@
-import { useState, FC, useEffect } from "react";
-import { useUser } from "../../../../hooks/UserContex";
+import { useState, FC, useEffect, useContext } from "react";
+import { UserContex } from "../../../../hooks/UserContex";
 import { API_URL } from "../../../../helpers/configs";
 import useFetch from "../../../../hooks/useFetch";
 import Button from "@mui/material/Button";
@@ -31,7 +31,7 @@ const SalesModalFormUpdate: FC<CategoriesModalFormUpdateProps> = ({
     reloadPage,
     categoriesToEdit,
 }) => {
-    const { UserInfo } = useUser();
+    const { UserInfo } = useContext(UserContex);
     const { loading, response, succes, setSucces } = useFetch(
         `${API_URL}/categorie/name`,
         "PUT"

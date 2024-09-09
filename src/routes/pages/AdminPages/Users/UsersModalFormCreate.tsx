@@ -1,5 +1,5 @@
-import { useState, FC } from "react";
-import { useUser } from "../../../../hooks/UserContex";
+import { useState, useContext, FC } from "react";
+import { UserContex } from "../../../../hooks/UserContex";
 import { API_URL } from "../../../../helpers/configs";
 import useFetch from "../../../../hooks/useFetch";
 import Button from "@mui/material/Button";
@@ -35,7 +35,7 @@ const UsersModalFormCreate: FC<UserModalFormCreateProps> = ({
     openUserModalForm,
     reloadPage,
 }) => {
-    const { UserInfo } = useUser();
+    const { UserInfo } = useContext(UserContex);
     const { loading, response, succes, setSucces } = useFetch(
         `${API_URL}/user`,
         "POST"

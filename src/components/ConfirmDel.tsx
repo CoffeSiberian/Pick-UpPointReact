@@ -1,5 +1,5 @@
-import { FC, useState } from "react";
-import { useUser } from "../hooks/UserContex";
+import { FC, useState, useContext } from "react";
+import { UserContex } from "../hooks/UserContex";
 import useFetch from "../hooks/useFetch";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -32,7 +32,7 @@ const ConfirmDel: FC<ConfirmDelProps> = ({
     url,
     message,
 }) => {
-    const { UserInfo } = useUser();
+    const { UserInfo } = useContext(UserContex);
     const { response, loading, succes, setSucces } = useFetch(url, "DELETE");
     const [Error, setError] = useState<ResponseError>({
         status: 200,

@@ -1,11 +1,12 @@
+import { useContext } from "react";
 import { PieChart } from "@mui/x-charts/PieChart";
-import { useUser } from "../../../hooks/UserContex";
-import { useDarkMode } from "../../../hooks/DarkModeContex";
+import { UserContex } from "../../../hooks/UserContex";
+import { DarkModeContex } from "../../../hooks/DarkModeContex";
 import { Typography } from "@mui/material";
 
 const Summary = () => {
-    const { UserInfo } = useUser();
-    const { themeTatailwind } = useDarkMode();
+    const { UserInfo } = useContext(UserContex);
+    const { themeTatailwind } = useContext(DarkModeContex);
 
     const chartData = () => {
         return (

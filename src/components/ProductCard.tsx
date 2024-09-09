@@ -1,10 +1,10 @@
-import { FC } from "react";
+import { useContext, FC } from "react";
 import { useNavigate } from "react-router-dom";
-import { useShopCart } from "../hooks/ShopCartContex";
+import { ShopCartContex } from "../hooks/ShopCartContex";
+import { DarkModeContex } from "../hooks/DarkModeContex";
 import IconButton from "@mui/material/IconButton";
 import { Typography } from "@mui/material";
 import Link from "@mui/material/Link";
-import { useDarkMode } from "../hooks/DarkModeContex";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import classNames from "classnames";
@@ -21,8 +21,8 @@ const ProductCard: FC<ProductCardProps> = ({
     description,
     price,
 }) => {
-    const { themeTatailwind } = useDarkMode();
-    const { addProduct } = useShopCart();
+    const { themeTatailwind } = useContext(DarkModeContex);
+    const { addProduct } = useContext(ShopCartContex);
     const navigate = useNavigate();
 
     const handleAddProduct = () => {

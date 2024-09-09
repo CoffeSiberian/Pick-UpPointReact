@@ -1,5 +1,5 @@
-import { useState, FC, ChangeEvent } from "react";
-import { useUser } from "../hooks/UserContex";
+import { useState, useContext, FC, ChangeEvent } from "react";
+import { UserContex } from "../hooks/UserContex";
 import { API_URL, FK_STORE } from "../helpers/configs";
 import useFetch from "../hooks/useFetch";
 import Button from "@mui/material/Button";
@@ -54,7 +54,7 @@ interface LoginData {
 }
 
 const ModalLogin: FC<ModalLoginProps> = ({ open, openLogin, openRegister }) => {
-    const { setLocalJwt } = useUser();
+    const { setLocalJwt } = useContext(UserContex);
     const { loading, response, succes, setSucces } = useFetch(
         `${API_URL}/login`,
         "POST"
