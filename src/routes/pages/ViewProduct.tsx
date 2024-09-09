@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useRef } from "react";
+import { useState, useEffect, useContext, useCallback, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { ShopCartContex } from "../../hooks/ShopCartContex";
 import { DarkModeContex } from "../../hooks/DarkModeContex";
@@ -44,7 +44,7 @@ const ViewProduct = () => {
         { id: 3, name: "test", src: testImg },
     ];
 
-    const getData = async () => {
+    const getData = useCallback(async () => {
         const fetchResponse = await response({
             headers: { "Content-Type": "application/json" },
         });
@@ -54,14 +54,14 @@ const ViewProduct = () => {
         if (fetchResponse.status === 200) {
             setProduct(fetchResponse.data);
         }
-    };
+    }, [response]);
 
-    const idChange = () => {
+    const idChange = useCallback(() => {
         if (oldid.current !== newid) {
             getData();
             oldid.current = newid;
         }
-    };
+    }, [newid, getData]);
 
     const checkError = () => {
         return (
@@ -170,8 +170,8 @@ const ViewProduct = () => {
         if (!loaded.current) {
             getData();
             loaded.current = true;
-        } // eslint-disable-next-line
-    }, [newid]);
+        }
+    }, [newid, getData, idChange]);
 
     return (
         <>

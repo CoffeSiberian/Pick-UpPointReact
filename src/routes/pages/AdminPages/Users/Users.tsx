@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useContext } from "react";
+import { useState, useEffect, useRef, useContext, useCallback } from "react";
 import IconButton from "@mui/material/IconButton";
 import { API_URL } from "../../../../helpers/configs";
 import useFetch from "../../../../hooks/useFetch";
@@ -163,7 +163,7 @@ const Users = () => {
         pageSize: 30,
     });
 
-    const getUsers = async () => {
+    const getUsers = useCallback(async () => {
         if (!UserInfo) return;
 
         const data: UserListResponse | null = await response({
@@ -180,7 +180,7 @@ const Users = () => {
                 rows: data.data,
             });
         }
-    };
+    }, [UserInfo, dataToTable, response]);
 
     const reloadUsers = () => {
         getUsers();
@@ -206,8 +206,8 @@ const Users = () => {
         if (!loaded.current) {
             getUsers();
             loaded.current = true;
-        } // eslint-disable-next-line
-    }, []);
+        }
+    }, [getUsers]);
 
     return (
         <>

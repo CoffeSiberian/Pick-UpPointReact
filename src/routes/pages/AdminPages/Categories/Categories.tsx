@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useContext } from "react";
+import { useState, useEffect, useRef, useContext, useCallback } from "react";
 import IconButton from "@mui/material/IconButton";
 import { API_URL } from "../../../../helpers/configs";
 import useFetch from "../../../../hooks/useFetch";
@@ -133,7 +133,7 @@ const Categories = () => {
         pageSize: 30,
     });
 
-    const getCategories = async () => {
+    const getCategories = useCallback(async () => {
         if (!UserInfo) return;
 
         const data: CategoriesListResponse | null = await response({
@@ -150,11 +150,7 @@ const Categories = () => {
                 rows: data.data,
             });
         }
-    };
-
-    const reloadCategories = () => {
-        getCategories();
-    };
+    }, [UserInfo, dataToTable, response]);
 
     const openUserModalFormUpdate = (open: boolean) => {
         setuserModalUpdate({ ...userModalUpdate, open });
@@ -174,28 +170,28 @@ const Categories = () => {
 
     useEffect(() => {
         if (!loaded.current) {
-            reloadCategories();
+            getCategories();
             loaded.current = true;
-        } // eslint-disable-next-line
-    }, []);
+        }
+    }, [getCategories]);
 
     return (
         <>
             <CategoriesModalFormCreate
                 open={userModalForm}
                 openUserModalForm={setuserModalForm}
-                reloadPage={reloadCategories}
+                reloadPage={getCategories}
             />
             <SalesModalFormUpdate
                 open={userModalUpdate.open}
                 openCategoriesModalForm={openUserModalFormUpdate}
-                reloadPage={reloadCategories}
+                reloadPage={getCategories}
                 categoriesToEdit={userModalUpdate.categoriesToEdit}
             />
             <ConfirmDel
                 open={modalConfirmDel.open}
                 setOpen={setOpenConfirmDel}
-                reloadPage={reloadCategories}
+                reloadPage={getCategories}
                 url={modalConfirmDel.url}
                 message={modalConfirmDel.message}
             />

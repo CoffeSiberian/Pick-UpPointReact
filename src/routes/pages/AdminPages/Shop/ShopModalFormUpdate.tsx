@@ -151,8 +151,8 @@ const ShopModalFormUpdate: FC<ProductModalFormUpdateProps> = ({
                 price: productToEdit.price,
                 fk_category: productToEdit.fk_category,
             },
-        }); // eslint-disable-next-line
-    }, [productToEdit]);
+        });
+    }, [Form, productToEdit]);
 
     return (
         <>

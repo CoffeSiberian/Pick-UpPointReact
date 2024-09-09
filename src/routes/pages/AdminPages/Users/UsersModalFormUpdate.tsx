@@ -145,8 +145,8 @@ const UsersModalFormUpdate: FC<UserModalFormUpdateProps> = ({
                 email: userToEdit.email,
                 password: "",
             },
-        }); // eslint-disable-next-line
-    }, [userToEdit]);
+        });
+    }, [userForm, userToEdit]);
 
     return (
         <>

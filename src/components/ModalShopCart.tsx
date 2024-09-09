@@ -203,8 +203,8 @@ const ModalShopCart: FC<ModalShopCartProps> = ({ open, setOpen }) => {
             setOpen(false);
         } else if (shopCart.length === 0) {
             setOpen(false);
-        } // eslint-disable-next-line
-    }, [shopCart]);
+        }
+    }, [shopCart, setOpen]);
 
     return (
         <>

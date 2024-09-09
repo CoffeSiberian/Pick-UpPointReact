@@ -116,8 +116,8 @@ const CategoriesModalFormUpdate: FC<CategoriesModalFormUpdateProps> = ({
                 id: categoriesToEdit.id,
                 name: categoriesToEdit.name,
             },
-        }); // eslint-disable-next-line
-    }, [categoriesToEdit]);
+        });
+    }, [Form, categoriesToEdit]);
 
     return (
         <>

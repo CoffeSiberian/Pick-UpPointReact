@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import IconButton from "@mui/material/IconButton";
 import { API_URL, FK_STORE } from "../../../../helpers/configs";
 import useFetch from "../../../../hooks/useFetch";
@@ -169,7 +169,7 @@ const Shop = () => {
         pageSize: 30,
     });
 
-    const getData = async () => {
+    const getData = useCallback(async () => {
         const data: ProductsListResponse | null = await response({
             headers: {
                 "Content-Type": "application/json",
@@ -183,7 +183,7 @@ const Shop = () => {
                 rows: data.data,
             });
         }
-    };
+    }, [dataToTable, response]);
 
     const reloadData = () => {
         getData();
@@ -209,8 +209,8 @@ const Shop = () => {
         if (!loaded.current) {
             getData();
             loaded.current = true;
-        } // eslint-disable-next-line
-    }, []);
+        }
+    }, [getData]);
 
     return (
         <>

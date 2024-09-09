@@ -1,4 +1,4 @@
-import { FC, useEffect, useState, useRef } from "react";
+import { FC, useEffect, useState, useCallback, useRef } from "react";
 import { API_URL, FK_STORE } from "../../../../helpers/configs";
 import useFetch from "../../../../hooks/useFetch";
 
@@ -28,7 +28,7 @@ const ShopForms: FC<ProductFormsProps> = ({ productForm, setProductForm }) => {
     );
     const [Categories, setCategories] = useState<Categories[] | undefined>();
 
-    const getData = async () => {
+    const getData = useCallback(async () => {
         const data: CategoriesListResponse | null = await response({
             headers: {
                 "Content-Type": "application/json",
@@ -39,15 +39,15 @@ const ShopForms: FC<ProductFormsProps> = ({ productForm, setProductForm }) => {
         if (data.status === 200) {
             setCategories(data.data);
         }
-    };
+    }, [response]);
 
     useEffect(() => {
         if (!loaded.current) {
             loaded.current = true;
             getData();
             setSucces(false);
-        } // eslint-disable-next-line
-    }, []);
+        }
+    }, [getData, setSucces]);
 
     return (
         <div className="flex flex-col gap-4 mt-2">

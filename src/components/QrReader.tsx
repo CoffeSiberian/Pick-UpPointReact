@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, useRef } from "react";
+import { FC, useState, useEffect, useCallback, useRef } from "react";
 import {
     Html5Qrcode,
     CameraDevice,
@@ -22,11 +22,6 @@ const QrReader: FC<QrReaderProps> = ({ setScanResults }) => {
     const refCamera = useRef<Html5Qrcode | null>(null);
     const refCamSelected = useRef<boolean>(false);
 
-    const configs: Html5QrcodeCameraScanConfig = {
-        fps: 10,
-        qrbox: { width: 250, height: 250 },
-    };
-
     const handleChange = (event: SelectChangeEvent) => {
         setCameraId(event.target.value as string);
     };
@@ -41,15 +36,23 @@ const QrReader: FC<QrReaderProps> = ({ setScanResults }) => {
         setPermissions(false);
     };
 
-    const successCallback = (decodedText: string, scaner: Html5Qrcode) => {
-        scaner.stop();
-        refCamSelected.current = false;
-        setScanResults(decodedText);
-    };
+    const successCallback = useCallback(
+        (decodedText: string, scaner: Html5Qrcode) => {
+            scaner.stop();
+            refCamSelected.current = false;
+            setScanResults(decodedText);
+        },
+        [setScanResults]
+    );
 
     const errorCallback = () => {};
 
-    const startCamera = async () => {
+    const startCamera = useCallback(async () => {
+        const configs: Html5QrcodeCameraScanConfig = {
+            fps: 10,
+            qrbox: { width: 250, height: 250 },
+        };
+
         if (CameraId === null) return;
         if (refCamera.current === null) return;
         if (refCamSelected.current === true) {
@@ -64,7 +67,7 @@ const QrReader: FC<QrReaderProps> = ({ setScanResults }) => {
             errorCallback
         );
         refCamSelected.current = true;
-    };
+    }, [CameraId, successCallback]);
 
     const listCameras = (): JSX.Element => {
         if (ListCameras === undefined) return <></>;
@@ -97,8 +100,8 @@ const QrReader: FC<QrReaderProps> = ({ setScanResults }) => {
             refCamera.current = new Html5Qrcode("QrReaderDiv");
         }
 
-        startCamera(); // eslint-disable-next-line
-    }, [CameraId]);
+        startCamera();
+    }, [CameraId, startCamera]);
 
     return (
         <div className="flex flex-col justify-center items-center w-full">

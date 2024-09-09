@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import useFetch from "../hooks/useFetch";
 import { API_URL, FK_STORE } from "../helpers/configs";
 
@@ -24,7 +24,7 @@ const ProductsList = () => {
 
     const [products, setProducts] = useState<ProductResponseObject[]>([]);
 
-    const getData = async () => {
+    const getData = useCallback(async () => {
         const data: ProductsListResponse | null = await response({
             headers: {
                 "Content-Type": "application/json",
@@ -35,14 +35,14 @@ const ProductsList = () => {
         if (data.status === 200) {
             setProducts(data.data);
         }
-    };
+    }, [response]);
 
     useEffect(() => {
         if (!loaded.current) {
             getData();
             loaded.current = true;
-        } // eslint-disable-next-line
-    }, []);
+        }
+    }, [loaded, getData]);
 
     const renderProducts = (): JSX.Element => {
         return (
