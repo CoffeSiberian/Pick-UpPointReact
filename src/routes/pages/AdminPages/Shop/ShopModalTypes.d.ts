@@ -1,53 +1,53 @@
 interface ProductModalFormCreateProps {
-    open: boolean;
-    openProductModalForm: (open: boolean) => void;
-    reloadPage: () => void;
+	open: boolean;
+	openProductModalForm: (open: boolean) => void;
+	reloadPage: () => void;
 }
 
 interface ProductModalFormUpdateProps {
-    open: boolean;
-    openProductModalForm: (open: boolean) => void;
-    reloadPage: () => void;
-    productToEdit: ProductToEdit;
+	open: boolean;
+	openProductModalForm: (open: boolean) => void;
+	reloadPage: () => void;
+	productToEdit: ProductToEdit;
 }
 
 interface ProductModalFormUpdateState {
-    open: boolean;
-    productToEdit: ProductToEdit;
+	open: boolean;
+	productToEdit: ProductToEdit;
 }
 
 interface ProductToEdit {
-    id: string;
-    name: string;
-    description: string;
-    stock: number;
-    price: number;
-    fk_category: string;
+	id: string;
+	name: string;
+	description: string;
+	stock: number;
+	price: number;
+	fk_category: string;
 }
 
 interface ProductPayLoad {
-    id?: string;
-    name: string;
-    description: string;
-    stock: number;
-    price: number;
-    fk_category: string;
+	id?: string;
+	name: string;
+	description: string;
+	stock: number;
+	price: number;
+	fk_category: string;
 }
 
 interface ProductError {
-    name: boolean;
-    description: boolean;
-    stock: boolean;
-    price: boolean;
-    fk_category: boolean;
+	name: boolean;
+	description: boolean;
+	stock: boolean;
+	price: boolean;
+	fk_category: boolean;
 }
 
 interface ProductData {
-    payload: ProductPayLoad;
-    error: ProductError;
+	payload: ProductPayLoad;
+	error: ProductError;
 }
 
 interface ProductFormsProps {
-    productForm: ProductData;
-    setProductForm: (productForm: ProductData) => void;
+	productForm: ProductData;
+	setProductForm: (productForm: ProductData) => void;
 }

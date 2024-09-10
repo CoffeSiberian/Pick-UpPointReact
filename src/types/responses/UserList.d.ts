@@ -2,5 +2,5 @@ import { AxiosResponse } from "axios";
 import { Users } from "../model";
 
 export interface UserListResponse extends AxiosResponse {
-    data: [Users];
+	data: [Users];
 }

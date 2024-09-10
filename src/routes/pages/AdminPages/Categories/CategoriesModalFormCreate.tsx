@@ -25,156 +25,153 @@ import { categoriesNameSchema } from "../../../../schemas/categoriesSch";
 import { StandarResponse } from "../../../../types/responses/StandarResponse";
 
 const CategoriesModalFormCreate: FC<UserModalFormCreateProps> = ({
-    open,
-    openUserModalForm,
-    reloadPage,
+	open,
+	openUserModalForm,
+	reloadPage,
 }) => {
-    const { UserInfo } = useContext(UserContex);
-    const { loading, response, succes, setSucces } = useFetch(
-        `${API_URL}/categorie`,
-        "POST"
-    );
+	const { UserInfo } = useContext(UserContex);
+	const { loading, response, succes, setSucces } = useFetch(
+		`${API_URL}/categorie`,
+		"POST"
+	);
 
-    const [Error, setError] = useState<ResponseError>({
-        status: 200,
-        message: "",
-        error: false,
-    });
-    const [Form, setForm] = useState<CategoriesData>({
-        payload: {
-            name: "",
-        },
-        error: {
-            name: false,
-        },
-    });
+	const [Error, setError] = useState<ResponseError>({
+		status: 200,
+		message: "",
+		error: false,
+	});
+	const [Form, setForm] = useState<CategoriesData>({
+		payload: {
+			name: "",
+		},
+		error: {
+			name: false,
+		},
+	});
 
-    const validateForm = async (): Promise<boolean> => {
-        const NameValid = await categoriesNameSchema.isValid({
-            name: Form.payload.name,
-        });
+	const validateForm = async (): Promise<boolean> => {
+		const NameValid = await categoriesNameSchema.isValid({
+			name: Form.payload.name,
+		});
 
-        setForm({
-            ...Form,
-            error: {
-                name: !NameValid,
-            },
-        });
+		setForm({
+			...Form,
+			error: {
+				name: !NameValid,
+			},
+		});
 
-        return NameValid;
-    };
+		return NameValid;
+	};
 
-    const sendData = async () => {
-        const valid = await validateForm();
-        if (!valid) return;
-        if (UserInfo === null) return;
+	const sendData = async () => {
+		const valid = await validateForm();
+		if (!valid) return;
+		if (UserInfo === null) return;
 
-        const data: StandarResponse | null = await response(
-            {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${UserInfo.token}`,
-                },
-            },
-            JSON.stringify(Form.payload)
-        );
+		const data: StandarResponse | null = await response(
+			{
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${UserInfo.token}`,
+				},
+			},
+			JSON.stringify(Form.payload)
+		);
 
-        if (data === null) {
-            setError({
-                status: 500,
-                message: "Error, Intenta mas tarde",
-                error: true,
-            });
-            return;
-        }
+		if (data === null) {
+			setError({
+				status: 500,
+				message: "Error, Intenta mas tarde",
+				error: true,
+			});
+			return;
+		}
 
-        if (data.status === 200) {
-            openUserModalForm(false);
-            reloadPage();
-        } else if (data.status === 400 || data.status === 401) {
-            setError({
-                status: data.status,
-                message: "Error, Credenciales invalidas",
-                error: true,
-            });
-        } else {
-            setError({
-                status: data.status,
-                message: "Error, Intenta mas tarde",
-                error: true,
-            });
-        }
-    };
+		if (data.status === 200) {
+			openUserModalForm(false);
+			reloadPage();
+		} else if (data.status === 400 || data.status === 401) {
+			setError({
+				status: data.status,
+				message: "Error, Credenciales invalidas",
+				error: true,
+			});
+		} else {
+			setError({
+				status: data.status,
+				message: "Error, Intenta mas tarde",
+				error: true,
+			});
+		}
+	};
 
-    return (
-        <>
-            <ModalLoading open={loading} />
-            <SnakeBarInfo
-                open={Error.error}
-                message={Error.message}
-                severity="error"
-                handleClose={() => setError({ ...Error, error: false })}
-            />
-            <SnakeBarInfo
-                open={succes}
-                message="Categoria creada con exito"
-                severity="success"
-                handleClose={() => setSucces(false)}
-            />
-            <ModalError
-                open={Error.error}
-                message={Error.message}
-                setError={() => setError({ ...Error, error: false })}
-            />
-            <Dialog
-                open={open}
-                keepMounted={false}
-                onClose={() => openUserModalForm(false)}
-                aria-labelledby="child-modal-title"
-                aria-describedby="child-modal-description"
-                scroll="paper"
-                fullWidth
-            >
-                <DialogTitle className="flex justify-between">
-                    Agregar Categoria
-                    <IconButton
-                        aria-label="Cerrar ventana"
-                        onClick={() => openUserModalForm(false)}
-                    >
-                        <CloseIcon />
-                    </IconButton>
-                </DialogTitle>
-                <DialogContent>
-                    <CategoriesForms
-                        categoriesForm={Form}
-                        setCategoriesForm={setForm}
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button
-                        color="success"
-                        size="small"
-                        variant="contained"
-                        endIcon={<SaveAsIcon />}
-                        onClick={sendData}
-                    >
-                        Crear
-                    </Button>
-                    <Button
-                        color="info"
-                        size="small"
-                        variant="contained"
-                        endIcon={<CancelIcon />}
-                        onClick={() => {
-                            openUserModalForm(false);
-                        }}
-                    >
-                        Cancelar
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        </>
-    );
+	return (
+		<>
+			<ModalLoading open={loading} />
+			<SnakeBarInfo
+				open={Error.error}
+				message={Error.message}
+				severity="error"
+				handleClose={() => setError({ ...Error, error: false })}
+			/>
+			<SnakeBarInfo
+				open={succes}
+				message="Categoria creada con exito"
+				severity="success"
+				handleClose={() => setSucces(false)}
+			/>
+			<ModalError
+				open={Error.error}
+				message={Error.message}
+				setError={() => setError({ ...Error, error: false })}
+			/>
+			<Dialog
+				open={open}
+				keepMounted={false}
+				onClose={() => openUserModalForm(false)}
+				aria-labelledby="child-modal-title"
+				aria-describedby="child-modal-description"
+				scroll="paper"
+				fullWidth
+			>
+				<DialogTitle className="flex justify-between">
+					Agregar Categoria
+					<IconButton
+						aria-label="Cerrar ventana"
+						onClick={() => openUserModalForm(false)}
+					>
+						<CloseIcon />
+					</IconButton>
+				</DialogTitle>
+				<DialogContent>
+					<CategoriesForms categoriesForm={Form} setCategoriesForm={setForm} />
+				</DialogContent>
+				<DialogActions>
+					<Button
+						color="success"
+						size="small"
+						variant="contained"
+						endIcon={<SaveAsIcon />}
+						onClick={sendData}
+					>
+						Crear
+					</Button>
+					<Button
+						color="info"
+						size="small"
+						variant="contained"
+						endIcon={<CancelIcon />}
+						onClick={() => {
+							openUserModalForm(false);
+						}}
+					>
+						Cancelar
+					</Button>
+				</DialogActions>
+			</Dialog>
+		</>
+	);
 };
 
 export default CategoriesModalFormCreate;

@@ -17,13 +17,13 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
 createRoot(document.getElementById("root")!).render(
-    <StrictMode>
-        <UserInfo>
-            <DarkModeInfo>
-                <ShopCartInfo>
-                    <App />
-                </ShopCartInfo>
-            </DarkModeInfo>
-        </UserInfo>
-    </StrictMode>
+	<StrictMode>
+		<UserInfo>
+			<DarkModeInfo>
+				<ShopCartInfo>
+					<App />
+				</ShopCartInfo>
+			</DarkModeInfo>
+		</UserInfo>
+	</StrictMode>
 );

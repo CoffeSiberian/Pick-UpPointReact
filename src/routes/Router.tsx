@@ -11,67 +11,67 @@ import AdminDash from "./pages/AdminDash";
 import ErrorPage from "../components/ErrorPage";
 
 const Router = () => {
-    const { UserInfo } = useContext(UserContex);
+	const { UserInfo } = useContext(UserContex);
 
-    return (
-        <BrowserRouter>
-            <Routes>
-                <Route
-                    path="/"
-                    element={
-                        <>
-                            <Header />
-                            <Home />
-                        </>
-                    }
-                />
-                <Route
-                    path="/store"
-                    element={
-                        <>
-                            <Header />
-                            <Store />
-                        </>
-                    }
-                />
-                <Route
-                    path="/admin"
-                    element={
-                        <>
-                            <Header />
-                            {UserInfo !== null && UserInfo.isAdmin ? (
-                                <AdminDash />
-                            ) : (
-                                <ErrorPage
-                                    title="Acceso denegado"
-                                    message="No tienes permisos para acceder a esta sección"
-                                    footer="Si crees que esto es un error, contacta con el administrador"
-                                />
-                            )}
-                        </>
-                    }
-                />
-                <Route
-                    path="/product/:newid"
-                    element={
-                        <>
-                            <Header />
-                            <ViewProduct />
-                        </>
-                    }
-                />
-                <Route
-                    path="/purchase/qr/:id"
-                    element={
-                        <>
-                            <Header />
-                            <RenderQrCode />
-                        </>
-                    }
-                />
-            </Routes>
-        </BrowserRouter>
-    );
+	return (
+		<BrowserRouter>
+			<Routes>
+				<Route
+					path="/"
+					element={
+						<>
+							<Header />
+							<Home />
+						</>
+					}
+				/>
+				<Route
+					path="/store"
+					element={
+						<>
+							<Header />
+							<Store />
+						</>
+					}
+				/>
+				<Route
+					path="/admin"
+					element={
+						<>
+							<Header />
+							{UserInfo !== null && UserInfo.isAdmin ? (
+								<AdminDash />
+							) : (
+								<ErrorPage
+									title="Acceso denegado"
+									message="No tienes permisos para acceder a esta sección"
+									footer="Si crees que esto es un error, contacta con el administrador"
+								/>
+							)}
+						</>
+					}
+				/>
+				<Route
+					path="/product/:newid"
+					element={
+						<>
+							<Header />
+							<ViewProduct />
+						</>
+					}
+				/>
+				<Route
+					path="/purchase/qr/:id"
+					element={
+						<>
+							<Header />
+							<RenderQrCode />
+						</>
+					}
+				/>
+			</Routes>
+		</BrowserRouter>
+	);
 };
 
 export default Router;

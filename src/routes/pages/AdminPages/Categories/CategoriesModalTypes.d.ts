@@ -1,41 +1,41 @@
 interface CategoriesModalFormCreateProps {
-    open: boolean;
-    openUserModalForm: (open: boolean) => void;
-    reloadPage: () => void;
+	open: boolean;
+	openUserModalForm: (open: boolean) => void;
+	reloadPage: () => void;
 }
 
 interface CategoriesModalFormUpdateProps {
-    open: boolean;
-    openCategoriesModalForm: (open: boolean) => void;
-    reloadPage: () => void;
-    categoriesToEdit: CategoriesToEdit;
+	open: boolean;
+	openCategoriesModalForm: (open: boolean) => void;
+	reloadPage: () => void;
+	categoriesToEdit: CategoriesToEdit;
 }
 
 interface CategoriesModalFormUpdateState {
-    open: boolean;
-    categoriesToEdit: CategoriesToEdit;
+	open: boolean;
+	categoriesToEdit: CategoriesToEdit;
 }
 
 interface CategoriesToEdit {
-    id: string;
-    name: string;
+	id: string;
+	name: string;
 }
 
 interface CategoriesPayLoad {
-    id?: string;
-    name: string;
+	id?: string;
+	name: string;
 }
 
 interface CategoriesError {
-    name: boolean;
+	name: boolean;
 }
 
 interface CategoriesData {
-    payload: CategoriesPayLoad;
-    error: CategoriesError;
+	payload: CategoriesPayLoad;
+	error: CategoriesError;
 }
 
 interface CategoriesFormsProps {
-    categoriesForm: CategoriesData;
-    setCategoriesForm: (categoriesForm: CategoriesData) => void;
+	categoriesForm: CategoriesData;
+	setCategoriesForm: (categoriesForm: CategoriesData) => void;
 }

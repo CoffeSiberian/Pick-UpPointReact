@@ -15,64 +15,64 @@ import LoginOptions from "./LoginOptions";
 import PersonIcon from "@mui/icons-material/Person";
 
 interface MovileHeaderOptionsProps {
-    openDrawer: boolean;
-    store: HeaderOptions;
-    setOpenDrawer: (open: boolean) => void;
-    setOpenLogin: (open: boolean) => void;
+	openDrawer: boolean;
+	store: HeaderOptions;
+	setOpenDrawer: (open: boolean) => void;
+	setOpenLogin: (open: boolean) => void;
 }
 
 const MovileHeaderOptions: FC<MovileHeaderOptionsProps> = ({
-    openDrawer,
-    store,
-    setOpenDrawer,
-    setOpenLogin,
+	openDrawer,
+	store,
+	setOpenDrawer,
+	setOpenLogin,
 }) => {
-    const navigate = useNavigate();
-    const { UserInfo } = useContext(UserContex);
+	const navigate = useNavigate();
+	const { UserInfo } = useContext(UserContex);
 
-    return (
-        <Drawer
-            className="flex md:hidden"
-            open={openDrawer}
-            onClose={() => setOpenDrawer(false)}
-        >
-            <List>
-                {store.store.map((item, index) => (
-                    <Fragment key={`${index}fragment`}>
-                        <ListItem disablePadding>
-                            <ListItemButton
-                                key={`${index}item`}
-                                onClick={() => {
-                                    navigate(item.path);
-                                    setOpenDrawer(false);
-                                }}
-                            >
-                                <ListItemIcon>{item.icon}</ListItemIcon>
-                                <ListItemText primary={item.name} />
-                            </ListItemButton>
-                        </ListItem>
-                        <Divider />
-                    </Fragment>
-                ))}
-                <Fragment key="loginfragment">
-                    <ListItem disablePadding>
-                        <div className="flex w-full mt-2 justify-center">
-                            {UserInfo && <LoginOptions />}
-                            {UserInfo === null && (
-                                <Button
-                                    startIcon={<PersonIcon />}
-                                    color="inherit"
-                                    onClick={() => setOpenLogin(true)}
-                                >
-                                    Iniciar sesión
-                                </Button>
-                            )}
-                        </div>
-                    </ListItem>
-                </Fragment>
-            </List>
-        </Drawer>
-    );
+	return (
+		<Drawer
+			className="flex md:hidden"
+			open={openDrawer}
+			onClose={() => setOpenDrawer(false)}
+		>
+			<List>
+				{store.store.map((item, index) => (
+					<Fragment key={`${index}fragment`}>
+						<ListItem disablePadding>
+							<ListItemButton
+								key={`${index}item`}
+								onClick={() => {
+									navigate(item.path);
+									setOpenDrawer(false);
+								}}
+							>
+								<ListItemIcon>{item.icon}</ListItemIcon>
+								<ListItemText primary={item.name} />
+							</ListItemButton>
+						</ListItem>
+						<Divider />
+					</Fragment>
+				))}
+				<Fragment key="loginfragment">
+					<ListItem disablePadding>
+						<div className="mt-2 flex w-full justify-center">
+							{UserInfo && <LoginOptions />}
+							{UserInfo === null && (
+								<Button
+									startIcon={<PersonIcon />}
+									color="inherit"
+									onClick={() => setOpenLogin(true)}
+								>
+									Iniciar sesión
+								</Button>
+							)}
+						</div>
+					</ListItem>
+				</Fragment>
+			</List>
+		</Drawer>
+	);
 };
 
 export default MovileHeaderOptions;

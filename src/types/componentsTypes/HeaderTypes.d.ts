@@ -1,9 +1,9 @@
 interface HeaderOptions {
-    store: ItemStore[];
+	store: ItemStore[];
 }
 
 interface ItemStore {
-    name: string;
-    path: string;
-    icon: JSX.Element;
+	name: string;
+	path: string;
+	icon: JSX.Element;
 }

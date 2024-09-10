@@ -1,35 +1,35 @@
 interface SalesModalFormUpdateProps {
-    open: boolean;
-    openSalesModalForm: (open: boolean) => void;
-    reloadPage: () => void;
-    categoriesToEdit: SalesToEdit;
+	open: boolean;
+	openSalesModalForm: (open: boolean) => void;
+	reloadPage: () => void;
+	categoriesToEdit: SalesToEdit;
 }
 
 interface SalesModalFormUpdateState {
-    open: boolean;
-    categoriesToEdit: SalesToEdit;
+	open: boolean;
+	categoriesToEdit: SalesToEdit;
 }
 
 interface SalesToEdit {
-    id: string;
-    name: string;
+	id: string;
+	name: string;
 }
 
 interface SalesPayLoad {
-    id?: string;
-    name: string;
+	id?: string;
+	name: string;
 }
 
 interface SalesError {
-    name: boolean;
+	name: boolean;
 }
 
 interface SalesData {
-    payload: SalesPayLoad;
-    error: SalesError;
+	payload: SalesPayLoad;
+	error: SalesError;
 }
 
 interface SalesFormsProps {
-    salesForm: SalesData;
-    setSalesForm: (data: SalesData) => void;
+	salesForm: SalesData;
+	setSalesForm: (data: SalesData) => void;
 }

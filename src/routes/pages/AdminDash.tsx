@@ -18,78 +18,78 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 
 const AdminDash = () => {
-    const [value, setValue] = useState("1");
+	const [value, setValue] = useState("1");
 
-    return (
-        <div className="flex flex-col p-2 justify-center">
-            <TabContext value={value}>
-                <div className="flex justify-center items-center">
-                    <TabList
-                        variant="scrollable"
-                        scrollButtons
-                        allowScrollButtonsMobile
-                        textColor="secondary"
-                        onChange={(_, value) => setValue(value)}
-                        aria-label="options-admin"
-                    >
-                        <Tab
-                            icon={<QueryStatsIcon />}
-                            iconPosition="start"
-                            label="Resumen"
-                            value="1"
-                        />
-                        <Tab
-                            icon={<PersonIcon />}
-                            iconPosition="start"
-                            label="Usuarios"
-                            value="2"
-                        />
-                        <Tab
-                            icon={<AddShoppingCartIcon />}
-                            iconPosition="start"
-                            label="Tienda"
-                            value="3"
-                        />
-                        <Tab
-                            icon={<CardMembershipIcon />}
-                            iconPosition="start"
-                            label="Categorias"
-                            value="4"
-                        />
-                        <Tab
-                            icon={<StorefrontIcon />}
-                            iconPosition="start"
-                            label="Ventas"
-                            value="5"
-                        />
-                    </TabList>
-                </div>
-                <Divider
-                    className="p-2"
-                    variant="middle"
-                    light={false}
-                    sx={{ borderBottomWidth: 3 }}
-                />
-                <div className="flex flex-col justify-center">
-                    <TabPanel value="1">
-                        <Summary />
-                    </TabPanel>
-                    <TabPanel value="2">
-                        <Users />
-                    </TabPanel>
-                    <TabPanel value="3">
-                        <Shop />
-                    </TabPanel>
-                    <TabPanel value="4">
-                        <Categories />
-                    </TabPanel>
-                    <TabPanel value="5">
-                        <Sales />
-                    </TabPanel>
-                </div>
-            </TabContext>
-        </div>
-    );
+	return (
+		<div className="flex flex-col justify-center p-2">
+			<TabContext value={value}>
+				<div className="flex items-center justify-center">
+					<TabList
+						variant="scrollable"
+						scrollButtons
+						allowScrollButtonsMobile
+						textColor="secondary"
+						onChange={(_, value) => setValue(value)}
+						aria-label="options-admin"
+					>
+						<Tab
+							icon={<QueryStatsIcon />}
+							iconPosition="start"
+							label="Resumen"
+							value="1"
+						/>
+						<Tab
+							icon={<PersonIcon />}
+							iconPosition="start"
+							label="Usuarios"
+							value="2"
+						/>
+						<Tab
+							icon={<AddShoppingCartIcon />}
+							iconPosition="start"
+							label="Tienda"
+							value="3"
+						/>
+						<Tab
+							icon={<CardMembershipIcon />}
+							iconPosition="start"
+							label="Categorias"
+							value="4"
+						/>
+						<Tab
+							icon={<StorefrontIcon />}
+							iconPosition="start"
+							label="Ventas"
+							value="5"
+						/>
+					</TabList>
+				</div>
+				<Divider
+					className="p-2"
+					variant="middle"
+					light={false}
+					sx={{ borderBottomWidth: 3 }}
+				/>
+				<div className="flex flex-col justify-center">
+					<TabPanel value="1">
+						<Summary />
+					</TabPanel>
+					<TabPanel value="2">
+						<Users />
+					</TabPanel>
+					<TabPanel value="3">
+						<Shop />
+					</TabPanel>
+					<TabPanel value="4">
+						<Categories />
+					</TabPanel>
+					<TabPanel value="5">
+						<Sales />
+					</TabPanel>
+				</div>
+			</TabContext>
+		</div>
+	);
 };
 
 export default AdminDash;

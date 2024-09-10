@@ -1,8 +1,8 @@
 import { AxiosResponse } from "axios";
 
 interface StandarResponse extends AxiosResponse {
-    data: {
-        status: number;
-        message: string;
-    };
+	data: {
+		status: number;
+		message: string;
+	};
 }
