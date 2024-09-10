@@ -140,9 +140,10 @@ const ShopModalFormUpdate: FC<ProductModalFormUpdateProps> = ({
     };
 
     useEffect(() => {
-        if (productToEdit === null) return;
+        if (!productToEdit) return;
+        if (!open) return;
+
         setForm({
-            ...Form,
             payload: {
                 id: productToEdit.id,
                 name: productToEdit.name,
@@ -151,8 +152,15 @@ const ShopModalFormUpdate: FC<ProductModalFormUpdateProps> = ({
                 price: productToEdit.price,
                 fk_category: productToEdit.fk_category,
             },
+            error: {
+                name: false,
+                description: false,
+                stock: false,
+                price: false,
+                fk_category: false,
+            },
         });
-    }, [Form, productToEdit]);
+    }, [productToEdit, open]);
 
     return (
         <>

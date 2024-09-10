@@ -110,16 +110,19 @@ const SalesModalFormUpdate: FC<CategoriesModalFormUpdateProps> = ({
     };
 
     useEffect(() => {
-        if (categoriesToEdit === null) return;
+        if (!categoriesToEdit) return;
+        if (!open) return;
 
         setForm({
-            ...Form,
             payload: {
                 id: categoriesToEdit.id,
                 name: categoriesToEdit.name,
             },
+            error: {
+                name: false,
+            },
         });
-    }, [Form, categoriesToEdit]);
+    }, [categoriesToEdit, open]);
 
     return (
         <>

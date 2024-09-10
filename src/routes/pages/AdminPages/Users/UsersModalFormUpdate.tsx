@@ -134,9 +134,10 @@ const UsersModalFormUpdate: FC<UserModalFormUpdateProps> = ({
     };
 
     useEffect(() => {
-        if (userToEdit === null) return;
+        if (!userToEdit) return;
+        if (!open) return;
+
         setUserForm({
-            ...userForm,
             payload: {
                 id: userToEdit.id,
                 rut: userToEdit.rut,
@@ -145,8 +146,14 @@ const UsersModalFormUpdate: FC<UserModalFormUpdateProps> = ({
                 email: userToEdit.email,
                 password: "",
             },
+            error: {
+                rut: false,
+                name: false,
+                email: false,
+                password: false,
+            },
         });
-    }, [userForm, userToEdit]);
+    }, [userToEdit, open]);
 
     return (
         <>
