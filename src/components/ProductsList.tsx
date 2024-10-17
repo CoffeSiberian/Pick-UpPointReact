@@ -33,7 +33,7 @@ const ProductsList = () => {
 
 		if (!data) return;
 		if (data.status === 200) {
-			setProducts(data.data);
+			setProducts(data.data.products);
 		}
 	}, [response]);
 

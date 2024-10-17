@@ -2,7 +2,7 @@ import { AxiosResponse } from "axios";
 import { Products, Categories, Images_Products, Stocks } from "../model";
 
 export interface ProductsListResponse extends AxiosResponse {
-	data: ProductResponseObject[];
+	data: { products: ProductResponseObject[] };
 }
 
 export interface ProductResponseObject extends Products {

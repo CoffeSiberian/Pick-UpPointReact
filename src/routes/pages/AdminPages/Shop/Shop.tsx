@@ -177,7 +177,7 @@ const Shop = () => {
 		if (data.status === 200) {
 			setdataToTable({
 				...dataToTable,
-				rows: data.data,
+				rows: data.data.products,
 			});
 		}
 	}, [dataToTable, response]);
