@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 
 export interface PurchaseListResponse extends AxiosResponse {
-	data: PurchaseListResponseObject[];
+	data: { purchases: PurchaseListResponseObject[] };
 }
 
 export interface PurchaseResponseQr extends AxiosResponse {

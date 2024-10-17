@@ -144,7 +144,7 @@ const Categories = () => {
 		if (data.status === 200) {
 			setdataToTable({
 				...dataToTable,
-				rows: data.data,
+				rows: data.data.categories,
 			});
 		}
 	}, [UserInfo, dataToTable, response]);
