@@ -37,7 +37,7 @@ const ShopForms: FC<ProductFormsProps> = ({ productForm, setProductForm }) => {
 
 		if (!data) return;
 		if (data.status === 200) {
-			setCategories(data.data);
+			setCategories(data.data.categories);
 		}
 	}, [response]);
 
