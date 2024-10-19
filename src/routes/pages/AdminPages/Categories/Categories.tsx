@@ -114,7 +114,7 @@ const Categories = () => {
 		rows: [],
 	});
 	const { response, loading } = useFetch(
-		`${API_URL}/categories?store=${UserInfo?.fk_store}`,
+		`${API_URL}/categoriesadmin?store=${UserInfo?.fk_store}&limit_start=0&limit_end=15`,
 		"GET"
 	);
 

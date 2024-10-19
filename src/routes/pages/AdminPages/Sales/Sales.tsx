@@ -167,7 +167,7 @@ const Sales = () => {
 		pageSize: 30,
 	});
 
-	const getCategories = async () => {
+	const getSales = async () => {
 		if (!UserInfo) return;
 
 		const data: PurchaseListResponse | null = await response({
@@ -186,8 +186,8 @@ const Sales = () => {
 		}
 	};
 
-	const reloadCategories = () => {
-		getCategories();
+	const reloadSales = () => {
+		getSales();
 	};
 
 	/*     const openUserModalFormUpdate = (open: boolean) => {
@@ -196,7 +196,7 @@ const Sales = () => {
 
 	useEffect(() => {
 		if (!loaded.current) {
-			reloadCategories();
+			reloadSales();
 			loaded.current = true;
 		} // eslint-disable-next-line
 	}, []);
