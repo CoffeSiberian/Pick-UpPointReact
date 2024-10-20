@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import Divider from "@mui/material/Divider";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
@@ -17,50 +17,63 @@ import PersonIcon from "@mui/icons-material/Person";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 
+type AdminDashTabs =
+	| "summary"
+	| "users"
+	| "shop"
+	| "categories"
+	| "sales"
+	| undefined;
+
 const AdminDash = () => {
-	const [value, setValue] = useState("1");
+	const { page } = useParams();
+	const navigate = useNavigate();
+
+	const setDashTab = (page: AdminDashTabs) => {
+		navigate(`/admin/${page}`);
+	};
 
 	return (
 		<div className="flex flex-col justify-center p-2">
-			<TabContext value={value}>
+			<TabContext value={page ? page : "summary"}>
 				<div className="flex items-center justify-center">
 					<TabList
 						variant="scrollable"
 						scrollButtons
 						allowScrollButtonsMobile
 						textColor="secondary"
-						onChange={(_, value) => setValue(value)}
+						onChange={(_, value) => setDashTab(value)}
 						aria-label="options-admin"
 					>
 						<Tab
 							icon={<QueryStatsIcon />}
 							iconPosition="start"
 							label="Resumen"
-							value="1"
+							value="summary"
 						/>
 						<Tab
 							icon={<PersonIcon />}
 							iconPosition="start"
 							label="Usuarios"
-							value="2"
+							value="users"
 						/>
 						<Tab
 							icon={<AddShoppingCartIcon />}
 							iconPosition="start"
 							label="Tienda"
-							value="3"
+							value="shop"
 						/>
 						<Tab
 							icon={<CardMembershipIcon />}
 							iconPosition="start"
 							label="Categorias"
-							value="4"
+							value="categories"
 						/>
 						<Tab
 							icon={<StorefrontIcon />}
 							iconPosition="start"
 							label="Ventas"
-							value="5"
+							value="sales"
 						/>
 					</TabList>
 				</div>
@@ -71,19 +84,19 @@ const AdminDash = () => {
 					sx={{ borderBottomWidth: 3 }}
 				/>
 				<div className="flex flex-col justify-center">
-					<TabPanel value="1">
+					<TabPanel value="summary">
 						<Summary />
 					</TabPanel>
-					<TabPanel value="2">
+					<TabPanel value="users">
 						<Users />
 					</TabPanel>
-					<TabPanel value="3">
+					<TabPanel value="shop">
 						<Shop />
 					</TabPanel>
-					<TabPanel value="4">
+					<TabPanel value="categories">
 						<Categories />
 					</TabPanel>
-					<TabPanel value="5">
+					<TabPanel value="sales">
 						<Sales />
 					</TabPanel>
 				</div>

@@ -12,6 +12,7 @@ import Button from "@mui/material/Button";
 import UsersModalFormCrate from "./UsersModalFormCreate";
 import UsersModalFormUpdate from "./UsersModalFormUpdate";
 import ConfirmDel from "../../../../components/ConfirmDel";
+import UserSalesModal from "./UserSalesModal";
 
 // types
 import { UserListResponse } from "../../../../types/responses/UserList";
@@ -45,6 +46,11 @@ const Users = () => {
 		url: "",
 		message: "",
 	});
+	const [userModalSales, setUserModalSales] = useState({
+		open: false,
+		username: "",
+		userId: "",
+	});
 	const [dataToTable, setdataToTable] = useState<Table>({
 		columns: [
 			{ field: "id", headerName: "ID", width: 70, editable: false },
@@ -72,18 +78,6 @@ const Users = () => {
 				field: "createdAt",
 				type: "dateTime",
 				headerName: "Creado",
-				width: 180,
-				editable: false,
-				valueGetter: (date) => {
-					if (typeof date === "string") {
-						return new Date(date);
-					}
-				},
-			},
-			{
-				field: "updatedAt",
-				type: "dateTime",
-				headerName: "Actualizado",
 				width: 180,
 				editable: false,
 				valueGetter: (date) => {
@@ -130,7 +124,13 @@ const Users = () => {
 							<DeleteForeverIcon />
 						</IconButton>
 						<IconButton
-							onClick={() => console.log(params.row.id)}
+							onClick={() => {
+								setUserModalSales({
+									open: true,
+									username: params.row.name,
+									userId: params.row.id,
+								});
+							}}
 							size="small"
 							aria-label="Historial"
 							color="warning"
@@ -191,6 +191,10 @@ const Users = () => {
 		setmodalConfirmDel({ ...modalConfirmDel, open: close });
 	};
 
+	const setOpenUserSales = (open: boolean) => {
+		setUserModalSales({ ...userModalSales, open });
+	};
+
 	const setDataToConfirmDel = (idUser: string, username: string) => {
 		setmodalConfirmDel({
 			url: `${API_URL}/user?id=${idUser}`,
@@ -219,6 +223,12 @@ const Users = () => {
 				reloadPage={reloadUsers}
 				userToEdit={userModalUpdate.userToEdit}
 			/>
+			<UserSalesModal
+				open={userModalSales.open}
+				openUserSalesProps={setOpenUserSales}
+				username={userModalSales.username}
+				userId={userModalSales.userId}
+			/>
 			<ConfirmDel
 				open={modalConfirmDel.open}
 				setOpen={setOpenConfirmDel}
@@ -240,8 +250,7 @@ const Users = () => {
 				</div>
 				<div className="flex justify-center">
 					<DataGrid
-						className="max-w-[1175px]"
-						autoHeight={true}
+						className="max-w-[993px]"
 						{...dataToTable}
 						loading={loading}
 						pageSizeOptions={[30]}
@@ -252,6 +261,11 @@ const Users = () => {
 						onColumnVisibilityModelChange={(newModel) =>
 							setColumnVisibilityModel(newModel)
 						}
+						disableColumnFilter
+						disableColumnResize
+						disableColumnSorting
+						disableDensitySelector
+						disableRowSelectionOnClick
 					/>
 				</div>
 			</div>

@@ -24,7 +24,7 @@ const LoginOptions = () => {
 	};
 
 	const handleAdminPanel = () => {
-		navigate("/admin");
+		navigate("/admin/summary");
 		setProfileOpen(null);
 	};
 

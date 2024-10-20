@@ -64,6 +64,7 @@ export interface Purchases {
 	payment_successful: boolean;
 	retired: boolean;
 	fk_user: string;
+	fk_store: string;
 }
 
 export interface Purchases_Items {

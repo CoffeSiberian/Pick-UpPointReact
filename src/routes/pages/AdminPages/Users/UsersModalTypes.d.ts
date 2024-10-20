@@ -11,6 +11,13 @@ interface UserModalFormUpdateProps {
 	userToEdit: UserToEdit;
 }
 
+interface UserModalSalesProps {
+	open: boolean;
+	username: string;
+	userId: string;
+	openUserSalesProps: (open: boolean) => void;
+}
+
 interface UserModalFormUpdateState {
 	open: boolean;
 	userToEdit: UserToEdit;
