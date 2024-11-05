@@ -7,6 +7,7 @@ import ViewProduct from "./pages/ViewProduct";
 import RenderQrCode from "./pages/RenderQrCode";
 import AdminDash from "./pages/AdminDash";
 import AdminRouteValidation from "../components/AdminRouteValidation";
+import ViewUser from "./pages/AdminPages/Users/ViewUser";
 
 const Router = () => {
 	return (
@@ -18,6 +19,10 @@ const Router = () => {
 					<Route
 						path="/admin/:page"
 						element={<AdminRouteValidation element={AdminDash} />}
+					/>
+					<Route
+						path="/admin/users/:id"
+						element={<AdminRouteValidation element={ViewUser} />}
 					/>
 					<Route
 						path="/admin"

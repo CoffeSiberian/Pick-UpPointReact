@@ -9,6 +9,7 @@ import {
 import { ShopCartContextTypes, ProviderProps } from "../types/ContexTypes";
 import { ShopCartDataDefined } from "../types/LocalShopCart";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const ShopCartContex = createContext<ShopCartContextTypes>(
 	{} as ShopCartContextTypes
 );

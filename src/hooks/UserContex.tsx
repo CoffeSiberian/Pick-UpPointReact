@@ -7,6 +7,7 @@ import { getTokenData, getTokenDataGiven } from "../helpers/getLocalJwt";
 import { UserContextTypes, ProviderProps } from "../types/ContexTypes";
 import { LocalJWTDefined } from "../types/LocalJWT";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const UserContex = createContext<UserContextTypes>(
 	{} as UserContextTypes
 );

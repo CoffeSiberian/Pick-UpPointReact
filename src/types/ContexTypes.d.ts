@@ -6,12 +6,14 @@ export interface DarkModeTypes {
 		main: string;
 		color: string;
 		border_color: string;
+		text_color: string;
 	};
 	secondary: {
 		main: string;
 		main_contrast: string;
 		color: string;
 		border_color: string;
+		text_color: string;
 	};
 }
 

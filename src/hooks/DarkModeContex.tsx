@@ -8,6 +8,7 @@ import {
 	ProviderProps,
 } from "../types/ContexTypes";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const DarkModeContex = createContext<DarkModeContextTypes>(
 	{} as DarkModeContextTypes
 );
@@ -42,12 +43,14 @@ export const DarkModeInfo = ({ children }: ProviderProps) => {
 			main: "bg-neutral-900",
 			color: "white",
 			border_color: "hover:border-cyan-600",
+			text_color: "text-white",
 		},
 		secondary: {
 			main: "bg-stone-800",
 			main_contrast: "bg-stone-600",
 			color: "white",
 			border_color: "hover:border-cyan-600",
+			text_color: "text-stone-400",
 		},
 	};
 
@@ -56,12 +59,14 @@ export const DarkModeInfo = ({ children }: ProviderProps) => {
 			main: "bg-white",
 			color: "black",
 			border_color: "hover:border-cyan-600",
+			text_color: "text-black",
 		},
 		secondary: {
 			main: "bg-gray-300",
 			main_contrast: "bg-gray-200",
 			color: "black",
 			border_color: "hover:border-cyan-600",
+			text_color: "text-stone-600",
 		},
 	};
 

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useContext, useCallback } from "react";
-import IconButton from "@mui/material/IconButton";
 import { API_URL } from "../../../../helpers/configs";
+import { useNavigate } from "react-router-dom";
 import useFetch from "../../../../hooks/useFetch";
 import { UserContex } from "../../../../hooks/UserContex";
 import {
@@ -9,10 +9,11 @@ import {
 	GridRenderCellParams,
 } from "@mui/x-data-grid";
 import Button from "@mui/material/Button";
+
+// modals
 import UsersModalFormCrate from "./UsersModalFormCreate";
 import UsersModalFormUpdate from "./UsersModalFormUpdate";
 import ConfirmDel from "../../../../components/ConfirmDel";
-import UserSalesModal from "./UserSalesModal";
 
 // types
 import { UserListResponse } from "../../../../types/responses/UserList";
@@ -22,10 +23,12 @@ import { Table, modalConfirm } from "./UsersType";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import PermContactCalendarIcon from "@mui/icons-material/PermContactCalendar";
+import IconButton from "@mui/material/IconButton";
 
 const Users = () => {
 	const loaded = useRef(false);
+	const navigate = useNavigate();
 	const { UserInfo } = useContext(UserContex);
 
 	const [userModalUpdate, setuserModalUpdate] =
@@ -46,11 +49,7 @@ const Users = () => {
 		url: "",
 		message: "",
 	});
-	const [userModalSales, setUserModalSales] = useState({
-		open: false,
-		username: "",
-		userId: "",
-	});
+
 	const [dataToTable, setdataToTable] = useState<Table>({
 		columns: [
 			{ field: "id", headerName: "ID", width: 70, editable: false },
@@ -124,18 +123,12 @@ const Users = () => {
 							<DeleteForeverIcon />
 						</IconButton>
 						<IconButton
-							onClick={() => {
-								setUserModalSales({
-									open: true,
-									username: params.row.name,
-									userId: params.row.id,
-								});
-							}}
+							onClick={() => navigate(`/admin/users/${params.row.id}`)}
 							size="small"
 							aria-label="Historial"
 							color="warning"
 						>
-							<MonetizationOnIcon />
+							<PermContactCalendarIcon />
 						</IconButton>
 					</div>
 				),
@@ -191,10 +184,6 @@ const Users = () => {
 		setmodalConfirmDel({ ...modalConfirmDel, open: close });
 	};
 
-	const setOpenUserSales = (open: boolean) => {
-		setUserModalSales({ ...userModalSales, open });
-	};
-
 	const setDataToConfirmDel = (idUser: string, username: string) => {
 		setmodalConfirmDel({
 			url: `${API_URL}/user?id=${idUser}`,
@@ -222,12 +211,6 @@ const Users = () => {
 				openUserModalForm={openUserModalFormUpdate}
 				reloadPage={reloadUsers}
 				userToEdit={userModalUpdate.userToEdit}
-			/>
-			<UserSalesModal
-				open={userModalSales.open}
-				openUserSalesProps={setOpenUserSales}
-				username={userModalSales.username}
-				userId={userModalSales.userId}
 			/>
 			<ConfirmDel
 				open={modalConfirmDel.open}
