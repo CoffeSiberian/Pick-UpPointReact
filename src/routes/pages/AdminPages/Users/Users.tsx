@@ -8,6 +8,7 @@ import {
 	GridColumnVisibilityModel,
 	GridRenderCellParams,
 } from "@mui/x-data-grid";
+import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 
 // modals
@@ -219,7 +220,7 @@ const Users = () => {
 				url={modalConfirmDel.url}
 				message={modalConfirmDel.message}
 			/>
-			<div className="flex flex-col gap-3">
+			<div className="flex w-full flex-col gap-3">
 				<div className="flex justify-end">
 					<Button
 						color="success"
@@ -231,9 +232,14 @@ const Users = () => {
 						Crear Usuario
 					</Button>
 				</div>
-				<div className="flex min-h-52 flex-col items-center">
+				<Paper
+					sx={{
+						display: "flex",
+						flexDirection: "column",
+						minHeight: "400px",
+					}}
+				>
 					<DataGrid
-						className="max-w-[993px]"
 						{...dataToTable}
 						loading={loading}
 						pageSizeOptions={[30]}
@@ -250,7 +256,7 @@ const Users = () => {
 						disableDensitySelector
 						disableRowSelectionOnClick
 					/>
-				</div>
+				</Paper>
 			</div>
 		</>
 	);

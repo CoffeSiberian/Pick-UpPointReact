@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import IconButton from "@mui/material/IconButton";
 import { API_URL, FK_STORE } from "../../../../helpers/configs";
 import useFetch from "../../../../hooks/useFetch";
 import {
@@ -7,7 +6,11 @@ import {
 	GridColumnVisibilityModel,
 	GridRenderCellParams,
 } from "@mui/x-data-grid";
+import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+
+// modals
 import SalesModalFormCrate from "./ShopModalFormCreate";
 import SalesModalFormUpdate from "./ShopModalFormUpdate";
 import ConfirmDel from "../../../../components/ConfirmDel";
@@ -85,18 +88,6 @@ const Shop = () => {
 				field: "createdAt",
 				type: "dateTime",
 				headerName: "Creado",
-				width: 180,
-				editable: false,
-				valueGetter: (date) => {
-					if (typeof date === "string") {
-						return new Date(date);
-					}
-				},
-			},
-			{
-				field: "updatedAt",
-				type: "dateTime",
-				headerName: "Actualizado",
 				width: 180,
 				editable: false,
 				valueGetter: (date) => {
@@ -229,7 +220,7 @@ const Shop = () => {
 				url={modalConfirmDel.url}
 				message={modalConfirmDel.message}
 			/>
-			<div className="flex flex-col gap-3">
+			<div className="flex w-full flex-col gap-3">
 				<div className="flex justify-end">
 					<Button
 						color="success"
@@ -241,7 +232,13 @@ const Shop = () => {
 						Crear Producto
 					</Button>
 				</div>
-				<div className="flex min-h-52 flex-col items-center">
+				<Paper
+					sx={{
+						display: "flex",
+						flexDirection: "column",
+						minHeight: "400px",
+					}}
+				>
 					<DataGrid
 						className="max-w-[1310px]"
 						{...dataToTable}
@@ -254,8 +251,13 @@ const Shop = () => {
 						onColumnVisibilityModelChange={(newModel) =>
 							setColumnVisibilityModel(newModel)
 						}
+						disableColumnFilter
+						disableColumnResize
+						disableColumnSorting
+						disableDensitySelector
+						disableRowSelectionOnClick
 					/>
-				</div>
+				</Paper>
 			</div>
 		</>
 	);

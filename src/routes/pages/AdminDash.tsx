@@ -83,7 +83,7 @@ const AdminDash = () => {
 					light={false}
 					sx={{ borderBottomWidth: 3 }}
 				/>
-				<div className="flex flex-col justify-center">
+				<div className="flex flex-col items-center">
 					<TabPanel value="summary">
 						<Summary />
 					</TabPanel>

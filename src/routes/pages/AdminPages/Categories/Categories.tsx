@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef, useContext, useCallback } from "react";
-import IconButton from "@mui/material/IconButton";
 import { API_URL } from "../../../../helpers/configs";
 import useFetch from "../../../../hooks/useFetch";
 import { UserContex } from "../../../../hooks/UserContex";
@@ -8,7 +7,11 @@ import {
 	GridColumnVisibilityModel,
 	GridRenderCellParams,
 } from "@mui/x-data-grid";
+import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+
+// modals
 import CategoriesModalFormCreate from "./CategoriesModalFormCreate";
 import SalesModalFormUpdate from "./CategoriesModalFormUpdate";
 import ConfirmDel from "../../../../components/ConfirmDel";
@@ -192,7 +195,7 @@ const Categories = () => {
 				url={modalConfirmDel.url}
 				message={modalConfirmDel.message}
 			/>
-			<div className="flex flex-col gap-3">
+			<div className="flex w-full flex-col gap-3">
 				<div className="flex justify-end">
 					<Button
 						color="success"
@@ -204,9 +207,14 @@ const Categories = () => {
 						Crear Categoria
 					</Button>
 				</div>
-				<div className="flex min-h-52 flex-col items-center">
+				<Paper
+					sx={{
+						display: "flex",
+						flexDirection: "column",
+						minHeight: "400px",
+					}}
+				>
 					<DataGrid
-						className="max-w-[715px]"
 						{...dataToTable}
 						loading={loading}
 						pageSizeOptions={[30]}
@@ -217,8 +225,13 @@ const Categories = () => {
 						onColumnVisibilityModelChange={(newModel) =>
 							setColumnVisibilityModel(newModel)
 						}
+						disableColumnFilter
+						disableColumnResize
+						disableColumnSorting
+						disableDensitySelector
+						disableRowSelectionOnClick
 					/>
-				</div>
+				</Paper>
 			</div>
 		</>
 	);

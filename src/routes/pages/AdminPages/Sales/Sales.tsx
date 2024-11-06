@@ -1,10 +1,13 @@
 import { useState, useEffect, useRef, useContext } from "react";
-import IconButton from "@mui/material/IconButton";
 import { API_URL } from "../../../../helpers/configs";
 import useFetch from "../../../../hooks/useFetch";
 import { UserContex } from "../../../../hooks/UserContex";
 import { DataGrid, GridColumnVisibilityModel } from "@mui/x-data-grid";
+import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+
+// modals
 import ModalReadPurchaseQr from "../../../../components/ModalReadPurchaseQr";
 // import SalesModalFormUpdate from "./SalesModalFormUpdate";
 
@@ -74,7 +77,7 @@ const Sales = () => {
 				field: "payment_id",
 				headerName: "ID de pago",
 				type: "string",
-				minWidth: 100,
+				minWidth: 110,
 				flex: 1,
 				editable: false,
 			},
@@ -90,7 +93,7 @@ const Sales = () => {
 				field: "retired",
 				headerName: "Retirado",
 				type: "boolean",
-				minWidth: 70,
+				minWidth: 80,
 				flex: 1,
 				editable: false,
 			},
@@ -213,7 +216,7 @@ const Sales = () => {
 				open={OpenPurchaseQr}
 				setOpen={() => setOpenPurchaseQr(false)}
 			/>
-			<div className="flex flex-col gap-3">
+			<div className="flex w-full flex-col gap-3">
 				<div className="flex justify-end">
 					<Button
 						color="success"
@@ -225,7 +228,13 @@ const Sales = () => {
 						Verificar entrega
 					</Button>
 				</div>
-				<div className="flex min-h-52 flex-col items-center">
+				<Paper
+					sx={{
+						display: "flex",
+						flexDirection: "column",
+						minHeight: "400px",
+					}}
+				>
 					<DataGrid
 						className="max-w-[1310px]"
 						{...dataToTable}
@@ -238,8 +247,13 @@ const Sales = () => {
 						onColumnVisibilityModelChange={(newModel) =>
 							setColumnVisibilityModel(newModel)
 						}
+						disableColumnFilter
+						disableColumnResize
+						disableColumnSorting
+						disableDensitySelector
+						disableRowSelectionOnClick
 					/>
-				</div>
+				</Paper>
 			</div>
 		</>
 	);
