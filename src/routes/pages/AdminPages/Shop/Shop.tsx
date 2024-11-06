@@ -9,6 +9,7 @@ import {
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
+import { Portal } from "@mui/base/Portal";
 
 // modals
 import SalesModalFormCrate from "./ShopModalFormCreate";
@@ -202,25 +203,27 @@ const Shop = () => {
 
 	return (
 		<>
-			<SalesModalFormCrate
-				open={ModalForm}
-				openProductModalForm={setModalForm}
-				reloadPage={reloadData}
-			/>
-			<SalesModalFormUpdate
-				open={productModalUpdate.open}
-				openProductModalForm={openModalFormUpdate}
-				reloadPage={reloadData}
-				productToEdit={productModalUpdate.productToEdit}
-			/>
-			<ConfirmDel
-				open={modalConfirmDel.open}
-				setOpen={setOpenConfirmDel}
-				reloadPage={reloadData}
-				url={modalConfirmDel.url}
-				message={modalConfirmDel.message}
-			/>
-			<div className="flex w-[95vw] flex-col gap-3 lg:w-full">
+			<Portal>
+				<SalesModalFormCrate
+					open={ModalForm}
+					openProductModalForm={setModalForm}
+					reloadPage={reloadData}
+				/>
+				<SalesModalFormUpdate
+					open={productModalUpdate.open}
+					openProductModalForm={openModalFormUpdate}
+					reloadPage={reloadData}
+					productToEdit={productModalUpdate.productToEdit}
+				/>
+				<ConfirmDel
+					open={modalConfirmDel.open}
+					setOpen={setOpenConfirmDel}
+					reloadPage={reloadData}
+					url={modalConfirmDel.url}
+					message={modalConfirmDel.message}
+				/>
+			</Portal>
+			<div className="flex max-w-min flex-col gap-3">
 				<div className="flex justify-end">
 					<Button
 						color="success"

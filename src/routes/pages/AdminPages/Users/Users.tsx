@@ -10,6 +10,7 @@ import {
 } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
+import { Portal } from "@mui/base/Portal";
 
 // modals
 import UsersModalFormCrate from "./UsersModalFormCreate";
@@ -202,25 +203,27 @@ const Users = () => {
 
 	return (
 		<>
-			<UsersModalFormCrate
-				open={userModalForm}
-				openUserModalForm={setuserModalForm}
-				reloadPage={reloadUsers}
-			/>
-			<UsersModalFormUpdate
-				open={userModalUpdate.open}
-				openUserModalForm={openUserModalFormUpdate}
-				reloadPage={reloadUsers}
-				userToEdit={userModalUpdate.userToEdit}
-			/>
-			<ConfirmDel
-				open={modalConfirmDel.open}
-				setOpen={setOpenConfirmDel}
-				reloadPage={reloadUsers}
-				url={modalConfirmDel.url}
-				message={modalConfirmDel.message}
-			/>
-			<div className="flex w-[95vw] flex-col gap-3 lg:w-full">
+			<Portal>
+				<UsersModalFormCrate
+					open={userModalForm}
+					openUserModalForm={setuserModalForm}
+					reloadPage={reloadUsers}
+				/>
+				<UsersModalFormUpdate
+					open={userModalUpdate.open}
+					openUserModalForm={openUserModalFormUpdate}
+					reloadPage={reloadUsers}
+					userToEdit={userModalUpdate.userToEdit}
+				/>
+				<ConfirmDel
+					open={modalConfirmDel.open}
+					setOpen={setOpenConfirmDel}
+					reloadPage={reloadUsers}
+					url={modalConfirmDel.url}
+					message={modalConfirmDel.message}
+				/>
+			</Portal>
+			<div className="flex max-w-min flex-col gap-3">
 				<div className="flex justify-end">
 					<Button
 						color="success"

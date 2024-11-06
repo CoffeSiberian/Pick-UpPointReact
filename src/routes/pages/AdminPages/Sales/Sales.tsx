@@ -6,6 +6,7 @@ import { DataGrid, GridColumnVisibilityModel } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
+import { Portal } from "@mui/base/Portal";
 
 // modals
 import ModalReadPurchaseQr from "../../../../components/ModalReadPurchaseQr";
@@ -206,17 +207,19 @@ const Sales = () => {
 
 	return (
 		<>
-			{/*             <SalesModalFormUpdate
+			<Portal>
+				{/*             <SalesModalFormUpdate
                 open={userModalUpdate.open}
                 openCategoriesModalForm={openUserModalFormUpdate}
                 reloadPage={reloadCategories}
                 categoriesToEdit={userModalUpdate.categoriesToEdit}
-            /> */}
-			<ModalReadPurchaseQr
-				open={OpenPurchaseQr}
-				setOpen={() => setOpenPurchaseQr(false)}
-			/>
-			<div className="flex w-[95vw] flex-col gap-3 lg:w-full">
+				/> */}
+				<ModalReadPurchaseQr
+					open={OpenPurchaseQr}
+					setOpen={() => setOpenPurchaseQr(false)}
+				/>
+			</Portal>
+			<div className="flex max-w-min flex-col gap-3">
 				<div className="flex justify-end">
 					<Button
 						color="success"

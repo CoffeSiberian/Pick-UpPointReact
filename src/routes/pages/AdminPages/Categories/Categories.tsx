@@ -10,6 +10,7 @@ import {
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
+import { Portal } from "@mui/base/Portal";
 
 // modals
 import CategoriesModalFormCreate from "./CategoriesModalFormCreate";
@@ -177,25 +178,27 @@ const Categories = () => {
 
 	return (
 		<>
-			<CategoriesModalFormCreate
-				open={userModalForm}
-				openUserModalForm={setuserModalForm}
-				reloadPage={getCategories}
-			/>
-			<SalesModalFormUpdate
-				open={userModalUpdate.open}
-				openCategoriesModalForm={openUserModalFormUpdate}
-				reloadPage={getCategories}
-				categoriesToEdit={userModalUpdate.categoriesToEdit}
-			/>
-			<ConfirmDel
-				open={modalConfirmDel.open}
-				setOpen={setOpenConfirmDel}
-				reloadPage={getCategories}
-				url={modalConfirmDel.url}
-				message={modalConfirmDel.message}
-			/>
-			<div className="flex w-[95vw] flex-col gap-3 lg:w-full">
+			<Portal>
+				<CategoriesModalFormCreate
+					open={userModalForm}
+					openUserModalForm={setuserModalForm}
+					reloadPage={getCategories}
+				/>
+				<SalesModalFormUpdate
+					open={userModalUpdate.open}
+					openCategoriesModalForm={openUserModalFormUpdate}
+					reloadPage={getCategories}
+					categoriesToEdit={userModalUpdate.categoriesToEdit}
+				/>
+				<ConfirmDel
+					open={modalConfirmDel.open}
+					setOpen={setOpenConfirmDel}
+					reloadPage={getCategories}
+					url={modalConfirmDel.url}
+					message={modalConfirmDel.message}
+				/>
+			</Portal>
+			<div className="flex max-w-min flex-col gap-3">
 				<div className="flex justify-end">
 					<Button
 						color="success"

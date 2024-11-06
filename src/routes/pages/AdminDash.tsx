@@ -1,9 +1,11 @@
 import { useParams, useNavigate } from "react-router-dom";
+
+// mui
 import Divider from "@mui/material/Divider";
 import Tab from "@mui/material/Tab";
-import TabContext from "@mui/lab/TabContext";
-import TabList from "@mui/lab/TabList";
-import TabPanel from "@mui/lab/TabPanel";
+import Tabs from "@mui/material/Tabs";
+
+// Pages
 import Summary from "./AdminPages/Summary";
 import Users from "./AdminPages/Users/Users";
 import Sales from "./AdminPages/Sales/Sales";
@@ -34,73 +36,57 @@ const AdminDash = () => {
 	};
 
 	return (
-		<div className="flex flex-col justify-center p-2">
-			<TabContext value={page ? page : "summary"}>
-				<div className="flex items-center justify-center">
-					<TabList
-						variant="scrollable"
-						scrollButtons
-						allowScrollButtonsMobile
-						textColor="secondary"
-						onChange={(_, value) => setDashTab(value)}
-						aria-label="options-admin"
-					>
-						<Tab
-							icon={<QueryStatsIcon />}
-							iconPosition="start"
-							label="Resumen"
-							value="summary"
-						/>
-						<Tab
-							icon={<PersonIcon />}
-							iconPosition="start"
-							label="Usuarios"
-							value="users"
-						/>
-						<Tab
-							icon={<AddShoppingCartIcon />}
-							iconPosition="start"
-							label="Tienda"
-							value="shop"
-						/>
-						<Tab
-							icon={<CardMembershipIcon />}
-							iconPosition="start"
-							label="Categorias"
-							value="categories"
-						/>
-						<Tab
-							icon={<StorefrontIcon />}
-							iconPosition="start"
-							label="Ventas"
-							value="sales"
-						/>
-					</TabList>
-				</div>
-				<Divider
-					className="p-2"
-					variant="middle"
-					light={false}
-					sx={{ borderBottomWidth: 3 }}
-				/>
-				<div className="flex flex-col items-center">
-					<TabPanel value="summary">
-						<Summary />
-					</TabPanel>
-					<TabPanel value="users">
-						<Users />
-					</TabPanel>
-					<TabPanel value="shop">
-						<Shop />
-					</TabPanel>
-					<TabPanel value="categories">
-						<Categories />
-					</TabPanel>
-					<TabPanel value="sales">
-						<Sales />
-					</TabPanel>
-				</div>
-			</TabContext>
+		<div className="flex flex-col justify-center">
+			<div className="mt-2 flex items-center justify-center">
+				<Tabs
+					value={page}
+					onChange={(_, value) => setDashTab(value)}
+					variant="scrollable"
+					scrollButtons
+					allowScrollButtonsMobile
+					textColor="secondary"
+					aria-label="options-admin"
+				>
+					<Tab
+						icon={<QueryStatsIcon />}
+						iconPosition="start"
+						label="Resumen"
+						value="summary"
+					/>
+					<Tab
+						icon={<PersonIcon />}
+						iconPosition="start"
+						label="Usuarios"
+						value="users"
+					/>
+					<Tab
+						icon={<AddShoppingCartIcon />}
+						iconPosition="start"
+						label="Tienda"
+						value="shop"
+					/>
+					<Tab
+						icon={<CardMembershipIcon />}
+						iconPosition="start"
+						label="Categorias"
+						value="categories"
+					/>
+					<Tab
+						icon={<StorefrontIcon />}
+						iconPosition="start"
+						label="Ventas"
+						value="sales"
+					/>
+				</Tabs>
+			</div>
+			<Divider className="p-2" variant="middle" />
+			<div className="flex flex-row justify-center py-3">
+				{page === "summary" && <Summary />}
+				{page === "users" && <Users />}
+				{page === "shop" && <Shop />}
+				{page === "categories" && <Categories />}
+				{page === "sales" && <Sales />}
+			</div>
 		</div>
 	);
 };
