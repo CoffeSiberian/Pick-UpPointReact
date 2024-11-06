@@ -195,7 +195,7 @@ const Categories = () => {
 				url={modalConfirmDel.url}
 				message={modalConfirmDel.message}
 			/>
-			<div className="flex w-full flex-col gap-3">
+			<div className="flex w-[95vw] flex-col gap-3 lg:w-full">
 				<div className="flex justify-end">
 					<Button
 						color="success"
