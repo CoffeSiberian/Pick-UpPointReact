@@ -223,7 +223,7 @@ const Shop = () => {
 					message={modalConfirmDel.message}
 				/>
 			</Portal>
-			<div className="flex max-w-min flex-col gap-3">
+			<div className="flex w-[95vw] flex-col gap-3 lg:max-w-min">
 				<div className="flex justify-end">
 					<Button
 						color="success"
