@@ -6,8 +6,10 @@ import classNames from "classnames";
 // Context and hooks
 import useFetch from "../../../../hooks/useFetch";
 import { UserContex } from "../../../../hooks/UserContex";
+import { DarkModeContex } from "../../../../hooks/DarkModeContex";
 
 // MUI
+import { Typography } from "@mui/material";
 import { Portal } from "@mui/material";
 import Button from "@mui/material/Button";
 
@@ -30,6 +32,7 @@ import EditIcon from "@mui/icons-material/Edit";
 const ViewUser = () => {
 	const loaded = useRef(false);
 	const { UserInfo } = useContext(UserContex);
+	const { themeTatailwind } = useContext(DarkModeContex);
 
 	const [user, setUser] = useState<UserAllInfoResponse | null>(null);
 	const [userModalUpdate, setuserModalUpdate] =
@@ -136,6 +139,14 @@ const ViewUser = () => {
 									totalSpent={user.data.totalSpent}
 									isAdmin={user.data.user.isAdmin}
 								/>
+								<Typography
+									className="flex justify-center"
+									component="h4"
+									variant="h4"
+									color={themeTatailwind.primary.color}
+								>
+									<b>Compras</b>
+								</Typography>
 								<UserPurchaseList userId={user.data.user.id} />
 							</>
 						)}
