@@ -80,7 +80,7 @@ const UserBasicInfo: FC<UserBasicInfoProps> = ({
 					<Chip label="User" />
 				)}
 			</div>
-			<div className="flex w-full justify-between">
+			<div className="flex w-full flex-col items-center justify-between gap-5 md:flex-row">
 				<div className="flex flex-row items-center">
 					<Typography component="a" color={themeTatailwind.primary.color}>
 						<ShoppingCartIcon className="mr-1" />
