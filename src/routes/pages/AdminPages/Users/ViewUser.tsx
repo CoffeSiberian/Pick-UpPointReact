@@ -48,12 +48,12 @@ const ViewUser = () => {
 			<div className="flex max-w-2xl justify-center">
 				{user && (
 					<UserBasicInfo
-						name={user.data.name}
-						rut={user.data.rut}
-						email={user.data.email}
-						totalPurchases={50}
-						totalSpent={123000}
-						isAdmin={user.data.isAdmin}
+						name={user.data.user.name}
+						rut={user.data.user.rut}
+						email={user.data.user.email}
+						totalPurchases={user.data.totalPurchases}
+						totalSpent={user.data.totalSpent}
+						isAdmin={user.data.user.isAdmin}
 					/>
 				)}
 			</div>
