@@ -17,6 +17,7 @@ import ModalLoading from "../../../../components/ModalLoading";
 
 // components
 import UserBasicInfo from "../../../../components/UserBasicInfo";
+import UserPurchaseList from "../../../../components/UserPurchaseList";
 import ErrorPage from "../../../../components/ErrorPage";
 
 // types
@@ -88,7 +89,7 @@ const ViewUser = () => {
 				<ModalLoading open={loading} />
 			</Portal>
 			<div className="flex w-full justify-center">
-				<div className="flex max-w-4xl flex-col gap-3 p-3">
+				<div className="flex w-full max-w-4xl flex-col gap-3 p-3">
 					<div
 						className={classNames(
 							"flex w-full justify-between",
@@ -124,16 +125,19 @@ const ViewUser = () => {
 							Editar Usuario
 						</Button>
 					</div>
-					<div className="flex max-w-2xl justify-center">
+					<div className="flex flex-col justify-center gap-5">
 						{user && (
-							<UserBasicInfo
-								name={user.data.user.name}
-								rut={user.data.user.rut}
-								email={user.data.user.email}
-								totalPurchases={user.data.totalPurchases}
-								totalSpent={user.data.totalSpent}
-								isAdmin={user.data.user.isAdmin}
-							/>
+							<>
+								<UserBasicInfo
+									name={user.data.user.name}
+									rut={user.data.user.rut}
+									email={user.data.user.email}
+									totalPurchases={user.data.totalPurchases}
+									totalSpent={user.data.totalSpent}
+									isAdmin={user.data.user.isAdmin}
+								/>
+								<UserPurchaseList userId={user.data.user.id} />
+							</>
 						)}
 						{error && (
 							<ErrorPage

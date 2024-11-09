@@ -13,7 +13,7 @@ import ModalReadPurchaseQr from "../../../../components/ModalReadPurchaseQr";
 // import SalesModalFormUpdate from "./SalesModalFormUpdate";
 
 // types
-import { PurchaseListResponse } from "../../../../types/responses/PurchaseList";
+import { PurchaseListResponseWithUser } from "../../../../types/responses/PurchaseList";
 import { Table } from "./SalesType";
 
 // icons
@@ -174,7 +174,7 @@ const Sales = () => {
 	const getSales = async () => {
 		if (!UserInfo) return;
 
-		const data: PurchaseListResponse | null = await response({
+		const data: PurchaseListResponseWithUser | null = await response({
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${UserInfo.token}`,

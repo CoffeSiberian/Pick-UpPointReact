@@ -41,7 +41,7 @@ const UserBasicInfo: FC<UserBasicInfoProps> = ({
 				themeTatailwind.secondary.main
 			)}
 		>
-			<div className="flex w-full flex-col items-center gap-3 md:flex-row">
+			<div className="flex w-full flex-col items-center justify-between gap-3 md:flex-row">
 				<AccountCircleIcon sx={{ fontSize: 128 }} color="action" />
 				<div className="mr-1 flex flex-col justify-center">
 					<Typography

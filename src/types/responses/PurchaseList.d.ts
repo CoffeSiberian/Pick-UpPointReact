@@ -2,6 +2,10 @@ import { AxiosResponse } from "axios";
 import { Purchases, Purchases_Items, Users } from "../model";
 
 export interface PurchaseListResponse extends AxiosResponse {
+	data: { purchases: Purchases[] };
+}
+
+export interface PurchaseListResponseWithUser extends AxiosResponse {
 	data: { purchases: PurchaseListResponseObject[] };
 }
 
