@@ -1,8 +1,12 @@
 import { useState, useEffect, useRef, useContext, useCallback } from "react";
-import { API_URL } from "../../../../helpers/configs";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../../../../helpers/configs";
+
+// Context and hooks
 import useFetch from "../../../../hooks/useFetch";
 import { UserContex } from "../../../../hooks/UserContex";
+
+// MUI
 import {
 	DataGrid,
 	GridColumnVisibilityModel,

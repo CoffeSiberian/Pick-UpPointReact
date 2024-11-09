@@ -1,53 +1,61 @@
-import { useContext } from "react";
-// import { useParams } from "react-router-dom";
-import { DarkModeContex } from "../../../../hooks/DarkModeContex";
-import { Typography } from "@mui/material";
-import Chip from "@mui/material/Chip";
-import classNames from "classnames";
+import { useContext, useEffect, useRef, useState, useCallback } from "react";
+import { useParams } from "react-router-dom";
+import { API_URL } from "../../../../helpers/configs";
 
-// icons
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import TagIcon from "@mui/icons-material/Tag";
-import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
+// Context and hooks
+import useFetch from "../../../../hooks/useFetch";
+import { UserContex } from "../../../../hooks/UserContex";
+
+// components
+import UserBasicInfo from "../../../../components/UserBasicInfo";
+
+// types
+import { UserAllInfoResponse } from "../../../../types/responses/UserList";
 
 const ViewUser = () => {
-	const { themeTatailwind } = useContext(DarkModeContex);
-	// const { id } = useParams();
+	const loaded = useRef(false);
+	const { UserInfo } = useContext(UserContex);
+	const [user, setUser] = useState<UserAllInfoResponse | null>(null);
+	const { id } = useParams();
+
+	const { response } = useFetch(`${API_URL}/user/info/?id=${id}`, "GET");
+
+	const getUserInfo = useCallback(async () => {
+		if (!UserInfo) return;
+
+		const data: UserAllInfoResponse | null = await response({
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${UserInfo.token}`,
+			},
+		});
+
+		if (!data) return;
+		if (data.status === 200) {
+			setUser(data);
+		}
+	}, [UserInfo, response]);
+
+	useEffect(() => {
+		if (!loaded.current && id) {
+			getUserInfo();
+			loaded.current = true;
+		}
+	}, [getUserInfo, id]);
 
 	return (
-		<div className="flex w-full justify-center">
+		<div className="flex w-full justify-center p-3">
 			<div className="flex max-w-2xl justify-center">
-				<div className="flex w-full items-center gap-3">
-					<AccountCircleIcon sx={{ fontSize: 128 }} color="action" />
-					<div className="mr-1 flex flex-col justify-center">
-						<Typography variant="h4" color={themeTatailwind.primary.color}>
-							<p className="font-semibold">Fernando Garrido</p>
-						</Typography>
-						<Typography>
-							<p
-								className={classNames(
-									"flex gap-1 font-normal tracking-tight",
-									themeTatailwind.secondary.text_color
-								)}
-							>
-								<TagIcon />
-								20.596.659-5
-							</p>
-						</Typography>
-						<Typography>
-							<p
-								className={classNames(
-									"flex gap-1 font-normal tracking-tight",
-									themeTatailwind.secondary.text_color
-								)}
-							>
-								<AlternateEmailIcon />
-								siberiancoffe@outlook.cl
-							</p>
-						</Typography>
-					</div>
-					<Chip color="primary" label="Admin" />
-				</div>
+				{user && (
+					<UserBasicInfo
+						name={user.data.name}
+						rut={user.data.rut}
+						email={user.data.email}
+						totalPurchases={50}
+						totalSpent={123000}
+						isAdmin={user.data.isAdmin}
+					/>
+				)}
 			</div>
 		</div>
 	);
