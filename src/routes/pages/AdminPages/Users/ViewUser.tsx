@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { API_URL } from "../../../../helpers/configs";
+import classNames from "classnames";
 
 // Context and hooks
 import useFetch from "../../../../hooks/useFetch";
@@ -12,9 +13,11 @@ import Button from "@mui/material/Button";
 
 // modals
 import UsersModalFormUpdate from "./UsersModalFormUpdate";
+import ModalLoading from "../../../../components/ModalLoading";
 
 // components
 import UserBasicInfo from "../../../../components/UserBasicInfo";
+import ErrorPage from "../../../../components/ErrorPage";
 
 // types
 import { UserAllInfoResponse } from "../../../../types/responses/UserList";
@@ -43,7 +46,10 @@ const ViewUser = () => {
 	const { id } = useParams();
 	const navigate = useNavigate();
 
-	const { response } = useFetch(`${API_URL}/user/info/?id=${id}`, "GET");
+	const { response, loading, error } = useFetch(
+		`${API_URL}/user/info/?id=${id}`,
+		"GET"
+	);
 
 	const getUserInfo = useCallback(async () => {
 		if (!UserInfo) return;
@@ -79,10 +85,16 @@ const ViewUser = () => {
 					reloadPage={() => getUserInfo()}
 					userToEdit={userModalUpdate.userToEdit}
 				/>
+				<ModalLoading open={loading} />
 			</Portal>
 			<div className="flex w-full justify-center">
 				<div className="flex max-w-4xl flex-col gap-3 p-3">
-					<div className="flex w-full justify-between">
+					<div
+						className={classNames(
+							"flex w-full justify-between",
+							loading ? "hidden" : ""
+						)}
+					>
 						<Button
 							color="info"
 							variant="contained"
@@ -121,6 +133,13 @@ const ViewUser = () => {
 								totalPurchases={user.data.totalPurchases}
 								totalSpent={user.data.totalSpent}
 								isAdmin={user.data.user.isAdmin}
+							/>
+						)}
+						{error && (
+							<ErrorPage
+								title="Error"
+								message="No se pudo cargar la información del usuario"
+								footer="Intenta recargar la página"
 							/>
 						)}
 					</div>
