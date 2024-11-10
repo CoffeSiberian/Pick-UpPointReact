@@ -37,8 +37,10 @@ const ViewPurchasedProductsModal: FC<ModalLoadingProps> = ({
 					<CloseIcon />
 				</IconButton>
 			</DialogTitle>
-			<DialogContent>
-				<ViewPurchasedProducts purchaseId={purchaseId} />
+			<DialogContent className="flex justify-center">
+				<div className="grid grid-cols-1 gap-7 md:grid-cols-2">
+					<ViewPurchasedProducts purchaseId={purchaseId} />
+				</div>
 			</DialogContent>
 			<DialogActions>
 				<Button color="error" variant="outlined" onClick={() => onClose(false)}>
