@@ -9,12 +9,15 @@ import {
 import { API_URL } from "../helpers/configs";
 
 // Context and hooks
-// import { DarkModeContex } from "../hooks/DarkModeContex";
 import { UserContex } from "../hooks/UserContex";
 import useFetch from "../hooks/useFetch";
 
+// MUI
+import CircularProgress from "@mui/material/CircularProgress";
+
 // Components
 import ItemsProductCard from "./ItemsProductCard";
+import ErrorPage from "./ErrorPage";
 
 // img
 import testImg from "../static/img/test.png";
@@ -30,12 +33,11 @@ interface ModalLoadingProps {
 }
 
 const ViewPurchasedProducts: FC<ModalLoadingProps> = ({ purchaseId }) => {
-	// const { darkMode } = useContext(DarkModeContex);
 	const loaded = useRef(false);
 	const { UserInfo } = useContext(UserContex);
 	const [products, setProducts] = useState<Purchases_Items_Response[] | null>();
 
-	const { response } = useFetch(
+	const { response, loading, error } = useFetch(
 		`${API_URL}/purchase/items?id=${purchaseId}`,
 		"GET"
 	);
@@ -69,8 +71,8 @@ const ViewPurchasedProducts: FC<ModalLoadingProps> = ({ purchaseId }) => {
 	}, [getProducts, purchaseId]);
 
 	return (
-		<div>
-			{products ? (
+		<>
+			{products &&
 				products.map((product) => (
 					<ItemsProductCard
 						key={product.product.id}
@@ -82,11 +84,22 @@ const ViewPurchasedProducts: FC<ModalLoadingProps> = ({ purchaseId }) => {
 						price={product.price}
 						quantity={product.quantity}
 					/>
-				))
-			) : (
-				<></>
+				))}
+			{loading && (
+				<div className="flex justify-center">
+					<CircularProgress color="info" />
+				</div>
 			)}
-		</div>
+			{error && (
+				<div>
+					<ErrorPage
+						title="Error"
+						message="Error al cargar los productos"
+						footer="Intenta nuevamente"
+					/>
+				</div>
+			)}
+		</>
 	);
 };
 
