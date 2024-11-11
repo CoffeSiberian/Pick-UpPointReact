@@ -36,9 +36,13 @@ interface UserPayLoad {
 	rut: string;
 	name: string;
 	email: string;
-	password?: string;
+	password: string;
 	isAdmin?: boolean;
 }
+
+type UserPayLoadOptionalPassword = Omit<UserPayLoad, "password"> &
+	Partial<Pick<UserPayLoad, "password">>;
+
 interface UserError {
 	rut: boolean;
 	name: boolean;
@@ -46,8 +50,13 @@ interface UserError {
 	password: boolean;
 }
 
-interface UserData {
+interface UserDataPost {
 	payload: UserPayLoad;
+	error: UserError;
+}
+
+interface UserDataPut {
+	payload: UserPayLoadOptionalPassword;
 	error: UserError;
 }
 

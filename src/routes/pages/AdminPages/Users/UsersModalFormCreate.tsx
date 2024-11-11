@@ -46,7 +46,7 @@ const UsersModalFormCreate: FC<UserModalFormCreateProps> = ({
 		message: "",
 		error: false,
 	});
-	const [userForm, setUserForm] = useState<UserData>({
+	const [userForm, setUserForm] = useState<UserDataPost>({
 		payload: {
 			rut: "",
 			name: "",

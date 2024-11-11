@@ -55,7 +55,7 @@ const UsersModalFormUpdate: FC<UserModalFormUpdateProps> = ({
 		message: "",
 		error: false,
 	});
-	const [userForm, setUserForm] = useState<UserData>({
+	const [userForm, setUserForm] = useState<UserDataPut>({
 		payload: {
 			id: "",
 			rut: "",
