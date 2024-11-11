@@ -79,7 +79,7 @@ const ViewPurchasedProducts: FC<ModalLoadingProps> = ({ purchaseId }) => {
 						id={product.product.id}
 						name={product.product.name}
 						img={testImg}
-						category="CATEGORIA"
+						category={product.product.category.name}
 						description={product.product.description}
 						price={product.price}
 						quantity={product.quantity}

@@ -1,8 +1,18 @@
 import { AxiosResponse } from "axios";
-import { Purchases, Purchases_Items, Users, Products } from "../model";
+import {
+	Purchases,
+	Categories,
+	Purchases_Items,
+	Users,
+	Products,
+} from "../model";
+
+export interface ProductsrWhithCategory extends Products {
+	category: Categories;
+}
 
 export interface Purchases_Items_Response extends Purchases_Items {
-	product: Products;
+	product: ProductsrWhithCategory;
 }
 
 export interface PurchaseListResponse extends AxiosResponse {
