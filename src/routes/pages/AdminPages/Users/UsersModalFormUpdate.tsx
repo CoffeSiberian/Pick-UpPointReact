@@ -151,6 +151,7 @@ const UsersModalFormUpdate: FC<UserModalFormUpdateProps> = ({
 				name: userToEdit.name,
 				isAdmin: userToEdit.isAdmin,
 				email: userToEdit.email,
+				password: undefined,
 			},
 			error: {
 				rut: false,
