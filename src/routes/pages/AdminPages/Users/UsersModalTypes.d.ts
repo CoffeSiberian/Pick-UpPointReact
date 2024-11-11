@@ -61,6 +61,6 @@ interface UserDataPut {
 }
 
 interface UsersFormsProps {
-	userForm: UserData;
-	setUserForm: (userForm: UserData) => void;
+	userForm: UserDataPost | UserDataPut;
+	setUserForm: (userForm: UserDataPost | UserDataPut) => void;
 }

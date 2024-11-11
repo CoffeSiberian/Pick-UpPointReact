@@ -124,7 +124,7 @@ const UsersForms: FC<UsersFormsProps> = ({ userForm, setUserForm }) => {
 				type="password"
 				helperText={userForm.error.password && "Minimo de 5 caracteres"}
 				error={userForm.error.password}
-				value={userForm.payload.password}
+				value={userForm.payload.password || ""}
 				onChange={(e) =>
 					setUserForm({
 						...userForm,
