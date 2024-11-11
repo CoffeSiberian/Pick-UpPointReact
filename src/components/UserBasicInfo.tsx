@@ -83,7 +83,7 @@ const UserBasicInfo: FC<UserBasicInfoProps> = ({
 			<div className="flex w-full flex-col items-center justify-between gap-5 md:flex-row">
 				<div className="flex flex-row items-center">
 					<Typography component="a" color={themeTatailwind.primary.color}>
-						<ShoppingCartIcon className="mr-1" />
+						<ShoppingCartIcon className="mr-1" fontSize="large" />
 					</Typography>
 					<Typography component="a" color={themeTatailwind.primary.color}>
 						<p>Total de compras</p>
@@ -96,7 +96,7 @@ const UserBasicInfo: FC<UserBasicInfoProps> = ({
 				</div>
 				<div className="flex flex-row items-center">
 					<Typography component="a" color={themeTatailwind.primary.color}>
-						<AttachMoneyIcon />
+						<AttachMoneyIcon fontSize="large" />
 					</Typography>
 					<Typography component="a" color={themeTatailwind.primary.color}>
 						<p>Total Gastado</p>
