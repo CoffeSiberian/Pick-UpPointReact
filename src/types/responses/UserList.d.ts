@@ -1,14 +1,10 @@
 import { AxiosResponse } from "axios";
-import { Users, Purchases } from "../model";
-
-interface UserWithPurchases extends Users {
-	purchases: Purchases[];
-}
+import { Users } from "../model";
 
 export interface UserListResponse extends AxiosResponse {
 	data: { users: Users[] };
 }
 
 export interface UserAllInfoResponse extends AxiosResponse {
-	data: { user: UserWithPurchases; totalPurchases: number; totalSpent: number };
+	data: { user: Users; totalPurchases: number; totalSpent: number };
 }
