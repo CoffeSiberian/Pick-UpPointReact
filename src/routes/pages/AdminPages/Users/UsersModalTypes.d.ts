@@ -36,7 +36,7 @@ interface UserPayLoad {
 	rut: string;
 	name: string;
 	email: string;
-	password: string;
+	password?: string;
 	isAdmin?: boolean;
 }
 interface UserError {

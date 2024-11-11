@@ -1,15 +1,23 @@
 import { useState, FC, useEffect, useContext } from "react";
+
+// Context and hooks
 import { UserContex } from "../../../../hooks/UserContex";
 import { API_URL } from "../../../../helpers/configs";
 import useFetch from "../../../../hooks/useFetch";
+
+// MUI
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+
+// modals
 import ModalLoading from "../../../../components/ModalLoading";
 import ModalError from "../../../../components/ModalError";
+
+// components
 import SnakeBarInfo from "../../../../components/SnakeBarInfo";
 import UsersForms from "./UsersForms";
 
@@ -53,7 +61,6 @@ const UsersModalFormUpdate: FC<UserModalFormUpdateProps> = ({
 			rut: "",
 			name: "",
 			email: "",
-			password: "",
 			isAdmin: false,
 		},
 		error: {
@@ -144,7 +151,6 @@ const UsersModalFormUpdate: FC<UserModalFormUpdateProps> = ({
 				name: userToEdit.name,
 				isAdmin: userToEdit.isAdmin,
 				email: userToEdit.email,
-				password: "",
 			},
 			error: {
 				rut: false,
