@@ -1,16 +1,24 @@
 import { useState, useContext, FC } from "react";
+
+// Context and hooks
 import { UserContex } from "../../../../hooks/UserContex";
 import { API_URL } from "../../../../helpers/configs";
 import useFetch from "../../../../hooks/useFetch";
+
+// MUI
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+
+// modals
 import ModalLoading from "../../../../components/ModalLoading";
 import ModalError from "../../../../components/ModalError";
 import SnakeBarInfo from "../../../../components/SnakeBarInfo";
+
+// components
 import UsersForms from "./UsersForms";
 
 // icons
