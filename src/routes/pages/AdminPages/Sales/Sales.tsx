@@ -1,7 +1,11 @@
 import { useState, useEffect, useRef, useContext } from "react";
 import { API_URL } from "../../../../helpers/configs";
+
+// Context and hooks
 import useFetch from "../../../../hooks/useFetch";
 import { UserContex } from "../../../../hooks/UserContex";
+
+// MUI
 import { DataGrid, GridColumnVisibilityModel } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
@@ -10,6 +14,7 @@ import { Portal } from "@mui/base/Portal";
 
 // modals
 import ModalReadPurchaseQr from "../../../../components/ModalReadPurchaseQr";
+import ViewPurchasedProductsModal from "../../../../components/ViewPurchasedProductsModal";
 // import SalesModalFormUpdate from "./SalesModalFormUpdate";
 
 // types
@@ -20,11 +25,22 @@ import { Table } from "./SalesType";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import EditIcon from "@mui/icons-material/Edit";
 
+interface userPurchaseModalState {
+	open: boolean;
+	purchaseId: string | null;
+}
+
 const Sales = () => {
 	const loaded = useRef(false);
 	const { UserInfo } = useContext(UserContex);
+
 	const status = ["Pendiente", "Pagado", "Rechazado", "Anulado"];
 	const [OpenPurchaseQr, setOpenPurchaseQr] = useState<boolean>(false);
+	const [userPurchaseModal, setUserPurchaseModal] =
+		useState<userPurchaseModalState>({
+			open: false,
+			purchaseId: null,
+		});
 
 	/*     const [userModalUpdate, setuserModalUpdate] =
         useState<CategoriesModalFormUpdateState>({
@@ -130,18 +146,16 @@ const Sales = () => {
 				minWidth: 50,
 				flex: 1,
 				editable: false,
-				renderCell: () => (
+				renderCell: (params) => (
 					<div className="flex gap-1">
 						<IconButton
-							/*                             onClick={() => {
-                                setuserModalUpdate({
-                                    open: true,
-                                    categoriesToEdit: {
-                                        id: params.row.id,
-                                        name: params.row.name,
-                                    },
-                                });
-                            }} */
+							onClick={() => {
+								setUserPurchaseModal({
+									...userPurchaseModal,
+									open: true,
+									purchaseId: params.row.id as string,
+								});
+							}}
 							size="small"
 							aria-label="Editar"
 							color="info"
@@ -214,6 +228,13 @@ const Sales = () => {
                 reloadPage={reloadCategories}
                 categoriesToEdit={userModalUpdate.categoriesToEdit}
 				/> */}
+				<ViewPurchasedProductsModal
+					open={userPurchaseModal.open}
+					onClose={() =>
+						setUserPurchaseModal({ ...userPurchaseModal, open: false })
+					}
+					purchaseId={userPurchaseModal.purchaseId}
+				/>
 				<ModalReadPurchaseQr
 					open={OpenPurchaseQr}
 					setOpen={() => setOpenPurchaseQr(false)}
