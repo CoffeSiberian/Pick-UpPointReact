@@ -147,6 +147,7 @@ const UserPurchaseList: FC<UserPurchaseListProps> = ({ userId }) => {
 									purchaseId: params.row.id as string,
 								})
 							}
+							size="small"
 							aria-label="Ver compras"
 						>
 							<RemoveRedEyeIcon />

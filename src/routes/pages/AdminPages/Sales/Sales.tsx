@@ -23,7 +23,7 @@ import { Table } from "./SalesType";
 
 // icons
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import EditIcon from "@mui/icons-material/Edit";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 
 interface userPurchaseModalState {
 	open: boolean;
@@ -157,10 +157,9 @@ const Sales = () => {
 								});
 							}}
 							size="small"
-							aria-label="Editar"
-							color="info"
+							aria-label="Ver compras"
 						>
-							<EditIcon />
+							<RemoveRedEyeIcon />
 						</IconButton>
 					</div>
 				),
