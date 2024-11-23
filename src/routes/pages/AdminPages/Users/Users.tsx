@@ -49,6 +49,11 @@ const Users = () => {
 			},
 		});
 
+	const [paginationModel, setPaginationModel] = useState({
+		page: 0,
+		pageSize: 10,
+	});
+
 	const [userModalForm, setuserModalForm] = useState<boolean>(false);
 	const [modalConfirmDel, setmodalConfirmDel] = useState<modalConfirm>({
 		open: false,
@@ -142,10 +147,7 @@ const Users = () => {
 		],
 		rows: [],
 	});
-	const { response, loading } = useFetch(
-		`${API_URL}/user/list?limit_start=0&limit_end=15`,
-		"GET"
-	);
+	const { response, loading } = useFetch(`${API_URL}/user/list`, "GET");
 
 	const [columnVisibilityModel, setColumnVisibilityModel] =
 		useState<GridColumnVisibilityModel>({
@@ -154,32 +156,34 @@ const Users = () => {
 			status: false,
 		});
 
-	const [paginationModel, setPaginationModel] = useState({
-		page: 0,
-		pageSize: 30,
-	});
+	const getUsers = useCallback(
+		async (page: number, pageSize: number) => {
+			if (!UserInfo) return;
 
-	const getUsers = useCallback(async () => {
-		if (!UserInfo) return;
-
-		const data: UserListResponse | null = await response({
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${UserInfo.token}`,
-			},
-		});
-
-		if (!data) return;
-		if (data.status === 200) {
-			setdataToTable({
-				...dataToTable,
-				rows: data.data.users,
+			const data: UserListResponse | null = await response({
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${UserInfo.token}`,
+				},
+				params: {
+					limit_start: page * pageSize,
+					limit_end: pageSize,
+				},
 			});
-		}
-	}, [UserInfo, dataToTable, response]);
+
+			if (!data) return;
+			if (data.status === 200) {
+				setdataToTable({
+					...dataToTable,
+					rows: data.data.users,
+				});
+			}
+		},
+		[UserInfo, dataToTable, response]
+	);
 
 	const reloadUsers = () => {
-		getUsers();
+		getUsers(paginationModel.page, paginationModel.pageSize);
 	};
 
 	const openUserModalFormUpdate = (open: boolean) => {
@@ -198,12 +202,17 @@ const Users = () => {
 		});
 	};
 
+	const onSetPage = (page: number, pageSize: number) => {
+		setPaginationModel({ page, pageSize });
+		getUsers(page, pageSize);
+	};
+
 	useEffect(() => {
 		if (!loaded.current) {
-			getUsers();
+			getUsers(paginationModel.page, paginationModel.pageSize);
 			loaded.current = true;
 		}
-	}, [getUsers]);
+	}, [getUsers, paginationModel.page, paginationModel.pageSize]);
 
 	return (
 		<>
@@ -249,10 +258,14 @@ const Users = () => {
 					<DataGrid
 						{...dataToTable}
 						loading={loading}
-						pageSizeOptions={[30]}
+						pageSizeOptions={[10]}
 						rows={dataToTable.rows}
+						initialState={{ pagination: { rowCount: -1 } }}
+						paginationMode="server"
 						paginationModel={paginationModel}
-						onPaginationModelChange={setPaginationModel}
+						onPaginationModelChange={({ page, pageSize }) =>
+							onSetPage(page, pageSize)
+						}
 						columnVisibilityModel={columnVisibilityModel}
 						onColumnVisibilityModelChange={(newModel) =>
 							setColumnVisibilityModel(newModel)

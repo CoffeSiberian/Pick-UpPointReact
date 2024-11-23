@@ -1,7 +1,11 @@
 import { useState, useEffect, useRef, useContext, useCallback } from "react";
 import { API_URL } from "../../../../helpers/configs";
+
+// Context and hooks
 import useFetch from "../../../../hooks/useFetch";
 import { UserContex } from "../../../../hooks/UserContex";
+
+// MUI
 import {
 	DataGrid,
 	GridColumnVisibilityModel,
@@ -38,6 +42,11 @@ const Categories = () => {
 				name: "",
 			},
 		});
+
+	const [paginationModel, setPaginationModel] = useState({
+		page: 0,
+		pageSize: 10,
+	});
 
 	const [userModalForm, setuserModalForm] = useState<boolean>(false);
 	const [modalConfirmDel, setmodalConfirmDel] = useState<modalConfirm>({
@@ -117,10 +126,7 @@ const Categories = () => {
 		],
 		rows: [],
 	});
-	const { response, loading } = useFetch(
-		`${API_URL}/categoriesadmin?store=${UserInfo?.fk_store}&limit_start=0&limit_end=15`,
-		"GET"
-	);
+	const { response, loading } = useFetch(`${API_URL}/categoriesadmin`, "GET");
 
 	const [columnVisibilityModel, setColumnVisibilityModel] =
 		useState<GridColumnVisibilityModel>({
@@ -129,29 +135,36 @@ const Categories = () => {
 			status: false,
 		});
 
-	const [paginationModel, setPaginationModel] = useState({
-		page: 0,
-		pageSize: 30,
-	});
+	const getCategories = useCallback(
+		async (page: number, pageSize: number) => {
+			if (!UserInfo) return;
 
-	const getCategories = useCallback(async () => {
-		if (!UserInfo) return;
-
-		const data: CategoriesListResponse | null = await response({
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${UserInfo.token}`,
-			},
-		});
-
-		if (!data) return;
-		if (data.status === 200) {
-			setdataToTable({
-				...dataToTable,
-				rows: data.data.categories,
+			const data: CategoriesListResponse | null = await response({
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${UserInfo.token}`,
+				},
+				params: {
+					store: UserInfo.fk_store,
+					limit_start: page * pageSize,
+					limit_end: pageSize,
+				},
 			});
-		}
-	}, [UserInfo, dataToTable, response]);
+
+			if (!data) return;
+			if (data.status === 200) {
+				setdataToTable({
+					...dataToTable,
+					rows: data.data.categories,
+				});
+			}
+		},
+		[UserInfo, dataToTable, response]
+	);
+
+	const reloadData = () => {
+		getCategories(paginationModel.page, paginationModel.pageSize);
+	};
 
 	const openUserModalFormUpdate = (open: boolean) => {
 		setuserModalUpdate({ ...userModalUpdate, open });
@@ -169,12 +182,17 @@ const Categories = () => {
 		});
 	};
 
+	const onSetPage = (page: number, pageSize: number) => {
+		setPaginationModel({ page, pageSize });
+		getCategories(page, pageSize);
+	};
+
 	useEffect(() => {
 		if (!loaded.current) {
-			getCategories();
+			getCategories(paginationModel.page, paginationModel.pageSize);
 			loaded.current = true;
 		}
-	}, [getCategories]);
+	}, [getCategories, paginationModel.page, paginationModel.pageSize]);
 
 	return (
 		<>
@@ -182,18 +200,18 @@ const Categories = () => {
 				<CategoriesModalFormCreate
 					open={userModalForm}
 					openUserModalForm={setuserModalForm}
-					reloadPage={getCategories}
+					reloadPage={reloadData}
 				/>
 				<SalesModalFormUpdate
 					open={userModalUpdate.open}
 					openCategoriesModalForm={openUserModalFormUpdate}
-					reloadPage={getCategories}
+					reloadPage={reloadData}
 					categoriesToEdit={userModalUpdate.categoriesToEdit}
 				/>
 				<ConfirmDel
 					open={modalConfirmDel.open}
 					setOpen={setOpenConfirmDel}
-					reloadPage={getCategories}
+					reloadPage={reloadData}
 					url={modalConfirmDel.url}
 					message={modalConfirmDel.message}
 				/>
@@ -220,10 +238,14 @@ const Categories = () => {
 					<DataGrid
 						{...dataToTable}
 						loading={loading}
-						pageSizeOptions={[30]}
+						pageSizeOptions={[10]}
 						rows={dataToTable.rows}
+						initialState={{ pagination: { rowCount: -1 } }}
+						paginationMode="server"
 						paginationModel={paginationModel}
-						onPaginationModelChange={setPaginationModel}
+						onPaginationModelChange={({ page, pageSize }) =>
+							onSetPage(page, pageSize)
+						}
 						columnVisibilityModel={columnVisibilityModel}
 						onColumnVisibilityModelChange={(newModel) =>
 							setColumnVisibilityModel(newModel)

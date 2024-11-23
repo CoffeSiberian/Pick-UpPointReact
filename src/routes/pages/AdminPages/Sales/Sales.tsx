@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useContext } from "react";
+import { useState, useEffect, useRef, useContext, useCallback } from "react";
 import { API_URL } from "../../../../helpers/configs";
 
 // Context and hooks
@@ -41,6 +41,11 @@ const Sales = () => {
 			open: false,
 			purchaseId: null,
 		});
+
+	const [paginationModel, setPaginationModel] = useState({
+		page: 0,
+		pageSize: 10,
+	});
 
 	/*     const [userModalUpdate, setuserModalUpdate] =
         useState<CategoriesModalFormUpdateState>({
@@ -167,10 +172,7 @@ const Sales = () => {
 		],
 		rows: [],
 	});
-	const { response, loading } = useFetch(
-		`${API_URL}/purchases?limit_start=0&limit_end=15`,
-		"GET"
-	);
+	const { response, loading } = useFetch(`${API_URL}/purchases`, "GET");
 
 	const [columnVisibilityModel, setColumnVisibilityModel] =
 		useState<GridColumnVisibilityModel>({
@@ -179,44 +181,47 @@ const Sales = () => {
 			status: false,
 		});
 
-	const [paginationModel, setPaginationModel] = useState({
-		page: 0,
-		pageSize: 30,
-	});
+	const getSales = useCallback(
+		async (page: number, pageSize: number) => {
+			if (!UserInfo) return;
 
-	const getSales = async () => {
-		if (!UserInfo) return;
-
-		const data: PurchaseListResponseWithUser | null = await response({
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${UserInfo.token}`,
-			},
-		});
-
-		if (!data) return;
-		if (data.status === 200) {
-			setdataToTable({
-				...dataToTable,
-				rows: data.data.purchases,
+			const data: PurchaseListResponseWithUser | null = await response({
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${UserInfo.token}`,
+				},
+				params: {
+					limit_start: page * pageSize,
+					limit_end: pageSize,
+				},
 			});
-		}
-	};
 
-	const reloadSales = () => {
-		getSales();
-	};
+			if (!data) return;
+			if (data.status === 200) {
+				setdataToTable({
+					...dataToTable,
+					rows: data.data.purchases,
+				});
+			}
+		},
+		[UserInfo, dataToTable, response]
+	);
 
 	/*     const openUserModalFormUpdate = (open: boolean) => {
         setuserModalUpdate({ ...userModalUpdate, open });
     }; */
 
+	const onSetPage = (page: number, pageSize: number) => {
+		setPaginationModel({ page, pageSize });
+		getSales(page, pageSize);
+	};
+
 	useEffect(() => {
 		if (!loaded.current) {
-			reloadSales();
+			getSales(paginationModel.page, paginationModel.pageSize);
 			loaded.current = true;
-		} // eslint-disable-next-line
-	}, []);
+		}
+	}, [getSales, paginationModel.page, paginationModel.pageSize]);
 
 	return (
 		<>
@@ -262,10 +267,14 @@ const Sales = () => {
 						className="max-w-[1310px]"
 						{...dataToTable}
 						loading={loading}
-						pageSizeOptions={[30]}
+						pageSizeOptions={[10]}
 						rows={dataToTable.rows}
+						initialState={{ pagination: { rowCount: -1 } }}
+						paginationMode="server"
 						paginationModel={paginationModel}
-						onPaginationModelChange={setPaginationModel}
+						onPaginationModelChange={({ page, pageSize }) =>
+							onSetPage(page, pageSize)
+						}
 						columnVisibilityModel={columnVisibilityModel}
 						onColumnVisibilityModelChange={(newModel) =>
 							setColumnVisibilityModel(newModel)

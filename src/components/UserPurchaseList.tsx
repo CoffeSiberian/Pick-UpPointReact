@@ -55,7 +55,7 @@ const UserPurchaseList: FC<UserPurchaseListProps> = ({ userId }) => {
 		});
 	const [paginationModel, setPaginationModel] = useState({
 		page: 0,
-		pageSize: 30,
+		pageSize: 10,
 	});
 	const [columnVisibilityModel, setColumnVisibilityModel] =
 		useState<GridColumnVisibilityModel>({
@@ -159,40 +159,50 @@ const UserPurchaseList: FC<UserPurchaseListProps> = ({ userId }) => {
 		rows: [],
 	});
 
-	const { response, loading } = useFetch(
-		`${API_URL}/purchases/user?id=${userId}&limit_start=0&limit_end=10`,
-		"GET"
-	);
+	const { response, loading } = useFetch(`${API_URL}/purchases/user`, "GET");
 
 	const openUserPurchaseModal = (open: boolean) => {
 		setUserPurchaseModal({ open, purchaseId: null });
 	};
 
-	const getSales = useCallback(async () => {
-		if (!UserInfo) return;
+	const getSales = useCallback(
+		async (page: number, pageSize: number) => {
+			if (!UserInfo) return;
 
-		const data: PurchaseListResponse | null = await response({
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${UserInfo.token}`,
-			},
-		});
-
-		if (!data) return;
-		if (data.status === 200) {
-			setdataToTable({
-				...dataToTable,
-				rows: data.data.purchases,
+			const data: PurchaseListResponse | null = await response({
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${UserInfo.token}`,
+				},
+				params: {
+					id: userId,
+					limit_start: page * pageSize,
+					limit_end: pageSize,
+				},
 			});
-		}
-	}, [UserInfo, dataToTable, response]);
+
+			if (!data) return;
+			if (data.status === 200) {
+				setdataToTable({
+					...dataToTable,
+					rows: data.data.purchases,
+				});
+			}
+		},
+		[UserInfo, dataToTable, response, userId]
+	);
+
+	const onSetPage = (page: number, pageSize: number) => {
+		setPaginationModel({ page, pageSize });
+		getSales(page, pageSize);
+	};
 
 	useEffect(() => {
 		if (!loaded.current) {
-			getSales();
+			getSales(paginationModel.page, paginationModel.pageSize);
 			loaded.current = true;
 		}
-	}, [getSales]);
+	}, [getSales, paginationModel.page, paginationModel.pageSize]);
 
 	return (
 		<>
@@ -214,10 +224,14 @@ const UserPurchaseList: FC<UserPurchaseListProps> = ({ userId }) => {
 					className="max-w-[1310px]"
 					{...dataToTable}
 					loading={loading}
-					pageSizeOptions={[30]}
+					pageSizeOptions={[10]}
 					rows={dataToTable.rows}
+					initialState={{ pagination: { rowCount: -1 } }}
+					paginationMode="server"
 					paginationModel={paginationModel}
-					onPaginationModelChange={setPaginationModel}
+					onPaginationModelChange={({ page, pageSize }) =>
+						onSetPage(page, pageSize)
+					}
 					columnVisibilityModel={columnVisibilityModel}
 					onColumnVisibilityModelChange={(newModel) =>
 						setColumnVisibilityModel(newModel)

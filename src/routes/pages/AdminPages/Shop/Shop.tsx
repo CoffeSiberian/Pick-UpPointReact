@@ -1,6 +1,10 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { API_URL, FK_STORE } from "../../../../helpers/configs";
+
+// Context and hooks
 import useFetch from "../../../../hooks/useFetch";
+
+// MUI
 import {
 	DataGrid,
 	GridColumnVisibilityModel,
@@ -40,6 +44,11 @@ const Shop = () => {
 				fk_category: "",
 			},
 		});
+
+	const [paginationModel, setPaginationModel] = useState({
+		page: 0,
+		pageSize: 10,
+	});
 
 	const [ModalForm, setModalForm] = useState<boolean>(false);
 	const [modalConfirmDel, setmodalConfirmDel] = useState<modalConfirm>({
@@ -141,10 +150,8 @@ const Shop = () => {
 		],
 		rows: [],
 	});
-	const { response, loading } = useFetch(
-		`${API_URL}/products?store=${FK_STORE}&limit_start=0&limit_end=15`,
-		"GET"
-	);
+
+	const { response, loading } = useFetch(`${API_URL}/products`, "GET");
 
 	const [columnVisibilityModel, setColumnVisibilityModel] =
 		useState<GridColumnVisibilityModel>({
@@ -153,29 +160,32 @@ const Shop = () => {
 			status: false,
 		});
 
-	const [paginationModel, setPaginationModel] = useState({
-		page: 0,
-		pageSize: 30,
-	});
-
-	const getData = useCallback(async () => {
-		const data: ProductsListResponse | null = await response({
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
-
-		if (!data) return;
-		if (data.status === 200) {
-			setdataToTable({
-				...dataToTable,
-				rows: data.data.products,
+	const getData = useCallback(
+		async (page: number, pageSize: number) => {
+			const data: ProductsListResponse | null = await response({
+				headers: {
+					"Content-Type": "application/json",
+				},
+				params: {
+					store: FK_STORE,
+					limit_start: page * pageSize,
+					limit_end: pageSize,
+				},
 			});
-		}
-	}, [dataToTable, response]);
+
+			if (!data) return;
+			if (data.status === 200) {
+				setdataToTable({
+					...dataToTable,
+					rows: data.data.products,
+				});
+			}
+		},
+		[dataToTable, response]
+	);
 
 	const reloadData = () => {
-		getData();
+		getData(paginationModel.page, paginationModel.pageSize);
 	};
 
 	const openModalFormUpdate = (open: boolean) => {
@@ -194,12 +204,17 @@ const Shop = () => {
 		});
 	};
 
+	const onSetPage = (page: number, pageSize: number) => {
+		setPaginationModel({ page, pageSize });
+		getData(page, pageSize);
+	};
+
 	useEffect(() => {
 		if (!loaded.current) {
-			getData();
+			getData(paginationModel.page, paginationModel.pageSize);
 			loaded.current = true;
 		}
-	}, [getData]);
+	}, [getData, paginationModel.page, paginationModel.pageSize]);
 
 	return (
 		<>
@@ -246,10 +261,14 @@ const Shop = () => {
 						className="max-w-[1310px]"
 						{...dataToTable}
 						loading={loading}
-						pageSizeOptions={[30]}
+						pageSizeOptions={[10]}
 						rows={dataToTable.rows}
+						initialState={{ pagination: { rowCount: -1 } }}
+						paginationMode="server"
 						paginationModel={paginationModel}
-						onPaginationModelChange={setPaginationModel}
+						onPaginationModelChange={({ page, pageSize }) =>
+							onSetPage(page, pageSize)
+						}
 						columnVisibilityModel={columnVisibilityModel}
 						onColumnVisibilityModelChange={(newModel) =>
 							setColumnVisibilityModel(newModel)
