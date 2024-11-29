@@ -9,6 +9,7 @@ interface ProductModalFormUpdateProps {
 	openProductModalForm: (open: boolean) => void;
 	reloadPage: () => void;
 	productToEdit: ProductToEdit;
+	productId: string;
 }
 
 interface ProductModalFormUpdateState {

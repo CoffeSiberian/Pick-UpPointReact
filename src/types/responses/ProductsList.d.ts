@@ -10,3 +10,7 @@ export interface ProductResponseObject extends Products {
 	stock: Stocks;
 	images: Images_Products[];
 }
+
+export interface ProductResponse extends AxiosResponse {
+	data: Products;
+}

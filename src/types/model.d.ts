@@ -34,8 +34,7 @@ export interface Categories {
 
 export interface Images_Products {
 	id: string;
-	name: string;
-	src: string;
+	file_name: string;
 	fk_products: string;
 }
 
@@ -45,6 +44,8 @@ export interface Products {
 	description: string;
 	price: number;
 	fk_category: string;
+	images: Images_Products[];
+	primary_image?: Images_Products;
 }
 
 export interface Stocks {

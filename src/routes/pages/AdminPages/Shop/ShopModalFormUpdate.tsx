@@ -1,17 +1,24 @@
 import { useState, FC, useEffect, useContext } from "react";
-import { UserContex } from "../../../../hooks/UserContex";
 import { API_URL } from "../../../../helpers/configs";
+
+// Context and hooks
+import { UserContex } from "../../../../hooks/UserContex";
 import useFetch from "../../../../hooks/useFetch";
+
+// MUI
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+
+// components
 import ModalLoading from "../../../../components/ModalLoading";
 import ModalError from "../../../../components/ModalError";
 import SnakeBarInfo from "../../../../components/SnakeBarInfo";
 import SalesForms from "./ShopForms";
+import ShopImages from "./ShopImages";
 
 // icons
 import SaveAsIcon from "@mui/icons-material/SaveAs";
@@ -36,6 +43,7 @@ const ShopModalFormUpdate: FC<ProductModalFormUpdateProps> = ({
 	openProductModalForm,
 	reloadPage,
 	productToEdit,
+	productId,
 }) => {
 	const { UserInfo } = useContext(UserContex);
 	const { loading, response, succes, setSucces } = useFetch(
@@ -188,6 +196,7 @@ const ShopModalFormUpdate: FC<ProductModalFormUpdateProps> = ({
 				onClose={() => openProductModalForm(false)}
 				aria-labelledby="child-modal-title"
 				aria-describedby="child-modal-description"
+				maxWidth="md"
 				scroll="paper"
 				fullWidth
 			>
@@ -201,7 +210,10 @@ const ShopModalFormUpdate: FC<ProductModalFormUpdateProps> = ({
 					</IconButton>
 				</DialogTitle>
 				<DialogContent>
-					<SalesForms productForm={Form} setProductForm={setForm} />
+					<div className="flex flex-col gap-5">
+						<SalesForms productForm={Form} setProductForm={setForm} />
+						<ShopImages productId={productId} />
+					</div>
 				</DialogContent>
 				<DialogActions>
 					<Button

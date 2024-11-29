@@ -229,6 +229,7 @@ const Shop = () => {
 					openProductModalForm={openModalFormUpdate}
 					reloadPage={reloadData}
 					productToEdit={productModalUpdate.productToEdit}
+					productId={productModalUpdate.productToEdit.id}
 				/>
 				<ConfirmDel
 					open={modalConfirmDel.open}
