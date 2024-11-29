@@ -18,7 +18,7 @@ const dataGet = async (
 
 const dataPost = async (
 	options: AxiosRequestConfig,
-	payload: string,
+	payload: string | FormData,
 	url: string
 ): Promise<AxiosResponse | null> => {
 	try {
@@ -51,7 +51,7 @@ const dataDelete = async (
 
 const dataPut = async (
 	options: AxiosRequestConfig,
-	payload: string,
+	payload: string | FormData,
 	url: string
 ): Promise<AxiosResponse | null> => {
 	try {

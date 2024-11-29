@@ -51,8 +51,6 @@ const ViewProduct = () => {
 
 		if (fetchResponse === null) return;
 
-		console.log(fetchResponse);
-
 		if (fetchResponse.status === 200) {
 			setProduct(fetchResponse.data);
 		}

@@ -9,7 +9,7 @@ const useFetch = (url: string, method: "GET" | "POST" | "PUT" | "DELETE") => {
 
 	const response = async (
 		options: AxiosRequestConfig,
-		payload?: string
+		payload?: string | FormData
 	): Promise<AxiosResponse | null> => {
 		if (method === "GET") {
 			return responseGET(options);
@@ -23,7 +23,7 @@ const useFetch = (url: string, method: "GET" | "POST" | "PUT" | "DELETE") => {
 
 	const responsePOST = async (
 		options: AxiosRequestConfig,
-		payload: string
+		payload: string | FormData
 	): Promise<AxiosResponse | null> => {
 		setLoading(true);
 		const data = await dataPost(options, payload, url);
@@ -54,7 +54,7 @@ const useFetch = (url: string, method: "GET" | "POST" | "PUT" | "DELETE") => {
 
 	const reponsePUT = async (
 		options: AxiosRequestConfig,
-		payload: string
+		payload: string | FormData
 	): Promise<AxiosResponse | null> => {
 		setLoading(true);
 		const data = await dataPut(options, payload, url);

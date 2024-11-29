@@ -14,7 +14,7 @@ import useFetch from "../../../../hooks/useFetch";
 
 // MUI
 import { styled } from "@mui/material/styles";
-import LoadingButton from '@mui/lab/LoadingButton';
+import LoadingButton from "@mui/lab/LoadingButton";
 
 // Components
 import ShopImagesEdit from "./ShopImagesEdit";
@@ -80,13 +80,15 @@ const ShopImages: FC<ShopImagesProps> = ({ productId }) => {
 		formData.append("image", file);
 		formData.append("fk_product", productId);
 
-		const data = await responsePostImage({
-			headers: {
-				"Content-Type": "multipart/form-data",
-				Authorization: `Bearer ${UserInfo.token}`,
+		const data = await responsePostImage(
+			{
+				headers: {
+					"Content-Type": "multipart/form-data",
+					Authorization: `Bearer ${UserInfo.token}`,
+				},
 			},
-			data: formData,
-		});
+			formData
+		);
 
 		if (data) {
 			if (data.status === 200) {
