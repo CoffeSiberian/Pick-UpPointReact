@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useContext, useCallback } from "react";
 import { API_URL } from "../../../../helpers/configs";
 
 // Context and hooks
+import { useNavigate } from "react-router-dom";
 import useFetch from "../../../../hooks/useFetch";
 import { UserContex } from "../../../../hooks/UserContex";
 
@@ -13,7 +14,6 @@ import IconButton from "@mui/material/IconButton";
 import { Portal } from "@mui/base/Portal";
 
 // modals
-import ModalReadPurchaseQr from "../../../../components/ModalReadPurchaseQr";
 import ViewPurchasedProductsModal from "../../../../components/ViewPurchasedProductsModal";
 // import SalesModalFormUpdate from "./SalesModalFormUpdate";
 
@@ -33,9 +33,9 @@ interface userPurchaseModalState {
 const Sales = () => {
 	const loaded = useRef(false);
 	const { UserInfo } = useContext(UserContex);
+	const navigate = useNavigate();
 
 	const status = ["Pendiente", "Pagado", "Rechazado", "Anulado"];
-	const [OpenPurchaseQr, setOpenPurchaseQr] = useState<boolean>(false);
 	const [userPurchaseModal, setUserPurchaseModal] =
 		useState<userPurchaseModalState>({
 			open: false,
@@ -239,10 +239,6 @@ const Sales = () => {
 					}
 					purchaseId={userPurchaseModal.purchaseId}
 				/>
-				<ModalReadPurchaseQr
-					open={OpenPurchaseQr}
-					setOpen={() => setOpenPurchaseQr(false)}
-				/>
 			</Portal>
 			<div className="flex w-[95vw] flex-col gap-3 lg:max-w-min">
 				<div className="flex justify-end">
@@ -250,7 +246,7 @@ const Sales = () => {
 						color="success"
 						size="small"
 						variant="contained"
-						onClick={() => setOpenPurchaseQr(true)}
+						onClick={() => navigate("/admin/sales/verify")}
 						endIcon={<AddCircleIcon />}
 					>
 						Verificar entrega
