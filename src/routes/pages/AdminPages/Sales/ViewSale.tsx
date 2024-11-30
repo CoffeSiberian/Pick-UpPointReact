@@ -138,6 +138,7 @@ const ViewSale = () => {
 									onChange={(e) => setQrValue(e.target.value)}
 								/>
 								<LoadingButton
+									disabled={!QrValue}
 									color="secondary"
 									variant="contained"
 									onClick={checkQr}

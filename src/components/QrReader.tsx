@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, useRef } from "react";
+import { FC, useState, useEffect, useCallback, useRef } from "react";
 import {
 	Html5Qrcode,
 	CameraDevice,
@@ -10,7 +10,6 @@ import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import Button from "@mui/material/Button";
 
 interface QrReaderProps {
 	modalState: boolean;
@@ -44,7 +43,52 @@ const QrReader: FC<QrReaderProps> = ({
 		}
 	};
 
-	const getCameras = async () => {
+	const successCallback = useCallback(
+		async (decodedText: string) => {
+			if (refCamera.current !== null) {
+				await refCamera.current.stop();
+				refCamera.current = null;
+			}
+
+			setScanResults(decodedText);
+			handelCloseModal();
+		},
+		[handelCloseModal, setScanResults]
+	);
+
+	const errorCallback = () => {};
+
+	const startCamera = useCallback(
+		async (cameraId?: string) => {
+			const configs: Html5QrcodeCameraScanConfig = {
+				fps: 10,
+				qrbox: { width: 250, height: 250 },
+			};
+
+			if (refCamera.current === null) {
+				refCamera.current = new Html5Qrcode("QrReaderDiv");
+			}
+
+			if (cameraId === undefined) {
+				await refCamera.current.start(
+					{ facingMode: "environment" },
+					configs,
+					(decode) => successCallback(decode),
+					errorCallback
+				);
+			} else {
+				await refCamera.current.start(
+					{ deviceId: { exact: cameraId } },
+					configs,
+					(decode) => successCallback(decode),
+					errorCallback
+				);
+			}
+		},
+		[successCallback]
+	);
+
+	const getCameras = useCallback(async () => {
 		const camerasList = await Html5Qrcode.getCameras();
 
 		if (camerasList && camerasList.length > 0) {
@@ -53,47 +97,9 @@ const QrReader: FC<QrReaderProps> = ({
 			await startCamera();
 			return;
 		}
+
 		setPermissions(false);
-	};
-
-	const successCallback = async (decodedText: string) => {
-		if (refCamera.current !== null) {
-			await refCamera.current.stop();
-			refCamera.current = null;
-		}
-
-		setScanResults(decodedText);
-		handelCloseModal();
-	};
-
-	const errorCallback = () => {};
-
-	const startCamera = async (cameraId?: string) => {
-		const configs: Html5QrcodeCameraScanConfig = {
-			fps: 10,
-			qrbox: { width: 250, height: 250 },
-		};
-
-		if (refCamera.current === null) {
-			refCamera.current = new Html5Qrcode("QrReaderDiv");
-		}
-
-		if (cameraId === undefined) {
-			await refCamera.current.start(
-				{ facingMode: "environment" },
-				configs,
-				(decode) => successCallback(decode),
-				errorCallback
-			);
-		} else {
-			await refCamera.current.start(
-				{ deviceId: { exact: cameraId } },
-				configs,
-				(decode) => successCallback(decode),
-				errorCallback
-			);
-		}
-	};
+	}, [startCamera]);
 
 	useEffect(() => {
 		if (modalState === false) {
@@ -102,8 +108,10 @@ const QrReader: FC<QrReaderProps> = ({
 					refCamera.current = null;
 				});
 			}
+		} else {
+			getCameras();
 		}
-	}, [modalState]);
+	}, [getCameras, modalState]);
 
 	return (
 		<div className="flex w-full flex-col items-center justify-center gap-2 p-3">
@@ -113,11 +121,6 @@ const QrReader: FC<QrReaderProps> = ({
 				style={{ width: "100%" }}
 			></div>
 			<div className="flex w-full max-w-md justify-center">
-				{Permissions === false && (
-					<Button color="warning" onClick={getCameras} variant="contained">
-						Permitir Usar Camara
-					</Button>
-				)}
 				{Permissions && (
 					<FormControl fullWidth>
 						<InputLabel color="info" id="camera-select-label">
