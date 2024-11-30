@@ -23,7 +23,6 @@ interface ProductCardProps {
 	id: string;
 	name: string;
 	img?: Images_Products;
-	description: string;
 	category: string;
 	price: number;
 	quantity: number;
@@ -34,7 +33,6 @@ const ItemsProductCard: FC<ProductCardProps> = ({
 	name,
 	img,
 	category,
-	description,
 	price,
 	quantity,
 }) => {
@@ -69,13 +67,6 @@ const ItemsProductCard: FC<ProductCardProps> = ({
 						<Chip color="primary" size="small" label={category} />
 					</div>
 					<Divider />
-					<Typography
-						className="flex"
-						color={themeTatailwind.primary.color}
-						variant="body1"
-					>
-						{description}
-					</Typography>
 					<Typography
 						color="success"
 						component="div"
