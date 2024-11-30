@@ -13,8 +13,6 @@ import { Portal } from "@mui/material";
 import Button from "@mui/material/Button";
 import LoadingButton from "@mui/lab/LoadingButton";
 
-// modals
-
 // components
 import InfoScanResult from "../../../../components/Sales/InfoScanResult";
 import SnakeBarInfo from "../../../../components/SnakeBarInfo";
@@ -130,8 +128,8 @@ const ViewSale = () => {
 						</Button>
 					</div>
 					<div className="flex justify-center">
-						<div className="my-3 flex flex-col gap-5">
-							<div className="flex flex-col gap-3">
+						<div className="my-3 flex w-full flex-col items-center gap-5">
+							<div className="flex w-full max-w-lg flex-col gap-3">
 								<TextField
 									label="Codigo de compra"
 									variant="filled"
@@ -149,7 +147,10 @@ const ViewSale = () => {
 									Verificar
 								</LoadingButton>
 							</div>
-							<InfoScanResult responsePurchase={Response} />
+							<InfoScanResult
+								responsePurchase={Response}
+								reloadViewSaleData={checkQr}
+							/>
 						</div>
 					</div>
 				</div>

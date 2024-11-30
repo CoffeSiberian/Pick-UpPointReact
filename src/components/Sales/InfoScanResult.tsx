@@ -4,6 +4,7 @@ import { API_URL } from "../../helpers/configs";
 import classNames from "classnames";
 
 // Context and hooks
+import { useNavigate } from "react-router-dom";
 import { DarkModeContex } from "../../hooks/DarkModeContex";
 import { UserContex } from "../../hooks/UserContex";
 import Button from "@mui/material/Button";
@@ -12,10 +13,11 @@ import useFetch from "../../hooks/useFetch";
 // MUI
 import Typography from "@mui/material/Typography/Typography";
 import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
-import { Portal } from "@mui/material";
+import { IconButton, Portal } from "@mui/material";
 
 // components
 import SnakeBarInfo from "../SnakeBarInfo";
+import ViewPurchasedProductsModal from "../ViewPurchasedProductsModal";
 
 // icons
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -27,6 +29,8 @@ import InventoryIcon from "@mui/icons-material/Inventory";
 import PaymentsIcon from "@mui/icons-material/Payments";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import DoneIcon from "@mui/icons-material/Done";
+import PermContactCalendarIcon from "@mui/icons-material/PermContactCalendar";
 
 // types
 import { StandarResponse } from "../../types/responses/StandarResponse";
@@ -35,13 +39,19 @@ import { PurchaseListResponseObject } from "../../types/responses/PurchaseList";
 
 interface InfoScanResultProps {
 	responsePurchase?: PurchaseListResponseObject;
+	reloadViewSaleData: () => void;
 }
 
-const InfoScanResult: FC<InfoScanResultProps> = ({ responsePurchase }) => {
+const InfoScanResult: FC<InfoScanResultProps> = ({
+	responsePurchase,
+	reloadViewSaleData,
+}) => {
 	const status = ["Pendiente", "Pagado", "Rechazado", "Anulado"];
+	const navigate = useNavigate();
 	const { themeTatailwind } = useContext(DarkModeContex);
 	const { UserInfo } = useContext(UserContex);
 
+	const [ViewPurchaseModal, setViewPurchaseModal] = useState<boolean>(false);
 	const [Error, setError] = useState<ResponseError>({
 		status: 200,
 		message: "",
@@ -81,6 +91,7 @@ const InfoScanResult: FC<InfoScanResultProps> = ({ responsePurchase }) => {
 		}
 		if (data.status === 200) {
 			setSucces(true);
+			reloadViewSaleData();
 			return;
 		}
 
@@ -113,28 +124,46 @@ const InfoScanResult: FC<InfoScanResultProps> = ({ responsePurchase }) => {
 					severity="error"
 					handleClose={() => setError({ ...Error, error: false })}
 				/>
+				<ViewPurchasedProductsModal
+					open={ViewPurchaseModal}
+					onClose={() => setViewPurchaseModal(false)}
+					purchaseId={responsePurchase ? responsePurchase.id : ""}
+				/>
 			</Portal>
 			<div
 				className={classNames(
-					"flex w-full max-w-md flex-col",
+					"flex w-full max-w-lg flex-col",
 					themeTatailwind.secondary.main,
 					"rounded-lg border-2 border-transparent",
 					themeTatailwind.primary.border_color,
-					"p-4 shadow-2xl"
+					"gap-3 p-4 shadow-2xl"
 				)}
 			>
-				<div className="flex h-full pb-2">
-					<Typography variant="h6">
-						<div className="flex items-center justify-center">
+				<Typography variant="h6" color={themeTatailwind.primary.color}>
+					<div className="flex w-full justify-between">
+						<div className="flex items-center">
 							<AccountCircleIcon className="mr-1" />
 							<div>{responsePurchase ? responsePurchase.user.name : ""}</div>
 						</div>
-					</Typography>
-				</div>
+						<div>
+							<IconButton
+								disabled={!responsePurchase}
+								onClick={() =>
+									navigate(`/admin/users/${responsePurchase?.user.id}`)
+								}
+								size="small"
+								aria-label="Historial"
+								color="warning"
+							>
+								<PermContactCalendarIcon />
+							</IconButton>
+						</div>
+					</div>
+				</Typography>
 				<div className="flex h-full flex-col pb-2">
 					<Typography
 						component={"div"}
-						className="pt-2"
+						className="flex flex-col gap-1 pt-1"
 						color={themeTatailwind.primary.color}
 						variant="body1"
 					>
@@ -165,12 +194,12 @@ const InfoScanResult: FC<InfoScanResultProps> = ({ responsePurchase }) => {
 								<b className="mr-2">Retirado:</b>
 								{responsePurchase ? (
 									responsePurchase.retired ? (
-										<OfflinePinIcon />
+										<OfflinePinIcon color="success" />
 									) : (
-										<CancelIcon />
+										<CancelIcon color="error" />
 									)
 								) : (
-									<CancelIcon />
+									<CancelIcon color="error" />
 								)}
 							</div>
 						</div>
@@ -183,7 +212,7 @@ const InfoScanResult: FC<InfoScanResultProps> = ({ responsePurchase }) => {
 						</div>
 					</Typography>
 				</div>
-				<div className="flex w-full justify-center gap-3">
+				<div className="flex w-full flex-col justify-center gap-3">
 					<LoadingButton
 						disabled={
 							!responsePurchase ||
@@ -196,6 +225,7 @@ const InfoScanResult: FC<InfoScanResultProps> = ({ responsePurchase }) => {
 							dataRetired();
 						}}
 						color="error"
+						endIcon={<DoneIcon />}
 					>
 						Marcar como retirado
 					</LoadingButton>
@@ -203,6 +233,7 @@ const InfoScanResult: FC<InfoScanResultProps> = ({ responsePurchase }) => {
 						disabled={!responsePurchase}
 						variant="contained"
 						color="warning"
+						onClick={() => setViewPurchaseModal(true)}
 						endIcon={<VisibilityIcon />}
 					>
 						Ver Carrito
