@@ -81,6 +81,7 @@ const ShopForms: FC<ProductFormsProps> = ({ productForm, setProductForm }) => {
 			<TextField
 				fullWidth
 				multiline
+				maxRows={8}
 				autoComplete="off"
 				id="description-product-add"
 				color="info"
