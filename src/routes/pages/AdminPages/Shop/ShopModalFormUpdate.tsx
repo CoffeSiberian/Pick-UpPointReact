@@ -37,6 +37,7 @@ import {
 
 // types
 import { StandarResponse } from "../../../../types/responses/StandarResponse";
+import { ResponseError } from "../../../../types/responses/ResponseError";
 
 const ShopModalFormUpdate: FC<ProductModalFormUpdateProps> = ({
 	open,

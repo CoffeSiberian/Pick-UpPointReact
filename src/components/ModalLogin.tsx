@@ -1,7 +1,11 @@
 import { useState, useContext, FC, ChangeEvent } from "react";
-import { UserContex } from "../hooks/UserContex";
 import { API_URL, FK_STORE } from "../helpers/configs";
+
+// Context and hooks
+import { UserContex } from "../hooks/UserContex";
 import useFetch from "../hooks/useFetch";
+
+// MUI
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Dialog from "@mui/material/Dialog";
@@ -10,6 +14,8 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
+
+// components
 import ModalLoading from "./ModalLoading";
 import ModalError from "./ModalError";
 import SnakeBarInfo from "./SnakeBarInfo";
@@ -23,6 +29,7 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 
 // types
 import { LoginResponse } from "../types/responses/Login";
+import { ResponseError } from "../types/responses/ResponseError";
 
 // schemas
 import {

@@ -29,6 +29,7 @@ import { categoriesNameSchema } from "../../../../schemas/categoriesSch";
 
 // types
 import { StandarResponse } from "../../../../types/responses/StandarResponse";
+import { ResponseError } from "../../../../types/responses/ResponseError";
 
 // actualmente sin utilizar
 const SalesModalFormUpdate: FC<CategoriesModalFormUpdateProps> = ({

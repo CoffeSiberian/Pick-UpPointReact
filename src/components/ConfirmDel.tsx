@@ -1,17 +1,24 @@
 import { FC, useState, useContext } from "react";
+
+// Context and hooks
 import { UserContex } from "../hooks/UserContex";
 import useFetch from "../hooks/useFetch";
+
+// MUI
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+
+// components
 import ModalLoading from "./ModalLoading";
 import SnakeBarInfo from "./SnakeBarInfo";
 
 // types
 import { StandarResponse } from "../types/responses/StandarResponse";
+import { ResponseError } from "../types/responses/ResponseError";
 
 // icons
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";

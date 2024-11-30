@@ -1,6 +1,10 @@
 import { useState, FC, ChangeEvent } from "react";
 import { API_URL, FK_STORE } from "../helpers/configs";
+
+// Context and hooks
 import useFetch from "../hooks/useFetch";
+
+// MUI
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Dialog from "@mui/material/Dialog";
@@ -9,6 +13,8 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
+
+// components
 import ModalLoading from "./ModalLoading";
 import ModalError from "./ModalError";
 import SnakeBarInfo from "./SnakeBarInfo";
@@ -23,6 +29,7 @@ import LoginIcon from "@mui/icons-material/Login";
 
 // types
 import { StandarResponse } from "../types/responses/StandarResponse";
+import { ResponseError } from "../types/responses/ResponseError";
 
 // schemas
 import {

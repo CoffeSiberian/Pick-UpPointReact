@@ -1,14 +1,20 @@
 import { FC, useState, useEffect, useContext, useRef } from "react";
+import { API_URL } from "../helpers/configs";
+
+// Context and hooks
 import { ShopCartContex } from "../hooks/ShopCartContex";
 import { UserContex } from "../hooks/UserContex";
-import { API_URL } from "../helpers/configs";
 import useFetch from "../hooks/useFetch";
+
+// MUI
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+
+// components
 import ModalLoading from "./ModalLoading";
 import ModalError from "./ModalError";
 import SnakeBarInfo from "./SnakeBarInfo";
@@ -22,6 +28,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 // types
 import { PurchaseResponse } from "../types/responses/Purchase";
+import { ResponseError } from "../types/responses/ResponseError";
 
 interface ModalShopCartProps {
 	open: boolean;
