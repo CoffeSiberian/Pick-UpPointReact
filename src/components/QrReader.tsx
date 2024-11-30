@@ -24,14 +24,24 @@ const QrReader: FC<QrReaderProps> = ({
 	handelCloseModal,
 }) => {
 	const [Permissions, setPermissions] = useState<boolean>(false);
-	const [CameraId, setCameraId] = useState<string | null>(null);
+	const [CameraId, setCameraId] = useState<string>("");
 	const [ListCameras, setListCameras] = useState<CameraDevice[]>([]);
 
 	const refCamera = useRef<Html5Qrcode | null>(null);
-	const refCamSelected = useRef<boolean>(false);
 
-	const handleChange = (event: SelectChangeEvent) => {
+	const handleChange = async (event: SelectChangeEvent) => {
 		setCameraId(event.target.value as string);
+
+		if (refCamera.current) {
+			await refCamera.current.stop();
+			refCamera.current = null;
+		}
+
+		try {
+			await startCamera(event.target.value);
+		} catch {
+			refCamera.current = null;
+		}
 	};
 
 	const getCameras = async () => {
@@ -51,7 +61,6 @@ const QrReader: FC<QrReaderProps> = ({
 			await refCamera.current.stop();
 			refCamera.current = null;
 		}
-		refCamSelected.current = false;
 
 		setScanResults(decodedText);
 		handelCloseModal();
@@ -59,7 +68,7 @@ const QrReader: FC<QrReaderProps> = ({
 
 	const errorCallback = () => {};
 
-	const startCamera = async () => {
+	const startCamera = async (cameraId?: string) => {
 		const configs: Html5QrcodeCameraScanConfig = {
 			fps: 10,
 			qrbox: { width: 250, height: 250 },
@@ -69,12 +78,21 @@ const QrReader: FC<QrReaderProps> = ({
 			refCamera.current = new Html5Qrcode("QrReaderDiv");
 		}
 
-		await refCamera.current.start(
-			{ facingMode: "environment" },
-			configs,
-			(decode) => successCallback(decode),
-			errorCallback
-		);
+		if (cameraId === undefined) {
+			await refCamera.current.start(
+				{ facingMode: "environment" },
+				configs,
+				(decode) => successCallback(decode),
+				errorCallback
+			);
+		} else {
+			await refCamera.current.start(
+				{ deviceId: { exact: cameraId } },
+				configs,
+				(decode) => successCallback(decode),
+				errorCallback
+			);
+		}
 	};
 
 	useEffect(() => {
@@ -88,13 +106,13 @@ const QrReader: FC<QrReaderProps> = ({
 	}, [modalState]);
 
 	return (
-		<div className="flex w-full flex-col items-center justify-center">
+		<div className="flex w-full flex-col items-center justify-center gap-2 p-3">
 			<div
-				className="mb-4 max-w-xl"
+				className="my-2 max-w-xl"
 				id="QrReaderDiv"
 				style={{ width: "100%" }}
 			></div>
-			<div className="mb-3 flex w-full max-w-md justify-center">
+			<div className="flex w-full max-w-md justify-center">
 				{Permissions === false && (
 					<Button color="warning" onClick={getCameras} variant="contained">
 						Permitir Usar Camara
@@ -102,13 +120,13 @@ const QrReader: FC<QrReaderProps> = ({
 				)}
 				{Permissions && (
 					<FormControl fullWidth>
-						<InputLabel id="camera-select-label">
+						<InputLabel color="info" id="camera-select-label">
 							Selecciona una cámara
 						</InputLabel>
 						<Select
 							id="camera-select"
 							fullWidth
-							value={CameraId === null ? "" : CameraId}
+							value={CameraId}
 							label="Selecciona una cámara"
 							color="info"
 							onChange={handleChange}
