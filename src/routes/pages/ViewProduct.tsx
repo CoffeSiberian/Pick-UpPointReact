@@ -55,7 +55,7 @@ const ViewProduct = () => {
 				<ModalLoading open={loading} />
 				<ShopCart />
 			</Portal>
-			<div className="my-5 flex w-full justify-center">
+			<div className="my-5 flex w-full flex-col justify-center md:flex-row">
 				{Product ? (
 					<>
 						<ProductImagesView

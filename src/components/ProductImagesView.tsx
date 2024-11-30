@@ -25,7 +25,7 @@ const ProductImagesView: FC<ProductImageViewProps> = ({
 	>(primaryImage);
 
 	return (
-		<div className="flex w-full max-w-xl flex-col gap-5">
+		<div className="flex w-full max-w-xl flex-col gap-5 p-5">
 			<div className="flex flex-col">
 				<img
 					className="rounded-xl"
@@ -46,7 +46,7 @@ const ProductImagesView: FC<ProductImageViewProps> = ({
 					modules={[FreeMode]}
 				>
 					{images.map((item) => (
-						<SwiperSlide>
+						<SwiperSlide key={item.id}>
 							<img
 								className="h-48 max-h-36 w-full rounded-xl object-cover"
 								onClick={() => setSelectedImage(item)}
