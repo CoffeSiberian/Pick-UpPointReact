@@ -19,9 +19,6 @@ import CircularProgress from "@mui/material/CircularProgress";
 import ItemsProductCard from "./ItemsProductCard";
 import ErrorPage from "./ErrorPage";
 
-// img
-import testImg from "../static/img/test.png";
-
 // types
 import {
 	ItemsPurchasedListResponse,
@@ -78,7 +75,7 @@ const ViewPurchasedProducts: FC<ModalLoadingProps> = ({ purchaseId }) => {
 						key={product.product.id}
 						id={product.product.id}
 						name={product.product.name}
-						img={testImg}
+						img={product.product.primary_image}
 						category={product.product.category.name}
 						description={product.product.description}
 						price={product.price}

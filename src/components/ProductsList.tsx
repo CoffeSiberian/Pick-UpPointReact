@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import useFetch from "../hooks/useFetch";
 import { API_URL, FK_STORE } from "../helpers/configs";
+
+// Context and hooks
+import useFetch from "../hooks/useFetch";
 
 // components
 import ModalLoading from "./ModalLoading";
@@ -12,8 +14,6 @@ import {
 	ProductsListResponse,
 	ProductResponseObject,
 } from "../types/responses/ProductsList";
-
-import testimg from "../static/img/test.png";
 
 const ProductsList = () => {
 	const loaded = useRef(false);
@@ -46,7 +46,7 @@ const ProductsList = () => {
 
 	const renderProducts = (): JSX.Element => {
 		return (
-			<div className="grid grid-flow-row grid-cols-1 justify-items-center sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+			<div className="my-5 grid grid-flow-row grid-cols-1 justify-items-center sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
 				{products.map((product) => {
 					const description = product.description.substring(0, 100);
 					const descriptionExtra =
@@ -60,7 +60,7 @@ const ProductsList = () => {
 							category={product.category.name}
 							description={descriptionExtra}
 							price={product.price}
-							img={testimg}
+							img={product.primary_image}
 						/>
 					);
 				})}

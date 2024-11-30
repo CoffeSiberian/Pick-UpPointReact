@@ -1,5 +1,6 @@
 import { useContext, FC } from "react";
 import classNames from "classnames";
+import { STATIC_URL } from "../helpers/configs";
 
 // Context and hooks
 import { DarkModeContex } from "../hooks/DarkModeContex";
@@ -13,11 +14,15 @@ import Chip from "@mui/material/Chip";
 // icons
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import testimg from "../static/img/test.png";
+
+// types
+import { Images_Products } from "../types/model";
 
 interface ProductCardProps {
 	id: string;
 	name: string;
-	img: string;
+	img?: Images_Products;
 	description: string;
 	category: string;
 	price: number;
@@ -48,12 +53,16 @@ const ItemsProductCard: FC<ProductCardProps> = ({
 		>
 			<img
 				className="rounded-xl object-cover drop-shadow-lg"
-				src={img}
+				src={img ? `${STATIC_URL}/${img.file_name}` : testimg}
 				alt="store"
 			/>
 			<div className="flex flex-col pb-2">
 				<div className="flex flex-col gap-2">
-					<Typography className="flex justify-center" variant="h6">
+					<Typography
+						className="flex justify-center"
+						color={themeTatailwind.primary.color}
+						variant="h6"
+					>
 						<div className="font-bold">{name}</div>
 					</Typography>
 					<div className="flex justify-center">
