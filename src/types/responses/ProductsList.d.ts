@@ -9,6 +9,7 @@ export interface ProductResponseObject extends Products {
 	category: Categories;
 	stock: Stocks;
 	images: Images_Products[];
+	primary_image?: Images_Products;
 }
 
 export interface ProductResponse extends AxiosResponse {
