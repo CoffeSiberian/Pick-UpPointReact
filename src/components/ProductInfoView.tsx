@@ -26,21 +26,25 @@ const ProductInfoView: FC<ProductInfoViewProps> = ({ product }) => {
 		<div className="flex max-w-md flex-col p-5">
 			<div className="flex flex-col gap-3">
 				<Typography color={themeTatailwind.primary.color} variant="h2">
-					{product.name}
+					<p className="font-medium">{product.name}</p>
 				</Typography>
-				<Typography color={themeTatailwind.primary.color} variant="h6">
-					{product.price.toLocaleString("es-CL", {
-						style: "currency",
-						currency: "CLP",
-					})}
+				<Typography color="success" component="div" variant="h5">
+					<div className="text-3xl font-bold">
+						{product.price.toLocaleString("es-CL", {
+							style: "currency",
+							currency: "CLP",
+						})}
+					</div>
 				</Typography>
 				<Typography color={themeTatailwind.primary.color} variant="body1">
-					Stock: {product.stock.quantity}
+					<div className="text-xl font-bold">
+						Stock: {product.stock.quantity}
+					</div>
 				</Typography>
 			</div>
 			<div className="flex pb-3 pt-3">
 				<Typography color={themeTatailwind.primary.color} variant="body1">
-					{product.description}
+					<div className="font-medium">{product.description}</div>
 				</Typography>
 			</div>
 			<div>
