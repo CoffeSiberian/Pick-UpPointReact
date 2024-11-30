@@ -18,6 +18,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 // components
 import InfoScanResult from "../../../../components/Sales/InfoScanResult";
 import SnakeBarInfo from "../../../../components/SnakeBarInfo";
+import ModalQRScan from "../../../../components/Sales/ModalQRScan";
 
 // types
 import { ResponseError } from "../../../../types/responses/ResponseError";
@@ -35,6 +36,7 @@ const ViewSale = () => {
 	const navigate = useNavigate();
 	const { UserInfo } = useContext(UserContex);
 
+	const [QrModal, setQrModal] = useState<boolean>(false);
 	const [QrValue, setQrValue] = useState<string>("");
 	const [Response, setResponse] = useState<
 		PurchaseListResponseObject | undefined
@@ -101,6 +103,11 @@ const ViewSale = () => {
 					severity="error"
 					handleClose={() => setError({ ...Error, error: false })}
 				/>
+				<ModalQRScan
+					open={QrModal}
+					handleClose={() => setQrModal(false)}
+					setScanResults={(results) => setQrValue(results)}
+				/>
 			</Portal>
 			<div className="flex w-full justify-center">
 				<div className="flex w-full max-w-4xl flex-col gap-3 p-3">
@@ -115,6 +122,7 @@ const ViewSale = () => {
 						</Button>
 						<Button
 							color="primary"
+							onClick={() => setQrModal(true)}
 							variant="contained"
 							endIcon={<QrCodeScannerIcon />}
 						>
@@ -123,7 +131,7 @@ const ViewSale = () => {
 					</div>
 					<div className="flex justify-center">
 						<div className="my-3 flex flex-col gap-5">
-							<div className="flex flex-col">
+							<div className="flex flex-col gap-3">
 								<TextField
 									label="Codigo de compra"
 									variant="filled"
