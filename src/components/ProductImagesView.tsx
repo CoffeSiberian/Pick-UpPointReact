@@ -28,7 +28,7 @@ const ProductImagesView: FC<ProductImageViewProps> = ({
 		<div className="flex w-full max-w-xl flex-col gap-5 p-5">
 			<div className="flex flex-col">
 				<img
-					className="rounded-xl"
+					className="max-h-72 rounded-xl object-cover"
 					src={selectedImage ? `${STATIC_URL}/${selectedImage.file_name}` : ""}
 					alt={selectedImage?.file_name}
 				/>
