@@ -28,7 +28,7 @@ const ProductImagesView: FC<ProductImageViewProps> = ({
 		<div className="flex w-full max-w-xl flex-col gap-5 p-5">
 			<div className="flex flex-col">
 				<img
-					className="max-h-72 rounded-xl object-cover"
+					className="max-h-72 rounded-xl object-contain"
 					src={selectedImage ? `${STATIC_URL}/${selectedImage.file_name}` : ""}
 					alt={selectedImage?.file_name}
 				/>
@@ -48,7 +48,7 @@ const ProductImagesView: FC<ProductImageViewProps> = ({
 					{images.map((item) => (
 						<SwiperSlide key={item.id}>
 							<img
-								className="h-48 max-h-36 w-full rounded-xl object-cover"
+								className="h-48 max-h-36 w-full rounded-xl object-contain"
 								onClick={() => setSelectedImage(item)}
 								style={{ cursor: "pointer" }}
 								src={item ? `${STATIC_URL}/${item.file_name}` : ""}
