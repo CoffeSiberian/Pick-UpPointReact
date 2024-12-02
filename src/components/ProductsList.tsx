@@ -69,7 +69,7 @@ const ProductsList = () => {
 	};
 
 	return (
-		<div>
+		<div className="p-3 md:p-5">
 			<ModalLoading open={loading} />
 			{error && (
 				<ErrorPage

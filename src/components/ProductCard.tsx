@@ -62,7 +62,7 @@ const ProductCard: FC<ProductCardProps> = ({
 			)}
 		>
 			<img
-				className="max-h-72 rounded-xl object-cover drop-shadow-lg"
+				className="max-h-72 rounded-xl object-contain drop-shadow-lg"
 				src={img ? `${STATIC_URL}/${img.file_name}` : testimg}
 				alt="store"
 			/>
