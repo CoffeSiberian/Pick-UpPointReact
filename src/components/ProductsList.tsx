@@ -46,7 +46,7 @@ const ProductsList = () => {
 
 	const renderProducts = (): JSX.Element => {
 		return (
-			<div className="my-5 grid grid-flow-row grid-cols-1 justify-items-center sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+			<div className="my-5 grid grid-flow-row grid-cols-1 justify-items-center gap-5 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
 				{products.map((product) => {
 					const description = product.description.substring(0, 100);
 					const descriptionExtra =

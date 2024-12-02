@@ -46,7 +46,7 @@ const ItemsProductCard: FC<ProductCardProps> = ({
 				themeTatailwind.secondary.main,
 				"rounded-lg border-2 border-transparent",
 				themeTatailwind.primary.border_color,
-				"gap-2 p-4 shadow-2xl"
+				"gap-2 p-4 shadow-md"
 			)}
 		>
 			<img

@@ -136,7 +136,7 @@ const InfoScanResult: FC<InfoScanResultProps> = ({
 					themeTatailwind.secondary.main,
 					"rounded-lg border-2 border-transparent",
 					themeTatailwind.primary.border_color,
-					"gap-3 p-4 shadow-2xl"
+					"gap-3 p-4 shadow-md"
 				)}
 			>
 				<Typography variant="h6" color={themeTatailwind.primary.color}>

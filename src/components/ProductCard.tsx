@@ -58,11 +58,11 @@ const ProductCard: FC<ProductCardProps> = ({
 				themeTatailwind.secondary.main,
 				"rounded-lg border-2 border-transparent",
 				themeTatailwind.primary.border_color,
-				"gap-2 p-4 shadow-2xl"
+				"gap-2 p-4 shadow-md"
 			)}
 		>
 			<img
-				className="rounded-xl object-cover drop-shadow-lg"
+				className="max-h-72 rounded-xl object-cover drop-shadow-lg"
 				src={img ? `${STATIC_URL}/${img.file_name}` : testimg}
 				alt="store"
 			/>
