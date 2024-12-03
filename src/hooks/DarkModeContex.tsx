@@ -14,7 +14,7 @@ export const DarkModeContex = createContext<DarkModeContextTypes>(
 );
 
 export const DarkModeInfo = ({ children }: ProviderProps) => {
-	const [darkMode, setDarkModeState] = useState<boolean>(true);
+	const [darkMode, setDarkModeState] = useState<boolean>(false);
 
 	const darkMaterial = {
 		palette: {
@@ -90,6 +90,7 @@ export const DarkModeInfo = ({ children }: ProviderProps) => {
 
 	useEffect(() => {
 		const darkModeLocal = localStorage.getItem("darkMode");
+
 		if (darkModeLocal !== null) {
 			setDarkModeState(JSON.parse(darkModeLocal));
 		} else {
