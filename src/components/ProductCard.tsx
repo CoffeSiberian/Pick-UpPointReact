@@ -54,7 +54,7 @@ const ProductCard: FC<ProductCardProps> = ({
 	return (
 		<div
 			className={classNames(
-				"flex w-full max-w-xs flex-col",
+				"flex w-full max-w-xs flex-col justify-center",
 				themeTatailwind.secondary.main,
 				"rounded-lg border-2 border-transparent",
 				themeTatailwind.primary.border_color,
@@ -68,7 +68,7 @@ const ProductCard: FC<ProductCardProps> = ({
 					alt={name + " image"}
 				/>
 			</div>
-			<div className="flex flex-col pb-2">
+			<div className="flex flex-col justify-end pb-2">
 				<div className="flex flex-col gap-2">
 					<Typography
 						className="flex justify-center"
