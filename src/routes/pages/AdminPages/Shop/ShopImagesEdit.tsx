@@ -8,7 +8,7 @@ import { UserContex } from "../../../../hooks/UserContex";
 import useFetch from "../../../../hooks/useFetch";
 
 // MUI
-import IconButton from "@mui/material/IconButton";
+import Button from "@mui/material/Button";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 
@@ -94,17 +94,21 @@ const ShopImagesEdit: FC<ShopImageEditsProps> = ({
 			{images.map((item) => (
 				<ImageListItem key={item.id}>
 					<div className="relative inline-block">
-						<div className="absolute right-1 top-1">
-							<IconButton
+						<div className="absolute right-2 top-2">
+							<Button
+								variant="contained"
+								size="small"
 								aria-label="delete"
 								color="error"
 								onClick={() => deleteImage(item.id)}
 							>
 								<DeleteIcon />
-							</IconButton>
+							</Button>
 						</div>
-						<div className="absolute left-1 top-1">
-							<IconButton
+						<div className="absolute left-2 top-2">
+							<Button
+								variant="contained"
+								size="small"
 								aria-label="default-image"
 								color={
 									defaultImage
@@ -116,7 +120,7 @@ const ShopImagesEdit: FC<ShopImageEditsProps> = ({
 								onClick={() => setDefaultImage(item.id)}
 							>
 								<CheckCircleIcon />
-							</IconButton>
+							</Button>
 						</div>
 						<img
 							className={classNames(
@@ -124,8 +128,8 @@ const ShopImagesEdit: FC<ShopImageEditsProps> = ({
 								defaultImage
 									? defaultImage.id === item.id
 										? darkMode
-											? "border-2 border-green-500"
-											: "border-2 border-green-700"
+											? "border-4 border-green-500"
+											: "border-4 border-green-700"
 										: ""
 									: ""
 							)}
