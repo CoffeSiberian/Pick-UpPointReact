@@ -8,7 +8,7 @@ import { UserContex } from "../../../../hooks/UserContex";
 import useFetch from "../../../../hooks/useFetch";
 
 // MUI
-import Button from "@mui/material/Button";
+import LoadingButton from "@mui/lab/LoadingButton";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 
@@ -34,11 +34,11 @@ const ShopImagesEdit: FC<ShopImageEditsProps> = ({
 }) => {
 	const { darkMode } = useContext(DarkModeContex);
 	const { UserInfo } = useContext(UserContex);
-	const { response: responseDelete } = useFetch(
+	const { response: responseDelete, loading: loadingDelete } = useFetch(
 		`${API_URL}/product/image`,
 		"DELETE"
 	);
-	const { response: responsePutDefault } = useFetch(
+	const { response: responsePutDefault, loading: loadingPutDefault } = useFetch(
 		`${API_URL}/product/primary_image`,
 		"PUT"
 	);
@@ -94,19 +94,8 @@ const ShopImagesEdit: FC<ShopImageEditsProps> = ({
 			{images.map((item) => (
 				<ImageListItem key={item.id}>
 					<div className="relative inline-block">
-						<div className="absolute right-2 top-2">
-							<Button
-								variant="contained"
-								size="small"
-								aria-label="delete"
-								color="error"
-								onClick={() => deleteImage(item.id)}
-							>
-								<DeleteIcon />
-							</Button>
-						</div>
-						<div className="absolute left-2 top-2">
-							<Button
+						<div className="absolute right-2 top-2 flex flex-col gap-3">
+							<LoadingButton
 								variant="contained"
 								size="small"
 								aria-label="default-image"
@@ -118,9 +107,20 @@ const ShopImagesEdit: FC<ShopImageEditsProps> = ({
 										: "info"
 								}
 								onClick={() => setDefaultImage(item.id)}
+								loading={loadingPutDefault}
 							>
 								<CheckCircleIcon />
-							</Button>
+							</LoadingButton>
+							<LoadingButton
+								variant="contained"
+								size="small"
+								aria-label="delete"
+								color="error"
+								onClick={() => deleteImage(item.id)}
+								loading={loadingDelete}
+							>
+								<DeleteIcon />
+							</LoadingButton>
 						</div>
 						<img
 							className={classNames(

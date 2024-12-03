@@ -75,10 +75,34 @@ export const DarkModeInfo = ({ children }: ProviderProps) => {
 			? {
 					...darkMaterial,
 					palette: { ...darkMaterial.palette, mode: "dark" },
+					components: {
+						MuiButton: {
+							styleOverrides: {
+								root: {
+									"&.Mui-disabled": {
+										background: "#f3f3f3",
+										color: "#dadada",
+									},
+								},
+							},
+						},
+					},
 				}
 			: {
 					...lightMaterial,
 					palette: { ...lightMaterial.palette, mode: "light" },
+					components: {
+						MuiButton: {
+							styleOverrides: {
+								root: {
+									"&.Mui-disabled": {
+										background: "#f3f3f3",
+										color: "#dadada",
+									},
+								},
+							},
+						},
+					},
 				}
 	);
 	const themeTatailwind = darkMode ? darkTailwind : lightTailwind;

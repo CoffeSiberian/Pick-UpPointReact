@@ -1,6 +1,13 @@
 import { FC, useContext, Fragment } from "react";
+
+// Context and hooks
 import { useNavigate } from "react-router-dom";
 import { UserContex } from "../hooks/UserContex";
+
+// components
+import LoginOptions from "./LoginOptions";
+
+// MUI
 import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -9,7 +16,6 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
-import LoginOptions from "./LoginOptions";
 
 // icons
 import PersonIcon from "@mui/icons-material/Person";
