@@ -199,7 +199,7 @@ const Shop = () => {
 	const setDataToConfirmDel = (id: string, name: string) => {
 		setmodalConfirmDel({
 			url: `${API_URL}/product?id=${id}`,
-			message: `¿Está seguro que desea eliminar el producto "${name}`,
+			message: `¿Está seguro que desea eliminar el producto "${name}"`,
 			open: true,
 		});
 	};

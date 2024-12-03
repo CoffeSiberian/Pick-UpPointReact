@@ -49,11 +49,13 @@ const ItemsProductCard: FC<ProductCardProps> = ({
 				"gap-2 p-4 shadow-md"
 			)}
 		>
-			<img
-				className="max-h-60 rounded-xl object-contain drop-shadow-lg"
-				src={img ? `${STATIC_URL}/${img.file_name}` : testimg}
-				alt="store"
-			/>
+			<div className="flex justify-center">
+				<img
+					className="max-h-60 rounded-xl object-contain drop-shadow-lg"
+					src={img ? `${STATIC_URL}/${img.file_name}` : testimg}
+					alt="store"
+				/>
+			</div>
 			<div className="flex flex-col pb-2">
 				<div className="flex flex-col gap-2">
 					<Typography
@@ -83,7 +85,7 @@ const ItemsProductCard: FC<ProductCardProps> = ({
 					<Typography
 						color={themeTatailwind.primary.color}
 						component="div"
-						className="flex justify-between"
+						className="flex justify-between gap-5"
 						variant="subtitle2"
 					>
 						<div className="flex gap-1">

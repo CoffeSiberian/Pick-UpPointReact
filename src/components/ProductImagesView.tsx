@@ -26,16 +26,16 @@ const ProductImagesView: FC<ProductImageViewProps> = ({
 
 	return (
 		<div className="flex w-full max-w-xl flex-col gap-5 p-5">
-			<div className="flex flex-col">
+			<div className="flex justify-center">
 				<img
-					className="max-h-72 rounded-xl object-contain"
+					className="max-h-72 rounded-xl object-contain drop-shadow-lg"
 					src={selectedImage ? `${STATIC_URL}/${selectedImage.file_name}` : ""}
 					alt={selectedImage?.file_name}
 				/>
 			</div>
 			<div>
 				<Swiper
-					slidesPerView={2}
+					slidesPerView={3}
 					centeredSlides={false}
 					spaceBetween={10}
 					grabCursor={true}
@@ -47,13 +47,15 @@ const ProductImagesView: FC<ProductImageViewProps> = ({
 				>
 					{images.map((item) => (
 						<SwiperSlide key={item.id}>
-							<img
-								className="h-48 max-h-36 w-full rounded-xl object-contain"
-								onClick={() => setSelectedImage(item)}
-								style={{ cursor: "pointer" }}
-								src={item ? `${STATIC_URL}/${item.file_name}` : ""}
-								alt={item.file_name}
-							/>
+							<div className="flex justify-center">
+								<img
+									className="max-h-36 rounded-xl object-contain"
+									onClick={() => setSelectedImage(item)}
+									style={{ cursor: "pointer" }}
+									src={item ? `${STATIC_URL}/${item.file_name}` : ""}
+									alt={item.file_name}
+								/>
+							</div>
 						</SwiperSlide>
 					))}
 				</Swiper>

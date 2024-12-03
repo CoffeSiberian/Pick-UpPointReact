@@ -93,7 +93,7 @@ const ShopImagesEdit: FC<ShopImageEditsProps> = ({
 		<ImageList variant="masonry" cols={2} gap={10}>
 			{images.map((item) => (
 				<ImageListItem key={item.id}>
-					<div className="relative flex">
+					<div className="relative inline-block">
 						<div className="absolute right-1 top-1">
 							<IconButton
 								aria-label="delete"
@@ -120,7 +120,7 @@ const ShopImagesEdit: FC<ShopImageEditsProps> = ({
 						</div>
 						<img
 							className={classNames(
-								"rounded-lg",
+								"max-h-72 rounded-lg object-contain",
 								defaultImage
 									? defaultImage.id === item.id
 										? darkMode
