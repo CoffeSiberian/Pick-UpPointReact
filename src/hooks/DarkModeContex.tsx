@@ -80,8 +80,7 @@ export const DarkModeInfo = ({ children }: ProviderProps) => {
 							styleOverrides: {
 								root: {
 									"&.Mui-disabled": {
-										background: "#f3f3f3",
-										color: "#dadada",
+										background: "#333333",
 									},
 								},
 							},
@@ -96,8 +95,7 @@ export const DarkModeInfo = ({ children }: ProviderProps) => {
 							styleOverrides: {
 								root: {
 									"&.Mui-disabled": {
-										background: "#f3f3f3",
-										color: "#dadada",
+										background: "#e0e0e0",
 									},
 								},
 							},
