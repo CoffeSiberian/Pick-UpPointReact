@@ -1,14 +1,19 @@
 import { useState, useContext, Fragment } from "react";
+import classNames from "classnames";
+
+// Context and hooks
 import { useNavigate } from "react-router-dom";
 import { DarkModeContex } from "../hooks/DarkModeContex";
 import { UserContex } from "../hooks/UserContex";
+
+// MUI
 import { styled } from "@mui/material/styles";
-import logo from "../static/img/logo.png";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
-import classNames from "classnames";
+import Switch from "@mui/material/Switch";
+import MovileHeaderOptions from "./MovileHeaderOptions";
 
 // components
 import ModalLogin from "./ModalLogin";
@@ -22,8 +27,8 @@ import IconButton from "@mui/material/IconButton";
 import PersonIcon from "@mui/icons-material/Person";
 import StoreIcon from "@mui/icons-material/Store";
 
-import Switch from "@mui/material/Switch";
-import MovileHeaderOptions from "./MovileHeaderOptions";
+// images
+import logo from "../static/img/logo.webp";
 
 const Header = () => {
 	const { darkMode, setDarkMode } = useContext(DarkModeContex);
@@ -161,7 +166,11 @@ const Header = () => {
 						))}
 					</div>
 					<div className="flex p-2">
-						<img className="w-12 md:w-16" src={logo} alt="Los Andes VTC logo" />
+						<img
+							className="w-12 rounded-lg shadow-lg md:w-16"
+							src={logo}
+							alt="Store logo"
+						/>
 					</div>
 					<div className="flex">
 						<Divider

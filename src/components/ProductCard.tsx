@@ -16,7 +16,9 @@ import Divider from "@mui/material/Divider";
 // icons
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import InfoIcon from "@mui/icons-material/Info";
-import testimg from "../static/img/test.png";
+
+// images
+import testimg from "../static/img/test.webp";
 
 // types
 import { Images_Products } from "../types/model";

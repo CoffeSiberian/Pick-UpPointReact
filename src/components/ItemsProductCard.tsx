@@ -14,7 +14,9 @@ import Chip from "@mui/material/Chip";
 // icons
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import testimg from "../static/img/test.png";
+
+// images
+import testimg from "../static/img/test.webp";
 
 // types
 import { Images_Products } from "../types/model";

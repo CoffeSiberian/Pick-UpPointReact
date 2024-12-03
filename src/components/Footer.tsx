@@ -1,15 +1,22 @@
 import { useContext } from "react";
+import { TITLE } from "../helpers/configs";
+
+// Context and hooks
 import { DarkModeContex } from "../hooks/DarkModeContex";
+
+// MUI
 import Paper from "@mui/material/Paper";
 import { Typography } from "@mui/material";
 import Link from "@mui/material/Link";
-import { TITLE } from "../helpers/configs";
 
 // icons
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import GitHubIcon from "@mui/icons-material/GitHub";
+
+// images
+import logo from "../static/img/logo.webp";
 
 const Footer = () => {
 	const { darkMode } = useContext(DarkModeContex);
@@ -34,8 +41,12 @@ const Footer = () => {
 					backgroundColor: darkMode ? "#1f1f1f" : "#cfd3da",
 				}}
 			>
-				<div className="flex flex-col items-center p-2 drop-shadow-md md:flex-row md:justify-center">
-					<img className="mr-2 h-auto w-10" src="x" alt="logo" />
+				<div className="flex flex-col items-center p-2 md:flex-row md:justify-center">
+					<img
+						className="mr-2 w-10 rounded-lg shadow-lg"
+						src={logo}
+						alt="Store logo"
+					/>
 					<Typography variant="h4">
 						<b>{TITLE}</b>
 					</Typography>
