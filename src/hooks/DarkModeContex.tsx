@@ -93,7 +93,7 @@ export const DarkModeInfo = ({ children }: ProviderProps) => {
 		if (darkModeLocal !== null) {
 			setDarkModeState(JSON.parse(darkModeLocal));
 		} else {
-			localStorage.setItem("darkMode", "true");
+			localStorage.setItem("darkMode", "false");
 		}
 	}, []);
 
