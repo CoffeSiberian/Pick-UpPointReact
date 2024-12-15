@@ -6,7 +6,7 @@ import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 
 // Pages
-import Summary from "./AdminPages/Summary";
+import Summary from "./AdminPages/Summary/Summary";
 import Users from "./AdminPages/Users/Users";
 import Sales from "./AdminPages/Sales/Sales";
 import Shop from "./AdminPages/Shop/Shop";

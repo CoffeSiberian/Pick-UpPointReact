@@ -1,4 +1,5 @@
 import { AxiosResponse } from "axios";
+import { Products } from "../model";
 
 export interface PurchaseResponseObject {
 	id: string;
@@ -10,6 +11,12 @@ export interface PurchaseTotalObject {
 	date: string;
 	total_sales: number;
 	total_money: number;
+}
+
+export interface MostPurchasedItemsObject {
+	fk_product: string;
+	total: number;
+	product: Products;
 }
 
 export interface PurchasesTotalResponseObject {
@@ -25,10 +32,10 @@ export interface PurchaseResponse extends AxiosResponse {
 	data: PurchaseResponseObject;
 }
 
-export interface PurchasesTotalMonthResponse extends AxiosResponse {
+export interface PurchasesTotalResponse extends AxiosResponse {
 	data: PurchasesTotalResponseObject;
 }
 
-export interface PurchasesTotalWeekResponse extends AxiosResponse {
-	data: PurchasesTotalResponseObject;
+export interface MostPurchasedItemsResponse extends AxiosResponse {
+	data: { most_purchased_items: MostPurchasedItemsObject[] };
 }

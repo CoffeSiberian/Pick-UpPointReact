@@ -1,13 +1,13 @@
 import { useState, useCallback, useContext, useEffect, useRef } from "react";
-import { API_URL } from "../../../helpers/configs";
-import { formatOnlyDateNoYear } from "../../../helpers/formatDate";
+import { API_URL } from "../../../../helpers/configs";
+import { formatOnlyDateNoYear } from "../../../../helpers/formatDate";
 import dayjs from "dayjs";
 import "dayjs/locale/es";
 
 // Context and hooks
-import useFetch from "../../../hooks/useFetch";
-import { UserContex } from "../../../hooks/UserContex";
-import { DarkModeContex } from "../../../hooks/DarkModeContex";
+import useFetch from "../../../../hooks/useFetch";
+import { UserContex } from "../../../../hooks/UserContex";
+import { DarkModeContex } from "../../../../hooks/DarkModeContex";
 
 // MUI
 import { Typography } from "@mui/material";
@@ -23,14 +23,17 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
+// components
+import MostPurchasedItems from "./MostPurchasedItems";
+
 // icons
 import SearchIcon from "@mui/icons-material/Search";
 
 // types
 import {
-	PurchasesTotalMonthResponse,
+	PurchasesTotalResponse,
 	PurchaseTotalObject,
-} from "../../../types/responses/Purchase";
+} from "../../../../types/responses/Purchase";
 
 interface DateRange {
 	date_start: dayjs.Dayjs | null;
@@ -54,7 +57,7 @@ const Summary = () => {
 		async (date_start: string, date_end: string) => {
 			if (!UserInfo) return;
 
-			const data: PurchasesTotalMonthResponse | null = await response({
+			const data: PurchasesTotalResponse | null = await response({
 				headers: {
 					"Content-Type": "application/json",
 					Authorization: `Bearer ${UserInfo.token}`,
@@ -174,30 +177,39 @@ const Summary = () => {
 									<ChartsAxisHighlight x="band" y="line" />
 								</ResponsiveChartContainer>
 							</Paper>
-							<div className="flex w-full max-w-44 flex-col items-center gap-3">
-								<Typography
-									color={themeTatailwind.primary.color}
-									component="div"
-									className="flex"
-									variant="h5"
+							<div className="flex w-full max-w-72 flex-col items-center gap-3">
+								<Paper
+									className="flex w-full flex-col items-center p-4"
+									sx={{ p: 1, borderRadius: 3 }}
 								>
-									<div className="font-bold">Ganancia total</div>
-								</Typography>
-								<Typography
-									color="success"
-									component="div"
-									className="flex"
-									variant="h5"
-								>
-									<div className="font-bold">
-										{totalMoth
-											.reduce((acc, item) => acc + item.total_money, 0)
-											.toLocaleString("es-CL", {
-												style: "currency",
-												currency: "CLP",
-											})}
-									</div>
-								</Typography>
+									<Typography
+										color={themeTatailwind.primary.color}
+										component="div"
+										className="flex"
+										variant="h5"
+									>
+										<div className="font-bold">Ganancia total</div>
+									</Typography>
+									<Typography
+										color="success"
+										component="div"
+										className="flex"
+										variant="h5"
+									>
+										<div className="font-bold">
+											{totalMoth
+												.reduce((acc, item) => acc + item.total_money, 0)
+												.toLocaleString("es-CL", {
+													style: "currency",
+													currency: "CLP",
+												})}
+										</div>
+									</Typography>
+								</Paper>
+								<MostPurchasedItems
+									date_end={dateRange.date_end}
+									date_start={dateRange.date_start}
+								/>
 							</div>
 						</div>
 					)}
