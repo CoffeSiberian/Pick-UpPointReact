@@ -14,4 +14,10 @@ const formatOnlyDate = (date: Date | string): string => {
 	return dayjs.tz(date, "UTC").tz(dayjs.tz.guess()).format("DD/MMMM/YYYY");
 };
 
-export { formatDate, formatOnlyDate };
+const formatOnlyDateNoYear = (date: Date | string): string => {
+	dayjs.extend(utc);
+	dayjs.extend(timezone);
+	return dayjs.tz(date, "UTC").tz(dayjs.tz.guess()).format("DD/MM");
+};
+
+export { formatDate, formatOnlyDate, formatOnlyDateNoYear };
