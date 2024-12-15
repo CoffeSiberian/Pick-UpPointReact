@@ -84,7 +84,7 @@ const Summary = () => {
 						</ButtonGroup>
 					</div>
 					{totalMoth.length > 0 && (
-						<div className="flex w-full max-w-6xl flex-col justify-center gap-4 p-3 md:flex-row">
+						<div className="flex w-full max-w-6xl flex-col items-center justify-center gap-4 p-3 md:flex-row">
 							<Paper
 								sx={{
 									width: "100%",
