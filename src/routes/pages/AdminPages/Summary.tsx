@@ -2,6 +2,7 @@ import { useState, useCallback, useContext, useEffect, useRef } from "react";
 import { API_URL } from "../../../helpers/configs";
 import { formatOnlyDateNoYear } from "../../../helpers/formatDate";
 import dayjs from "dayjs";
+import "dayjs/locale/es";
 
 // Context and hooks
 import useFetch from "../../../hooks/useFetch";
@@ -103,7 +104,7 @@ const Summary = () => {
 				</div>
 				<div className="flex w-full flex-col items-center gap-3">
 					<div className="flex flex-col gap-3 md:flex-row">
-						<LocalizationProvider dateAdapter={AdapterDayjs}>
+						<LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
 							<DatePicker
 								label="Desde la fecha"
 								views={["day", "month", "year"]}
@@ -114,7 +115,7 @@ const Summary = () => {
 								}
 							/>
 						</LocalizationProvider>
-						<LocalizationProvider dateAdapter={AdapterDayjs}>
+						<LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
 							<DatePicker
 								label="Hasta la fecha"
 								views={["day", "month", "year"]}

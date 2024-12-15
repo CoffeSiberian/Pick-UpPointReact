@@ -18,28 +18,6 @@ export const DarkModeContex = createContext<DarkModeContextTypes>(
 export const DarkModeInfo = ({ children }: ProviderProps) => {
 	const [darkMode, setDarkModeState] = useState<boolean>(false);
 
-	const darkMaterial = {
-		palette: {
-			primary: {
-				main: "#404040",
-			},
-			secondary: {
-				main: "#90caf9",
-			},
-		},
-	};
-
-	const lightMaterial = {
-		palette: {
-			primary: {
-				main: "#3ca9d0",
-			},
-			secondary: {
-				main: "#ed9427",
-			},
-		},
-	};
-
 	const darkTailwind: DarkModeTypes = {
 		primary: {
 			main: "bg-neutral-900",
@@ -75,8 +53,15 @@ export const DarkModeInfo = ({ children }: ProviderProps) => {
 	const themeMaterial = createTheme(
 		darkMode
 			? {
-					...darkMaterial,
-					palette: { ...darkMaterial.palette, mode: "dark" },
+					palette: {
+						mode: "dark",
+						primary: {
+							main: "#3ca9d0",
+						},
+						secondary: {
+							main: "#ed9427",
+						},
+					},
 					components: {
 						MuiButton: {
 							styleOverrides: {
@@ -90,8 +75,15 @@ export const DarkModeInfo = ({ children }: ProviderProps) => {
 					},
 				}
 			: {
-					...lightMaterial,
-					palette: { ...lightMaterial.palette, mode: "light" },
+					palette: {
+						mode: "light",
+						primary: {
+							main: "#3ca9d0",
+						},
+						secondary: {
+							main: "#ed9427",
+						},
+					},
 					components: {
 						MuiButton: {
 							styleOverrides: {
