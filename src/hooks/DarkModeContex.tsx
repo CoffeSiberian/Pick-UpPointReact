@@ -1,5 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { esES } from "@mui/x-date-pickers/locales";
+import { esES as coreEs } from "@mui/material/locale";
 
 // types
 import {
@@ -101,7 +103,9 @@ export const DarkModeInfo = ({ children }: ProviderProps) => {
 							},
 						},
 					},
-				}
+				},
+		esES,
+		coreEs
 	);
 	const themeTatailwind = darkMode ? darkTailwind : lightTailwind;
 
