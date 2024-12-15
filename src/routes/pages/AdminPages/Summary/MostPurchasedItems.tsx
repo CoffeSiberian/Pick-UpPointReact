@@ -6,18 +6,22 @@ import {
 	useEffect,
 	useRef,
 } from "react";
-import { API_URL } from "../../../../helpers/configs";
+import classNames from "classnames";
+import { API_URL, STATIC_URL } from "../../../../helpers/configs";
 import dayjs from "dayjs";
 
 // Context and hooks
 import useFetch from "../../../../hooks/useFetch";
 import { UserContex } from "../../../../hooks/UserContex";
+import { DarkModeContex } from "../../../../hooks/DarkModeContex";
 
 // MUI
 import { Typography } from "@mui/material";
 import Paper from "@mui/material/Paper";
+import IconButton from "@mui/material/IconButton";
 
 // icons
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 // types
 import {
@@ -33,6 +37,7 @@ interface DateRange {
 const MostPurchasedItems: FC<DateRange> = ({ date_start, date_end }) => {
 	const loaded = useRef(false);
 	const { UserInfo } = useContext(UserContex);
+	const { darkMode } = useContext(DarkModeContex);
 
 	const { response } = useFetch(`${API_URL}/purchases/most`, "GET");
 
@@ -84,11 +89,35 @@ const MostPurchasedItems: FC<DateRange> = ({ date_start, date_end }) => {
 				</Typography>
 				<div className="flex w-full flex-col space-y-2">
 					{mostPurchased.map((item, index) => (
-						<div key={index} className="flex justify-between">
-							<Typography>
-								<div className="font-medium">{item.product.name}</div>
-							</Typography>
-							<Typography>{item.total}</Typography>
+						<div
+							key={index}
+							className={classNames(
+								"flex w-full items-center gap-3 rounded-md p-2",
+								darkMode ? "hover:bg-gray-700" : "hover:bg-gray-200"
+							)}
+						>
+							<div className="h-10 w-10">
+								<img
+									src={`${STATIC_URL}/${item.product.primary_image?.file_name}`}
+									alt={item.product.name}
+									className="h-10 w-10 rounded-lg object-contain"
+								/>
+							</div>
+							<div className="flex w-full flex-col gap-1">
+								<Typography>
+									<div className="font-medium">{item.product.name}</div>
+								</Typography>
+								<Typography>
+									<div className="text-sm">{item.total}</div>
+								</Typography>
+							</div>
+							<IconButton
+								onClick={() => {
+									window.open(`/product/${item.product.id}`, "_blank");
+								}}
+							>
+								<OpenInNewIcon />
+							</IconButton>
 						</div>
 					))}
 				</div>
