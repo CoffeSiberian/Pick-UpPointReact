@@ -93,6 +93,7 @@ const MostPurchasedItems: FC<DateRange> = ({ date_start, date_end }) => {
 							key={index}
 							className={classNames(
 								"flex w-full items-center gap-3 rounded-md p-2",
+								"transition duration-150",
 								darkMode ? "hover:bg-gray-700" : "hover:bg-gray-200"
 							)}
 						>

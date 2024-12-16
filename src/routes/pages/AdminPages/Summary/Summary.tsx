@@ -177,7 +177,7 @@ const Summary = () => {
 									<ChartsAxisHighlight x="band" y="line" />
 								</ResponsiveChartContainer>
 							</Paper>
-							<div className="flex w-full max-w-72 flex-col items-center gap-3">
+							<div className="flex w-full flex-col items-center gap-3 md:max-w-72">
 								<Paper
 									className="flex w-full flex-col items-center p-4"
 									sx={{ p: 1, borderRadius: 3 }}
