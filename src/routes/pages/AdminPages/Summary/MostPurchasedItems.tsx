@@ -27,14 +27,20 @@ import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import {
 	MostPurchasedItemsResponse,
 	MostPurchasedItemsObject,
+	PurchaseTotalObject,
 } from "../../../../types/responses/Purchase";
 
 interface DateRange {
 	date_start: dayjs.Dayjs | null;
 	date_end: dayjs.Dayjs | null;
+	purchases: PurchaseTotalObject[];
 }
 
-const MostPurchasedItems: FC<DateRange> = ({ date_start, date_end }) => {
+const MostPurchasedItems: FC<DateRange> = ({
+	date_start,
+	date_end,
+	purchases,
+}) => {
 	const loaded = useRef(false);
 	const { UserInfo } = useContext(UserContex);
 	const { darkMode } = useContext(DarkModeContex);
@@ -69,14 +75,13 @@ const MostPurchasedItems: FC<DateRange> = ({ date_start, date_end }) => {
 	);
 
 	useEffect(() => {
-		if (!loaded.current) {
-			getStats(
-				date_start?.format("YYYY-MM-DD") || "",
-				date_end?.format("YYYY-MM-DD") || ""
-			);
-			loaded.current = true;
-		}
-	}, [date_end, date_start, getStats]);
+		getStats(
+			date_start?.format("YYYY-MM-DD") || "",
+			date_end?.format("YYYY-MM-DD") || ""
+		);
+		loaded.current = true;
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [purchases]);
 
 	return (
 		<div className="flex w-full">

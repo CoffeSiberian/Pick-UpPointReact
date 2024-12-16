@@ -209,6 +209,7 @@ const Summary = () => {
 								<MostPurchasedItems
 									date_end={dateRange.date_end}
 									date_start={dateRange.date_start}
+									purchases={totalMoth}
 								/>
 							</div>
 						</div>
