@@ -21,6 +21,7 @@ export interface MostPurchasedItemsObject {
 
 export interface PurchasesTotalResponseObject {
 	purchases: PurchaseTotalObject[];
+	total_purchases_money: number;
 }
 
 export interface PurchaseTotalNumbersResponseObject {

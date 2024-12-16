@@ -32,7 +32,7 @@ import SearchIcon from "@mui/icons-material/Search";
 // types
 import {
 	PurchasesTotalResponse,
-	PurchaseTotalObject,
+	PurchasesTotalResponseObject,
 } from "../../../../types/responses/Purchase";
 
 interface DateRange {
@@ -47,7 +47,10 @@ const Summary = () => {
 
 	const { response, loading } = useFetch(`${API_URL}/purchases/total`, "GET");
 
-	const [totalMoth, setTotalMonth] = useState<PurchaseTotalObject[]>([]);
+	const [totalMoth, setTotalMonth] = useState<PurchasesTotalResponseObject>({
+		purchases: [],
+		total_purchases_money: 0,
+	});
 	const [dateRange, setDateRange] = useState<DateRange>({
 		date_start: dayjs().subtract(30, "day"),
 		date_end: dayjs(),
@@ -70,7 +73,7 @@ const Summary = () => {
 
 			if (!data) return;
 			if (data.status === 200) {
-				setTotalMonth(data.data.purchases);
+				setTotalMonth(data.data);
 			}
 		},
 		[UserInfo, response]
@@ -143,7 +146,7 @@ const Summary = () => {
 							Filtrar
 						</LoadingButton>
 					</div>
-					{totalMoth.length > 0 && (
+					{totalMoth.purchases.length > 0 && (
 						<div className="flex w-full max-w-6xl flex-col items-center justify-center gap-4 p-3 md:flex-row">
 							<Paper
 								sx={{
@@ -155,7 +158,7 @@ const Summary = () => {
 								elevation={3}
 							>
 								<ResponsiveChartContainer
-									dataset={totalMoth.map((item) => ({
+									dataset={totalMoth.purchases.map((item) => ({
 										date: formatOnlyDateNoYear(item.date),
 										total_sales: item.total_sales,
 										total_money: item.total_money,
@@ -197,19 +200,17 @@ const Summary = () => {
 										variant="h5"
 									>
 										<div className="font-bold">
-											{totalMoth
-												.reduce((acc, item) => acc + item.total_money, 0)
-												.toLocaleString("es-CL", {
-													style: "currency",
-													currency: "CLP",
-												})}
+											{totalMoth.total_purchases_money.toLocaleString("es-CL", {
+												style: "currency",
+												currency: "CLP",
+											})}
 										</div>
 									</Typography>
 								</Paper>
 								<MostPurchasedItems
 									date_end={dateRange.date_end}
 									date_start={dateRange.date_start}
-									purchases={totalMoth}
+									purchases={totalMoth.purchases}
 								/>
 							</div>
 						</div>
