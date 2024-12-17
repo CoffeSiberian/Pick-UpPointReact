@@ -13,7 +13,7 @@ const UserRouteValidation = ({
 }: UserRouteValidationProps) => {
 	const { UserInfo } = useContext(UserContex);
 
-	return UserInfo !== null && UserInfo.isAdmin ? (
+	return UserInfo !== null ? (
 		<Component {...rest} />
 	) : (
 		<ErrorPage
