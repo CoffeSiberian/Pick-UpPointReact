@@ -127,7 +127,7 @@ const UserPurchaseList = () => {
 			{
 				field: "Acciones",
 				type: "actions",
-				minWidth: 35,
+				minWidth: 80,
 				flex: 1,
 				editable: false,
 				renderCell: (params) => (
