@@ -1,4 +1,5 @@
 import { useContext, useState, useCallback, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { API_URL } from "../../../helpers/configs";
 
 // Context and hooks
@@ -21,6 +22,7 @@ import { PurchaseListResponse } from "../../../types/responses/PurchaseList";
 
 // icons
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
 
 interface UserPurchaseTable {
 	columns: GridColDef[];
@@ -36,6 +38,7 @@ const UserPurchaseList = () => {
 	const status = ["Pendiente", "Pagado", "Rechazado", "Anulado"];
 	const loaded = useRef(false);
 	const { UserInfo } = useContext(UserContex);
+	const navigate = useNavigate();
 
 	const [userPurchaseModal, setUserPurchaseModal] =
 		useState<userPurchaseModalState>({
@@ -138,8 +141,17 @@ const UserPurchaseList = () => {
 							}
 							size="small"
 							aria-label="Ver compras"
+							color="primary"
 						>
 							<RemoveRedEyeIcon />
+						</IconButton>
+						<IconButton
+							onClick={() => navigate(`/purchase/qr/${params.row.id}`)}
+							size="small"
+							aria-label="Ver compras"
+							color="success"
+						>
+							<QrCodeScannerIcon />
 						</IconButton>
 					</div>
 				),
