@@ -19,7 +19,7 @@ import ModalLoading from "../../../components/ModalLoading";
 
 // components
 import UserBasicInfo from "../../../components/UserBasicInfo";
-import UserPurchaseList from "../../../components/UserPurchaseList";
+import UserPurchaseList from "./UserPurchaseList";
 import ErrorPage from "../../../components/ErrorPage";
 
 // types
@@ -145,7 +145,7 @@ const Profiles = () => {
 								>
 									<b>Compras</b>
 								</Typography>
-								<UserPurchaseList userId={user.data.user.id} />
+								<UserPurchaseList />
 							</>
 						)}
 						{error && (

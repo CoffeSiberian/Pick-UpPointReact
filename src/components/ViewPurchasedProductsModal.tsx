@@ -2,6 +2,7 @@ import { FC } from "react";
 
 // components
 import ViewPurchasedProducts from "./ViewPurchasedProducts";
+import ViewPurchasedProductsProfile from "./ViewPurchasedProductsProfile";
 
 // MUI
 import Dialog from "@mui/material/Dialog";
@@ -17,12 +18,14 @@ interface ModalLoadingProps {
 	open: boolean;
 	onClose: (open: boolean) => void;
 	purchaseId: string | null;
+	isProfile?: boolean;
 }
 
 const ViewPurchasedProductsModal: FC<ModalLoadingProps> = ({
 	open,
 	onClose,
 	purchaseId,
+	isProfile,
 }) => {
 	return (
 		<Dialog
@@ -39,7 +42,11 @@ const ViewPurchasedProductsModal: FC<ModalLoadingProps> = ({
 			</DialogTitle>
 			<DialogContent className="flex justify-center">
 				<div className="grid grid-cols-1 gap-7 md:grid-cols-2">
-					<ViewPurchasedProducts purchaseId={purchaseId} />
+					{isProfile ? (
+						<ViewPurchasedProductsProfile purchaseId={purchaseId} />
+					) : (
+						<ViewPurchasedProducts purchaseId={purchaseId} />
+					)}
 				</div>
 			</DialogContent>
 			<DialogActions>
