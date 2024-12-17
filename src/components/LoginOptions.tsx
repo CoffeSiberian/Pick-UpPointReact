@@ -1,6 +1,10 @@
 import { useState, useContext } from "react";
+
+// Context and hooks
 import { UserContex } from "../hooks/UserContex";
 import { useNavigate } from "react-router-dom";
+
+// MUI
 import Tooltip from "@mui/material/Tooltip";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -25,6 +29,11 @@ const LoginOptions = () => {
 
 	const handleAdminPanel = () => {
 		navigate("/admin/summary");
+		setProfileOpen(null);
+	};
+
+	const handleProfile = () => {
+		navigate("/profile");
 		setProfileOpen(null);
 	};
 
@@ -58,6 +67,12 @@ const LoginOptions = () => {
 					<MenuItem onClick={handleAdminPanel} className="gap-1">
 						<AdminPanelSettingsIcon />
 						<Typography textAlign="center">Panel de control</Typography>
+					</MenuItem>
+				)}
+				{UserInfo !== null && (
+					<MenuItem onClick={handleProfile} className="gap-1">
+						<AccountCircleIcon />
+						<Typography textAlign="center">Mi Perfil</Typography>
 					</MenuItem>
 				)}
 				<MenuItem onClick={handleLogout} className="gap-1">

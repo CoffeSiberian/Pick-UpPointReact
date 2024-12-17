@@ -2,46 +2,41 @@ import { FC } from "react";
 
 // MUI
 import TextField from "@mui/material/TextField";
-import Checkbox from "@mui/material/Checkbox";
 import InputAdornment from "@mui/material/InputAdornment";
-import FormControlLabel from "@mui/material/FormControlLabel";
 
 // icons
-import NumbersIcon from "@mui/icons-material/Numbers";
 import AbcIcon from "@mui/icons-material/Abc";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import KeyIcon from "@mui/icons-material/Key";
 
-const UsersForms: FC<UsersFormsProps> = ({ userForm, setUserForm }) => {
+// types
+import { UserForm, UserPayLoad } from "./UpdateUserTypes";
+
+const UsersForms: FC<UserForm> = ({ userForm, setUserForm }) => {
+	const setValuePassword = (value: string) => {
+		if (value.length === 0) {
+			const newUserForm: UserPayLoad = {
+				name: userForm.payload.name,
+				email: userForm.payload.email,
+			};
+
+			setUserForm({
+				...userForm,
+				payload: newUserForm,
+			});
+		} else {
+			setUserForm({
+				...userForm,
+				payload: {
+					...userForm.payload,
+					password: value,
+				},
+			});
+		}
+	};
+
 	return (
 		<div className="mt-2 flex flex-col gap-4">
-			<TextField
-				fullWidth
-				id="rut-user-add"
-				autoComplete="off"
-				color="info"
-				label="RUT"
-				type="text"
-				helperText={userForm.error.rut && "Rut invalido"}
-				error={userForm.error.rut}
-				value={userForm.payload.rut}
-				onChange={(e) =>
-					setUserForm({
-						...userForm,
-						payload: {
-							...userForm.payload,
-							rut: e.target.value,
-						},
-					})
-				}
-				InputProps={{
-					startAdornment: (
-						<InputAdornment position="start">
-							<NumbersIcon />
-						</InputAdornment>
-					),
-				}}
-			/>
 			<TextField
 				fullWidth
 				autoComplete="off"
@@ -96,27 +91,6 @@ const UsersForms: FC<UsersFormsProps> = ({ userForm, setUserForm }) => {
 					),
 				}}
 			/>
-			{userForm.payload.isAdmin !== undefined && (
-				<FormControlLabel
-					control={
-						<Checkbox
-							color="info"
-							checked={userForm.payload.isAdmin}
-							onChange={(e) =>
-								setUserForm({
-									...userForm,
-									payload: {
-										...userForm.payload,
-										isAdmin: e.target.checked,
-									},
-								})
-							}
-							inputProps={{ "aria-label": "Es Administrador" }}
-						/>
-					}
-					label="Es administrador"
-				/>
-			)}
 			<TextField
 				fullWidth
 				id="password-user-add"
@@ -127,15 +101,7 @@ const UsersForms: FC<UsersFormsProps> = ({ userForm, setUserForm }) => {
 				helperText={userForm.error.password && "Minimo de 5 caracteres"}
 				error={userForm.error.password}
 				value={userForm.payload.password || ""}
-				onChange={(e) =>
-					setUserForm({
-						...userForm,
-						payload: {
-							...userForm.payload,
-							password: e.target.value,
-						},
-					})
-				}
+				onChange={(e) => setValuePassword(e.target.value)}
 				InputProps={{
 					startAdornment: (
 						<InputAdornment position="start">
