@@ -11,9 +11,8 @@ import Link from "@mui/material/Link";
 
 // icons
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import YouTubeIcon from "@mui/icons-material/YouTube";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import WorkIcon from "@mui/icons-material/Work";
 
 // images
 import logo from "../static/img/logo.webp";
@@ -22,14 +21,9 @@ const Footer = () => {
 	const { darkMode } = useContext(DarkModeContex);
 	const social = [
 		{
-			name: "Instagram",
-			logo: <InstagramIcon />,
-			link: "https://www.instagram.com/siberiancoffe/",
-		},
-		{
-			name: "YouTube",
-			logo: <YouTubeIcon />,
-			link: "https://www.youtube.com/channel/UC2Ngs234UMfebl9GeCfwDWw",
+			name: "siberiancoffe.dev",
+			logo: <WorkIcon />,
+			link: "https://siberiancoffe.dev/",
 		},
 	];
 
@@ -60,7 +54,7 @@ const Footer = () => {
 						{social.map((obj) => (
 							<li className="ml-3 mr-3" key={obj.name}>
 								<Link
-									className="flex items-center justify-start p-2 md:justify-center"
+									className="flex items-center justify-start gap-1 p-1 md:justify-center"
 									color={darkMode ? "white" : "black"}
 									href={obj.link}
 									target="_blank"

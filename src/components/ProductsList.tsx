@@ -57,7 +57,13 @@ const ProductsList = () => {
 	);
 
 	const onSetPage = (page: number, pageSize: number) => {
+		if (page === pagination.page) return;
+
 		getData(page, pageSize);
+		window.scrollTo({
+			top: 0,
+			behavior: "smooth",
+		});
 	};
 
 	useEffect(() => {
