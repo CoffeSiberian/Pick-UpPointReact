@@ -180,7 +180,12 @@ const Header = () => {
 							flexItem
 						/>
 						<div className="hidden md:flex">
-							{UserInfo && <LoginOptions />}
+							{UserInfo && (
+								<LoginOptions
+									openDrawer={menuOpen}
+									setOpenDrawer={setMenuOpen}
+								/>
+							)}
 
 							{UserInfo === null && (
 								<Button

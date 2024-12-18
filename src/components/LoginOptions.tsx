@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, FC } from "react";
 
 // Context and hooks
 import { UserContex } from "../hooks/UserContex";
@@ -16,7 +16,12 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import LogoutIcon from "@mui/icons-material/Logout";
 
-const LoginOptions = () => {
+interface LoginOptionsProps {
+	openDrawer: boolean;
+	setOpenDrawer: (open: boolean) => void;
+}
+
+const LoginOptions: FC<LoginOptionsProps> = ({ openDrawer, setOpenDrawer }) => {
 	const [ProfileOpen, setProfileOpen] = useState<null | HTMLElement>(null);
 
 	const { UserInfo, logout } = useContext(UserContex);
@@ -30,11 +35,13 @@ const LoginOptions = () => {
 	const handleAdminPanel = () => {
 		navigate("/admin/summary");
 		setProfileOpen(null);
+		if (openDrawer) setOpenDrawer(false);
 	};
 
 	const handleProfile = () => {
 		navigate("/profile");
 		setProfileOpen(null);
+		if (openDrawer) setOpenDrawer(false);
 	};
 
 	return (
@@ -63,16 +70,16 @@ const LoginOptions = () => {
 				open={Boolean(ProfileOpen)}
 				onClose={() => setProfileOpen(null)}
 			>
-				{UserInfo !== null && UserInfo.isAdmin && (
-					<MenuItem onClick={handleAdminPanel} className="gap-1">
-						<AdminPanelSettingsIcon />
-						<Typography textAlign="center">Panel de control</Typography>
-					</MenuItem>
-				)}
 				{UserInfo !== null && (
 					<MenuItem onClick={handleProfile} className="gap-1">
 						<AccountCircleIcon />
 						<Typography textAlign="center">Mi Perfil</Typography>
+					</MenuItem>
+				)}
+				{UserInfo !== null && UserInfo.isAdmin && (
+					<MenuItem onClick={handleAdminPanel} className="gap-1">
+						<AdminPanelSettingsIcon />
+						<Typography textAlign="center">Panel de control</Typography>
 					</MenuItem>
 				)}
 				<MenuItem onClick={handleLogout} className="gap-1">

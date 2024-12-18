@@ -63,7 +63,12 @@ const MovileHeaderOptions: FC<MovileHeaderOptionsProps> = ({
 				<Fragment key="loginfragment">
 					<ListItem disablePadding>
 						<div className="mt-2 flex w-full justify-center">
-							{UserInfo && <LoginOptions />}
+							{UserInfo && (
+								<LoginOptions
+									openDrawer={openDrawer}
+									setOpenDrawer={setOpenDrawer}
+								/>
+							)}
 							{UserInfo === null && (
 								<Button
 									startIcon={<PersonIcon />}
