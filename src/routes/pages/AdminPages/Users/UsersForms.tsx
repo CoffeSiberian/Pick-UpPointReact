@@ -13,6 +13,31 @@ import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import KeyIcon from "@mui/icons-material/Key";
 
 const UsersForms: FC<UsersFormsProps> = ({ userForm, setUserForm }) => {
+	const setValuePassword = (value: string) => {
+		if (value.length === 0) {
+			const newUserForm: UserPayLoad = {
+				id: userForm.payload.id,
+				rut: userForm.payload.rut,
+				name: userForm.payload.name,
+				email: userForm.payload.email,
+				isAdmin: userForm.payload.isAdmin,
+			};
+
+			setUserForm({
+				...userForm,
+				payload: newUserForm,
+			});
+		} else {
+			setUserForm({
+				...userForm,
+				payload: {
+					...userForm.payload,
+					password: value,
+				},
+			});
+		}
+	};
+
 	return (
 		<div className="mt-2 flex flex-col gap-4">
 			<TextField
@@ -127,15 +152,7 @@ const UsersForms: FC<UsersFormsProps> = ({ userForm, setUserForm }) => {
 				helperText={userForm.error.password && "Minimo de 5 caracteres"}
 				error={userForm.error.password}
 				value={userForm.payload.password || ""}
-				onChange={(e) =>
-					setUserForm({
-						...userForm,
-						payload: {
-							...userForm.payload,
-							password: e.target.value,
-						},
-					})
-				}
+				onChange={(e) => setValuePassword(e.target.value)}
 				InputProps={{
 					startAdornment: (
 						<InputAdornment position="start">

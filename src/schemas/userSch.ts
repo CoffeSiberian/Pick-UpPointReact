@@ -4,7 +4,7 @@ export const userSchema = yup.object().shape({
 	rut: yup.string().min(5).max(10).required(),
 	name: yup.string().min(3).max(256).required(),
 	email: yup.string().email().max(256).required(),
-	password: yup.string().min(5).max(60),
+	password: yup.string().min(5).max(60).optional(),
 });
 
 export const userSchemaProfile = yup.object().shape({
