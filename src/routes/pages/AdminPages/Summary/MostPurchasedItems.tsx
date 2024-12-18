@@ -110,10 +110,10 @@ const MostPurchasedItems: FC<DateRange> = ({
 								/>
 							</div>
 							<div className="flex w-full flex-col gap-1">
-								<Typography>
+								<Typography component="div" variant="body1">
 									<div className="font-medium">{item.product.name}</div>
 								</Typography>
-								<Typography>
+								<Typography component="div" variant="body2">
 									<div className="text-sm">{item.total}</div>
 								</Typography>
 							</div>
